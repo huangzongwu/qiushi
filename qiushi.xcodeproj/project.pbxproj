@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1313DA8C15EF0012002ACBB2 /* SVStatusHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 1313DA8B15EF0012002ACBB2 /* SVStatusHUD.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1313DA8E15EF0188002ACBB2 /* shake.wav in Resources */ = {isa = PBXBuildFile; fileRef = 1313DA8D15EF0188002ACBB2 /* shake.wav */; };
+		1313DA9115EF0542002ACBB2 /* wifi.png in Resources */ = {isa = PBXBuildFile; fileRef = 1313DA8F15EF0542002ACBB2 /* wifi.png */; };
+		1313DA9215EF0542002ACBB2 /* wifi@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1313DA9015EF0542002ACBB2 /* wifi@2x.png */; };
+		1313DA9815EF0CC2002ACBB2 /* icon_shake@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1313DA9715EF0CC2002ACBB2 /* icon_shake@2x.png */; };
+		1313DAA315EF3281002ACBB2 /* CustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1313DAA215EF3281002ACBB2 /* CustomNavigationBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		1313DAA515EF335C002ACBB2 /* navi_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1313DAA415EF335C002ACBB2 /* navi_background@2x.png */; };
 		13C8434A15E47EEC000B8A44 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8434915E47EEC000B8A44 /* UIKit.framework */; };
 		13C8434C15E47EEC000B8A44 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8434B15E47EEC000B8A44 /* Foundation.framework */; };
 		13C8434E15E47EEC000B8A44 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8434D15E47EEC000B8A44 /* CoreGraphics.framework */; };
@@ -219,6 +226,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1313DA8A15EF0012002ACBB2 /* SVStatusHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVStatusHUD.h; sourceTree = "<group>"; };
+		1313DA8B15EF0012002ACBB2 /* SVStatusHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVStatusHUD.m; sourceTree = "<group>"; };
+		1313DA8D15EF0188002ACBB2 /* shake.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = shake.wav; sourceTree = "<group>"; };
+		1313DA8F15EF0542002ACBB2 /* wifi.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = wifi.png; sourceTree = "<group>"; };
+		1313DA9015EF0542002ACBB2 /* wifi@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "wifi@2x.png"; sourceTree = "<group>"; };
+		1313DA9715EF0CC2002ACBB2 /* icon_shake@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon_shake@2x.png"; sourceTree = "<group>"; };
+		1313DAA115EF3281002ACBB2 /* CustomNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationBar.h; sourceTree = "<group>"; };
+		1313DAA215EF3281002ACBB2 /* CustomNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationBar.m; sourceTree = "<group>"; };
+		1313DAA415EF335C002ACBB2 /* navi_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navi_background@2x.png"; sourceTree = "<group>"; };
 		13C8434515E47EEC000B8A44 /* qiushi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qiushi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13C8434915E47EEC000B8A44 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		13C8434B15E47EEC000B8A44 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -575,6 +591,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1313DA8915EF0012002ACBB2 /* SVStatusHUD */ = {
+			isa = PBXGroup;
+			children = (
+				1313DA8A15EF0012002ACBB2 /* SVStatusHUD.h */,
+				1313DA8B15EF0012002ACBB2 /* SVStatusHUD.m */,
+			);
+			path = SVStatusHUD;
+			sourceTree = "<group>";
+		};
+		1313DAA015EF3281002ACBB2 /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				1313DAA115EF3281002ACBB2 /* CustomNavigationBar.h */,
+				1313DAA215EF3281002ACBB2 /* CustomNavigationBar.m */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
 		13C8433A15E47EEC000B8A44 = {
 			isa = PBXGroup;
 			children = (
@@ -649,6 +683,7 @@
 			children = (
 				13C843E815E489E8000B8A44 /* images */,
 				13C8442615E489E8000B8A44 /* wryh.ttf */,
+				1313DA8D15EF0188002ACBB2 /* shake.wav */,
 			);
 			name = Resource;
 			path = qiushi/Resource;
@@ -657,6 +692,8 @@
 		13C843E815E489E8000B8A44 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				1313DAA415EF335C002ACBB2 /* navi_background@2x.png */,
+				1313DA9715EF0CC2002ACBB2 /* icon_shake@2x.png */,
 				13C843E915E489E8000B8A44 /* block_background.png */,
 				13C843EA15E489E8000B8A44 /* block_center_background.png */,
 				13C843EB15E489E8000B8A44 /* block_foot_background.png */,
@@ -687,6 +724,8 @@
 				13C8440415E489E8000B8A44 /* main_background.png */,
 				13C8440515E489E8000B8A44 /* nav_menu_icon@2x.png */,
 				13C8440615E489E8000B8A44 /* pulish_bg.png */,
+				1313DA8F15EF0542002ACBB2 /* wifi.png */,
+				1313DA9015EF0542002ACBB2 /* wifi@2x.png */,
 				13C8440715E489E8000B8A44 /* QuadCurveMenu */,
 				13C8442315E489E8000B8A44 /* thumb_avatar.png */,
 				13C8442415E489E8000B8A44 /* thumb_avatar@2x.png */,
@@ -729,6 +768,7 @@
 		13C8446315E489F5000B8A44 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				1313DAA015EF3281002ACBB2 /* CustomView */,
 				13C8446415E489F5000B8A44 /* AboutViewController.h */,
 				13C8446515E489F5000B8A44 /* AboutViewController.m */,
 				13C8446615E489F5000B8A44 /* AboutViewController.xib */,
@@ -764,6 +804,7 @@
 		13C845E315E48AFE000B8A44 /* Frame */ = {
 			isa = PBXGroup;
 			children = (
+				1313DA8915EF0012002ACBB2 /* SVStatusHUD */,
 				13C847BA15E4F96A000B8A44 /* ShareService */,
 				13C8476D15E4E152000B8A44 /* EGOImageLoading */,
 				13C8473A15E48D86000B8A44 /* Utils */,
@@ -1431,6 +1472,11 @@
 				13C8484B15E4F96B000B8A44 /* forward_tencent.png in Resources */,
 				13C8484C15E4F96B000B8A44 /* forward_tencent_active.png in Resources */,
 				13C8485F15E50778000B8A44 /* Icon@2x.png in Resources */,
+				1313DA8E15EF0188002ACBB2 /* shake.wav in Resources */,
+				1313DA9115EF0542002ACBB2 /* wifi.png in Resources */,
+				1313DA9215EF0542002ACBB2 /* wifi@2x.png in Resources */,
+				1313DA9815EF0CC2002ACBB2 /* icon_shake@2x.png in Resources */,
+				1313DAA515EF335C002ACBB2 /* navi_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1529,6 +1575,8 @@
 				13C8485115E4F96B000B8A44 /* SHSAuthorizationController.m in Sources */,
 				13C8485215E4F96B000B8A44 /* SHSMoreViewController.m in Sources */,
 				13C8485315E4F96B000B8A44 /* SHSShareViewController.m in Sources */,
+				1313DA8C15EF0012002ACBB2 /* SVStatusHUD.m in Sources */,
+				1313DAA315EF3281002ACBB2 /* CustomNavigationBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

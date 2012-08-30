@@ -15,9 +15,10 @@
     NSMutableArray *_items;
     
     DDMenuController *_menuController;
+    UINavigationController *_navController;
 }
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *items;
-
+@property (nonatomic, retain) UINavigationController *navController;
 @end

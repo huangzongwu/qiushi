@@ -18,6 +18,7 @@
 
 @synthesize tableView=_tableView;
 @synthesize items = _items;
+@synthesize navController = _navController;
 
 - (id)init {
     if ((self = [super init])) {

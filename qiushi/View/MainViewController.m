@@ -13,6 +13,7 @@
 
 
 #import "ContentViewController.h"
+#import "SVStatusHUD.h"
 
 
 #define FTop      101
@@ -53,6 +54,11 @@
     [super viewDidLoad];
     
     
+    //初始化 摇一摇刷新
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"shake" ofType:@"wav"];
+	AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &soundID);
+    
+
     
     //设置糗事类型
     if (!_typeQiuShi) {
@@ -95,7 +101,7 @@
     self.m_contentView = [[ContentViewController alloc]initWithNibName:@"ContentViewController" bundle:nil];
     [m_contentView.view setFrame:CGRectMake(0, 0, kDeviceWidth, self.view.frame.size.height)];
     [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
-    [self.view addSubview:m_contentView.view];
+//    [self.view addSubview:m_contentView.view];
     
 
 //    NSString *astring01 = @"1.0";
@@ -110,24 +116,34 @@
 
 -(void)segmentAction:(UISegmentedControl *)segment
 {
+    //tttttttttttttttttttttttt
+//    [SVStatusHUD showWithImage:[UIImage imageNamed:@"icon_shake.png"] status:@"摇动刷新哦，亲~~"];
+    
+    
+        //tttttttttttttttttttttttt
+    
     if(segment.selectedSegmentIndex == 0)
-    {
-        [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:QiuShiTimeRandom];
+    {   _timeType = QiuShiTimeRandom;
+        
         
     }
     else if(segment.selectedSegmentIndex == 1)
     {
-        [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:QiuShiTimeDay];
+        _timeType = QiuShiTimeDay;
+        
     }
     else if (segment.selectedSegmentIndex == 2)
     {
-        [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:QiuShiTimeWeek];
+        _timeType = QiuShiTimeWeek;
+        
     }
     else if (segment.selectedSegmentIndex == 3)
     {
-        [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:QiuShiTimeMonth];
+        _timeType = QiuShiTimeMonth;
+       
     }
     
+    [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
     
     
 }
@@ -166,6 +182,40 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
+
+
+//摇一摇 的准备
+-(BOOL)canBecomeFirstResponder{
+    return YES;
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    [self resignFirstResponder];
+    [super viewWillDisappear:animated];
+}
+
+//摇动后 
+-(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
+    
+    DLog(@"UIEventSubType : %d",motion);
+    if(motion==UIEventSubtypeMotionShake)
+    {
+                
+        AudioServicesPlaySystemSound (soundID);
+        
+        [SVStatusHUD showWithImage:[UIImage imageNamed:@"icon_shake.png"] status:@"摇动刷新哦，亲~~"];
+        //刷新 数据
+        [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
+        
+    }
+    
+}
+
 
 
 #ifdef _FOR_DEBUG_

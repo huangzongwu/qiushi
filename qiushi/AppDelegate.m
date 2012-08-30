@@ -12,6 +12,7 @@
 #import "DDMenuController.h"
 
 #import "LeftController.h"
+#import "CustomNavigationBar.h"
 //#import "RightController.h"
 
 //#import "ViewController.h"
@@ -46,6 +47,10 @@
 //    [self.window makeKeyAndVisible];
 //    return YES;
     
+    
+    //想摇就写在这～～～
+    application.applicationSupportsShakeToEdit=YES;
+    
     //默认显示广告
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
     [ud setObject:[NSNumber numberWithBool:YES]  forKey:@"showAD"];
@@ -54,6 +59,8 @@
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    
+    
     
     
     
@@ -73,6 +80,22 @@
     self.window.rootViewController = _menuController;
     
     self.window.backgroundColor = [UIColor whiteColor];
+    
+    
+    [self.navController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navi_background.png"]];
+    
+    //判断设备的版本
+#if __IPHONE_OS_VERSION_MAX_ALLOWED >= 50000
+    if ([self.navController.navigationBar respondsToSelector:@selector(setBackgroundImage:forBarMetrics:)]){
+        //ios5 新特性
+        [self.navController.navigationBar setBackgroundImage:[UIImage imageNamed:@"navi_background.png"] forBarMetrics:UIBarMetricsDefault];
+        [[NSUserDefaults standardUserDefaults] setObject:@">=5" forKey:@"version"];
+    }else {
+        [[NSUserDefaults standardUserDefaults] setObject:@"<5" forKey:@"version"];
+    }
+#endif
+    
+    
     [self.window makeKeyAndVisible];
     return YES;
     

@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+#import <AudioToolbox/AudioToolbox.h>
+
 @class ContentViewController;
 
 
@@ -20,6 +22,9 @@
     
     UISegmentedControl *_timeSegment;
     UIBarButtonItem* _timeItem;
+    
+    
+    SystemSoundID soundID;
 }
 
 @property (nonatomic,retain) ContentViewController *m_contentView;
