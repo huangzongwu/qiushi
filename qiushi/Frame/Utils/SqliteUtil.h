@@ -20,6 +20,6 @@
 
 + (void)initDb;
 + (void)saveDb:(QiuShi*)qs;
-//+ (NSMutableArray*)queryDb;
-
++ (NSMutableArray*)queryDb;
++ (NSString*)processString:(NSString*)str;
 @end

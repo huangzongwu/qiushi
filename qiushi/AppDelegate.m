@@ -72,6 +72,9 @@
     
     
     _leftController = [[LeftController alloc] init];
+    _leftController.navController = _navController;
+    _leftController.mainViewController = _mainController;
+    
     _menuController.leftViewController = _leftController;
     
     //    RightController *rightController = [[RightController alloc] init];

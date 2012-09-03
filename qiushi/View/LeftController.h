@@ -16,9 +16,11 @@
     
     DDMenuController *_menuController;
     UINavigationController *_navController;
+    MainViewController *_mainViewController;
 }
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *items;
 @property (nonatomic, retain) UINavigationController *navController;
+@property (nonatomic, retain) MainViewController *mainViewController;
 @end

@@ -35,6 +35,7 @@ UITableViewDelegate
 @synthesize page = _page;
 @synthesize asiRequest = _asiRequest;
 @synthesize Qiutype,QiuTime;
+@synthesize cacheArray = _cacheArray;
 
 
 
@@ -74,10 +75,30 @@ UITableViewDelegate
     
 //    _asiRequest = nil;
     
-    if (self.page == 0) {
+    
+    
+    
+    _cacheArray = [SqliteUtil queryDb];
+    if (_cacheArray != nil) {
+        for (QiuShi *qiushi in _cacheArray)
+        {
+            QiuShi *qs = [[QiuShi alloc]initWithQiushi:qiushi];
+            
+                        
+            
+            [self.list addObject:qs];
+            
+            DLog(@"%@",[self.list description]);
+            [self.tableView reloadData];
+        }
 
-        [self.tableView launchRefreshing];
     }
+    
+    
+//    if (self.page == 0) {
+//
+//        [self.tableView launchRefreshing];
+//    }
 }
 
 - (void)viewDidUnload

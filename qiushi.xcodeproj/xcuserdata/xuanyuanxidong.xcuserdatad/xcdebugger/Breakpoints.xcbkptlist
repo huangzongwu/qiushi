@@ -7,39 +7,26 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "qiushi/View/ContentViewController.m"
-         timestampString = "367408014.620094"
+         filePath = "qiushi/View/QiuShi.m"
+         timestampString = "368348414.932856"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "263"
-         endingLineNumber = "263"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "qiushi/Frame/ShareService/UI/SHSShareViewController.m"
-         timestampString = "367333619.919088"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "358"
-         endingLineNumber = "358"
-         landmarkName = "-ShareKitView:clickedButtonAtIndex:"
+         startingLineNumber = "27"
+         endingLineNumber = "27"
+         landmarkName = "-initWithDictionary:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "qiushi/View/MainViewController.m"
-         timestampString = "367986013.100726"
+         filePath = "qiushi/Frame/Utils/SqliteUtil.m"
+         timestampString = "368358298.438872"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "58"
-         endingLineNumber = "58"
-         landmarkName = "-viewDidLoad"
+         startingLineNumber = "125"
+         endingLineNumber = "125"
+         landmarkName = "+queryDb"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

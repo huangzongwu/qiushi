@@ -12,6 +12,7 @@
 #import "AppDelegate.h"
 #import "AboutViewController.h"
 #import "SetViewController.h"
+#import "PurchaseInViewController.h"
 
 
 @implementation LeftController
@@ -19,6 +20,7 @@
 @synthesize tableView=_tableView;
 @synthesize items = _items;
 @synthesize navController = _navController;
+@synthesize mainViewController = _mainViewController;
 
 - (id)init {
     if ((self = [super init])) {
@@ -95,12 +97,12 @@
     NSArray *menus = [NSArray arrayWithObjects:cameraMenuItem, peopleMenuItem,placeMenuItem,
                       musicMenuItem, thoughtMenuItem, sleepMenuItem,
                       nil];
-
+    
     QuadCurveMenu *menu = [[QuadCurveMenu alloc] initWithFrame:self.view.bounds menus:menus];
     menu.delegate = self;
-//    [self.view addSubview:menu];
- 
-
+    [self.view addSubview:menu];
+    
+    
 }
 
 - (void)viewDidUnload
@@ -172,16 +174,13 @@
         if ([str isEqualToString:@"(null)"]||[str isEqualToString:@"1001"]) {
             [_menuController showRootController:YES];
         }else{
-            MainViewController *controller = [[MainViewController alloc] init];
-            if (indexPath.row == 0) {
-                controller.title = @"";
-            }else{
-                controller.title = [NSString stringWithFormat:@"%@", [self.items objectAtIndex:indexPath.row]];
-            }
-            controller.typeQiuShi = 1001 + indexPath.row ; //
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
             
-            [_menuController setRootController:navController animated:YES];
+            [self.navController popToRootViewControllerAnimated:YES];
+            self.mainViewController.title = @"";
+            
+            self.mainViewController.typeQiuShi = 1001 + indexPath.row ; //
+            [self.mainViewController refreshDate];
+            [_menuController showRootController:YES];
             
         }
     }else if (indexPath.row == 1){
@@ -189,44 +188,36 @@
         if ([str isEqualToString:@"1002"]) {
             [_menuController showRootController:YES];
         }else{
-            MainViewController *controller = [[MainViewController alloc] init];
-            if (indexPath.row == 0) {
-                controller.title = @"";
-            }else{
-                controller.title = [NSString stringWithFormat:@"%@", [self.items objectAtIndex:indexPath.row]];
-            }
-            controller.typeQiuShi = 1001 + indexPath.row ; //
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
+            [self.navController popToRootViewControllerAnimated:YES];
+            self.mainViewController.title = [NSString stringWithFormat:@"%@", [self.items objectAtIndex:indexPath.row]];
             
-            [_menuController setRootController:navController animated:YES];
-           
+            self.mainViewController.typeQiuShi = 1001 + indexPath.row ; //
+            [self.mainViewController refreshDate];
+            [_menuController showRootController:YES];
+            
         }
         
     }else if (indexPath.row == 2){
         if ([str isEqualToString:@"1003"]) {
             [_menuController showRootController:YES];
         }else{
-            MainViewController *controller = [[MainViewController alloc] init];
-            if (indexPath.row == 0) {
-                controller.title = @"";
-            }else{
-                controller.title = [NSString stringWithFormat:@"%@", [self.items objectAtIndex:indexPath.row]];
-            }
-            controller.typeQiuShi = 1001 + indexPath.row ; //
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:controller];
+            [self.navController popToRootViewControllerAnimated:YES];
+            self.mainViewController.title = [NSString stringWithFormat:@"%@", [self.items objectAtIndex:indexPath.row]];
             
-            [_menuController setRootController:navController animated:YES];
-           
+            self.mainViewController.typeQiuShi = 1001 + indexPath.row ; //
+            [self.mainViewController refreshDate];
+            [_menuController showRootController:YES];
+            
+            
         }
     }else if (indexPath.row == 3){
         if ([str isEqualToString:@"1004"]) {
             [_menuController showRootController:YES];
         }else{
             AboutViewController *about = [[AboutViewController alloc]initWithNibName:@"AboutViewController" bundle:nil];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:about];
-            
-            [_menuController setRootController:navController animated:YES];
-           
+            [self.navController pushViewController:about animated:YES];
+
+            [_menuController showRootController:YES];
             
         }
     }else if (indexPath.row == 4){
@@ -234,10 +225,9 @@
             [_menuController showRootController:YES];
         }else{
             SetViewController *set = [[SetViewController alloc]initWithNibName:@"SetViewController" bundle:nil];
-            UINavigationController *navController = [[UINavigationController alloc] initWithRootViewController:set];
             
-            [_menuController setRootController:navController animated:YES];
-                       
+            [self.navController pushViewController:set animated:YES];
+            [_menuController showRootController:YES];
             
         }
     }
@@ -254,6 +244,15 @@
 - (void)quadCurveMenu:(QuadCurveMenu *)menu didSelectIndex:(NSInteger)idx
 {
     NSLog(@"Select the index : %d",idx);
+    if (idx == 0)
+    {
+        //程序内购买
+//        PurchaseInViewController *purchase = [[PurchaseInViewController alloc]initWithNibName:@"PurchaseInViewController" bundle:nil];
+//        [self.navController pushViewController:purchase animated:YES];
+
+        
+    }
+     [_menuController showRootController:YES];
 }
 
 

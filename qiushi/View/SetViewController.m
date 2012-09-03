@@ -8,8 +8,11 @@
 
 #import "SetViewController.h"
 
+#import "DDMenuController.h"
 @interface SetViewController ()
-
+{
+    UIBarButtonItem *leftMenuBtn;
+}
 @end
 
 @implementation SetViewController
@@ -18,6 +21,7 @@
 @synthesize subItems = _subItems;
 @synthesize mTable = _mTable;
 @synthesize adSwitch = _adSwitch;
+
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -33,6 +37,33 @@
 {
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
+    
+    self.navigationItem.hidesBackButton = YES;
+    
+    
+    
+    UIImage *image = [UIImage imageNamed:@"nav_menu_icon.png"];
+    UIImage *imagef = [UIImage imageNamed:@"nav_menu_icon_f.png"];
+    CGRect backframe= CGRectMake(0, 0, image.size.width, image.size.height);
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:backframe];
+    [btn setBackgroundImage:image forState:UIControlStateNormal];
+    [btn setBackgroundImage:imagef forState:UIControlStateHighlighted];
+    [btn addTarget:self action:@selector(showLeft:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem* someBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.leftBarButtonItem = someBarButtonItem;
+    
+    
+//    leftMenuBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_menu_icon.png"]
+//                                                               style:UIBarButtonItemStyleBordered
+//                                                              target:self
+//                                                              action:@selector(showLeft:)];
+//
+//    self.navigationItem.leftBarButtonItem = leftMenuBtn;
+    
+   
     
     //设置背景颜色
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"main_background.png"]]];
@@ -76,6 +107,14 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+
+- (void)showLeft:(id)seder
+{
+    DDMenuController *menuController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
+    [menuController showLeftController:YES];
+    
+    
+}
 
 
 #pragma mark - TableView*
@@ -149,6 +188,9 @@
     
     
 }
+
+
+
 
 
 #ifdef _FOR_DEBUG_

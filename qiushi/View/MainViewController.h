@@ -34,4 +34,5 @@
 @property (nonatomic, retain) UISegmentedControl *timeSegment;
 @property (nonatomic, retain) UIBarButtonItem *timeItem;
 
+- (void)refreshDate;
 @end

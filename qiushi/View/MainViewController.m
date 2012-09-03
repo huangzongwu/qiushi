@@ -35,6 +35,7 @@
 @synthesize timeSegment = _timeSegment;
 @synthesize timeItem = _timeItem;
 
+#pragma mark - view life cycle
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -101,18 +102,51 @@
     self.m_contentView = [[ContentViewController alloc]initWithNibName:@"ContentViewController" bundle:nil];
     [m_contentView.view setFrame:CGRectMake(0, 0, kDeviceWidth, self.view.frame.size.height)];
     [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
-//    [self.view addSubview:m_contentView.view];
+    [self.view addSubview:m_contentView.view];
     
 
-//    NSString *astring01 = @"1.0";
-//    NSString *astring02 = @"0.9.120821";
-//    BOOL result = [astring01 compare:astring02] == NSOrderedAscending;
-//    NSLog(@"result:%d",result);
-//    //NSOrderedAscending 判断两对象值的大小(按字母顺序进行比较，astring02大于astring01为真)
+
     
     
     
 }
+
+- (void)viewDidUnload
+{
+    DLog(@"viewDidUnload");
+    
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+
+//摇一摇 的准备
+-(BOOL)canBecomeFirstResponder{
+    return YES;
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    DLog("viewDidAppear");
+    [super viewDidAppear:animated];
+    [self becomeFirstResponder];
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    DLog("viewWillDisappear");
+    [self resignFirstResponder];
+    [super viewWillDisappear:animated];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    DLog("viewWillAppear");
+    [super viewWillAppear:animated];
+}
+
+
+#pragma mark - action
+
 
 -(void)segmentAction:(UISegmentedControl *)segment
 {
@@ -148,6 +182,8 @@
     
 }
 
+
+#pragma mark -  引导用户去 评分
 - (void) pingFen
 {
     NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
@@ -176,28 +212,10 @@
     }
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
 
 
-//摇一摇 的准备
--(BOOL)canBecomeFirstResponder{
-    return YES;
-}
--(void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self becomeFirstResponder];
-}
--(void)viewWillDisappear:(BOOL)animated
-{
-    [self resignFirstResponder];
-    [super viewWillDisappear:animated];
-}
+
+
 
 //摇动后 
 -(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
@@ -210,12 +228,22 @@
         
         [SVStatusHUD showWithImage:[UIImage imageNamed:@"icon_shake.png"] status:@"摇动刷新哦，亲~~"];
         //刷新 数据
-        [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
+        [self refreshDate];
         
     }
     
 }
 
+#pragma mark - 刷新数据
+- (void)refreshDate
+{
+    if (_typeQiuShi == QiuShiTypeTop) {
+        self.navigationItem.rightBarButtonItem = _timeItem;
+    }else
+        self.navigationItem.rightBarButtonItem = nil;
+    //刷新 数据
+    [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
+}
 
 
 #ifdef _FOR_DEBUG_

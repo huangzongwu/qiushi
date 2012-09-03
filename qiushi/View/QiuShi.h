@@ -48,5 +48,6 @@
 @property (nonatomic,copy) NSString *anchor;
 @property (nonatomic,copy) NSString *fbTime;
 - (id)initWithDictionary:(NSDictionary *)dictionary;
+- (id)initWithQiushi:(QiuShi *)qiushi;
 
 @end

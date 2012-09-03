@@ -14,6 +14,16 @@
 		1313DA9815EF0CC2002ACBB2 /* icon_shake@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1313DA9715EF0CC2002ACBB2 /* icon_shake@2x.png */; };
 		1313DAA315EF3281002ACBB2 /* CustomNavigationBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 1313DAA215EF3281002ACBB2 /* CustomNavigationBar.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		1313DAA515EF335C002ACBB2 /* navi_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 1313DAA415EF335C002ACBB2 /* navi_background@2x.png */; };
+		1313DAB715F054B5002ACBB2 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 1313DAB615F054B5002ACBB2 /* README.md */; };
+		1313DABC15F089DF002ACBB2 /* PurchaseInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1313DABA15F089DF002ACBB2 /* PurchaseInViewController.m */; };
+		1313DABD15F089DF002ACBB2 /* PurchaseInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1313DABB15F089DF002ACBB2 /* PurchaseInViewController.xib */; };
+		1313DABF15F08A09002ACBB2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1313DABE15F08A09002ACBB2 /* StoreKit.framework */; };
+		13C3E9F215F490C30001E3A1 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C3E9E715F490C30001E3A1 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		13C3E9F315F490C30001E3A1 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C3E9E915F490C30001E3A1 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		13C3E9F415F490C30001E3A1 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C3E9EB15F490C30001E3A1 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		13C3E9F515F490C30001E3A1 /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C3E9ED15F490C30001E3A1 /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		13C3E9F615F490C30001E3A1 /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C3E9EF15F490C30001E3A1 /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		13C3E9F715F490C30001E3A1 /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C3E9F115F490C30001E3A1 /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13C8434A15E47EEC000B8A44 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8434915E47EEC000B8A44 /* UIKit.framework */; };
 		13C8434C15E47EEC000B8A44 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8434B15E47EEC000B8A44 /* Foundation.framework */; };
 		13C8434E15E47EEC000B8A44 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 13C8434D15E47EEC000B8A44 /* CoreGraphics.framework */; };
@@ -223,6 +233,9 @@
 		13C8485215E4F96B000B8A44 /* SHSMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C8481E15E4F96B000B8A44 /* SHSMoreViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13C8485315E4F96B000B8A44 /* SHSShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C8482015E4F96B000B8A44 /* SHSShareViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13C8485F15E50778000B8A44 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13C8485E15E50778000B8A44 /* Icon@2x.png */; };
+		13F4C73815F1E9E900DD8451 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F4C73615F1E9E900DD8451 /* iVersion.m */; };
+		13F4C74715F1FFB500DD8451 /* iVersion.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13F4C74615F1FFB500DD8451 /* iVersion.bundle */; };
+		13F4C74D15F2164600DD8451 /* nav_menu_icon_f@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F4C74C15F2164600DD8451 /* nav_menu_icon_f@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -235,6 +248,24 @@
 		1313DAA115EF3281002ACBB2 /* CustomNavigationBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomNavigationBar.h; sourceTree = "<group>"; };
 		1313DAA215EF3281002ACBB2 /* CustomNavigationBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomNavigationBar.m; sourceTree = "<group>"; };
 		1313DAA415EF335C002ACBB2 /* navi_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navi_background@2x.png"; sourceTree = "<group>"; };
+		1313DAB615F054B5002ACBB2 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		1313DAB915F089DF002ACBB2 /* PurchaseInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PurchaseInViewController.h; sourceTree = "<group>"; };
+		1313DABA15F089DF002ACBB2 /* PurchaseInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseInViewController.m; sourceTree = "<group>"; };
+		1313DABB15F089DF002ACBB2 /* PurchaseInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseInViewController.xib; sourceTree = "<group>"; };
+		1313DABE15F08A09002ACBB2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		13C3E9E515F490C30001E3A1 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		13C3E9E615F490C30001E3A1 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		13C3E9E715F490C30001E3A1 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		13C3E9E815F490C30001E3A1 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		13C3E9E915F490C30001E3A1 /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		13C3E9EA15F490C30001E3A1 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		13C3E9EB15F490C30001E3A1 /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		13C3E9EC15F490C30001E3A1 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		13C3E9ED15F490C30001E3A1 /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		13C3E9EE15F490C30001E3A1 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		13C3E9EF15F490C30001E3A1 /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		13C3E9F015F490C30001E3A1 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		13C3E9F115F490C30001E3A1 /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
 		13C8434515E47EEC000B8A44 /* qiushi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = qiushi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13C8434915E47EEC000B8A44 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		13C8434B15E47EEC000B8A44 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -564,6 +595,10 @@
 		13C8481F15E4F96B000B8A44 /* SHSShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHSShareViewController.h; sourceTree = "<group>"; };
 		13C8482015E4F96B000B8A44 /* SHSShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHSShareViewController.m; sourceTree = "<group>"; };
 		13C8485E15E50778000B8A44 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		13F4C73515F1E9E900DD8451 /* iVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iVersion.h; sourceTree = "<group>"; };
+		13F4C73615F1E9E900DD8451 /* iVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iVersion.m; sourceTree = "<group>"; };
+		13F4C74615F1FFB500DD8451 /* iVersion.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iVersion.bundle; sourceTree = "<group>"; };
+		13F4C74C15F2164600DD8451 /* nav_menu_icon_f@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_menu_icon_f@2x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -571,6 +606,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1313DABF15F08A09002ACBB2 /* StoreKit.framework in Frameworks */,
 				13C843AA15E48116000B8A44 /* CFNetwork.framework in Frameworks */,
 				13C843A815E4810F000B8A44 /* QuartzCore.framework in Frameworks */,
 				13C843A615E48108000B8A44 /* SystemConfiguration.framework in Frameworks */,
@@ -609,9 +645,30 @@
 			path = CustomView;
 			sourceTree = "<group>";
 		};
+		13C3E9E415F490C30001E3A1 /* SBJson */ = {
+			isa = PBXGroup;
+			children = (
+				13C3E9E515F490C30001E3A1 /* JSON.h */,
+				13C3E9E615F490C30001E3A1 /* NSObject+SBJSON.h */,
+				13C3E9E715F490C30001E3A1 /* NSObject+SBJSON.m */,
+				13C3E9E815F490C30001E3A1 /* NSString+SBJSON.h */,
+				13C3E9E915F490C30001E3A1 /* NSString+SBJSON.m */,
+				13C3E9EA15F490C30001E3A1 /* SBJSON.h */,
+				13C3E9EB15F490C30001E3A1 /* SBJSON.m */,
+				13C3E9EC15F490C30001E3A1 /* SBJsonBase.h */,
+				13C3E9ED15F490C30001E3A1 /* SBJsonBase.m */,
+				13C3E9EE15F490C30001E3A1 /* SBJsonParser.h */,
+				13C3E9EF15F490C30001E3A1 /* SBJsonParser.m */,
+				13C3E9F015F490C30001E3A1 /* SBJsonWriter.h */,
+				13C3E9F115F490C30001E3A1 /* SBJsonWriter.m */,
+			);
+			path = SBJson;
+			sourceTree = "<group>";
+		};
 		13C8433A15E47EEC000B8A44 = {
 			isa = PBXGroup;
 			children = (
+				1313DAB615F054B5002ACBB2 /* README.md */,
 				13C845E315E48AFE000B8A44 /* Frame */,
 				13C8436915E47F39000B8A44 /* Default.png */,
 				13C8436A15E47F39000B8A44 /* Default@2x.png */,
@@ -636,6 +693,7 @@
 		13C8434815E47EEC000B8A44 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				1313DABE15F08A09002ACBB2 /* StoreKit.framework */,
 				13C843A915E48116000B8A44 /* CFNetwork.framework */,
 				13C843A715E4810F000B8A44 /* QuartzCore.framework */,
 				13C843A515E48108000B8A44 /* SystemConfiguration.framework */,
@@ -692,6 +750,7 @@
 		13C843E815E489E8000B8A44 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				13F4C74C15F2164600DD8451 /* nav_menu_icon_f@2x.png */,
 				1313DAA415EF335C002ACBB2 /* navi_background@2x.png */,
 				1313DA9715EF0CC2002ACBB2 /* icon_shake@2x.png */,
 				13C843E915E489E8000B8A44 /* block_background.png */,
@@ -796,6 +855,9 @@
 				13C8447C15E489F5000B8A44 /* SetViewController.h */,
 				13C8447D15E489F5000B8A44 /* SetViewController.m */,
 				13C8447E15E489F5000B8A44 /* SetViewController.xib */,
+				1313DAB915F089DF002ACBB2 /* PurchaseInViewController.h */,
+				1313DABA15F089DF002ACBB2 /* PurchaseInViewController.m */,
+				1313DABB15F089DF002ACBB2 /* PurchaseInViewController.xib */,
 			);
 			name = View;
 			path = qiushi/View;
@@ -804,6 +866,8 @@
 		13C845E315E48AFE000B8A44 /* Frame */ = {
 			isa = PBXGroup;
 			children = (
+				13C3E9E415F490C30001E3A1 /* SBJson */,
+				13F4C73315F1E9E900DD8451 /* iVersion */,
 				1313DA8915EF0012002ACBB2 /* SVStatusHUD */,
 				13C847BA15E4F96A000B8A44 /* ShareService */,
 				13C8476D15E4E152000B8A44 /* EGOImageLoading */,
@@ -1314,6 +1378,16 @@
 			path = LoadingView;
 			sourceTree = "<group>";
 		};
+		13F4C73315F1E9E900DD8451 /* iVersion */ = {
+			isa = PBXGroup;
+			children = (
+				13F4C74615F1FFB500DD8451 /* iVersion.bundle */,
+				13F4C73515F1E9E900DD8451 /* iVersion.h */,
+				13F4C73615F1E9E900DD8451 /* iVersion.m */,
+			);
+			path = iVersion;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1477,6 +1551,10 @@
 				1313DA9215EF0542002ACBB2 /* wifi@2x.png in Resources */,
 				1313DA9815EF0CC2002ACBB2 /* icon_shake@2x.png in Resources */,
 				1313DAA515EF335C002ACBB2 /* navi_background@2x.png in Resources */,
+				1313DAB715F054B5002ACBB2 /* README.md in Resources */,
+				1313DABD15F089DF002ACBB2 /* PurchaseInViewController.xib in Resources */,
+				13F4C74715F1FFB500DD8451 /* iVersion.bundle in Resources */,
+				13F4C74D15F2164600DD8451 /* nav_menu_icon_f@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1577,6 +1655,14 @@
 				13C8485315E4F96B000B8A44 /* SHSShareViewController.m in Sources */,
 				1313DA8C15EF0012002ACBB2 /* SVStatusHUD.m in Sources */,
 				1313DAA315EF3281002ACBB2 /* CustomNavigationBar.m in Sources */,
+				1313DABC15F089DF002ACBB2 /* PurchaseInViewController.m in Sources */,
+				13F4C73815F1E9E900DD8451 /* iVersion.m in Sources */,
+				13C3E9F215F490C30001E3A1 /* NSObject+SBJSON.m in Sources */,
+				13C3E9F315F490C30001E3A1 /* NSString+SBJSON.m in Sources */,
+				13C3E9F415F490C30001E3A1 /* SBJSON.m in Sources */,
+				13C3E9F515F490C30001E3A1 /* SBJsonBase.m in Sources */,
+				13C3E9F615F490C30001E3A1 /* SBJsonParser.m in Sources */,
+				13C3E9F715F490C30001E3A1 /* SBJsonWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1674,7 +1760,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1692,7 +1778,7 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				RUN_CLANG_STATIC_ANALYZER = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;

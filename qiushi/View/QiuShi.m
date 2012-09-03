@@ -24,6 +24,8 @@
 {
     if (self = [super init])
     {
+//        DLog(@"%@",[dictionary description]);
+        
         self.tag = [dictionary objectForKey:@"tag"];
         self.qiushiID = [dictionary objectForKey:@"id"];
         self.content = [dictionary objectForKey:@"content"];
@@ -51,6 +53,16 @@
             NSDictionary *user = [NSDictionary dictionaryWithDictionary:[dictionary objectForKey:@"user"]];
             self.anchor = [user objectForKey:@"login"];
         }
+    }
+    return self;
+}
+
+
+- (id)initWithQiushi:(QiuShi *)qiushi
+{
+    if (self = [super init])
+    {
+        self = qiushi;
     }
     return self;
 }

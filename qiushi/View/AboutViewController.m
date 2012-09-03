@@ -8,7 +8,11 @@
 
 #import "AboutViewController.h"
 
+#import "DDMenuController.h"
 @interface AboutViewController ()
+{
+    
+}
 
 @end
 
@@ -37,6 +41,21 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.navigationItem.hidesBackButton = YES;
+    
+    
+    UIImage *image = [UIImage imageNamed:@"nav_menu_icon.png"];
+    UIImage *imagef = [UIImage imageNamed:@"nav_menu_icon_f.png"];
+    CGRect backframe= CGRectMake(0, 0, image.size.width, image.size.height);
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:backframe];
+    [btn setBackgroundImage:image forState:UIControlStateNormal];
+    [btn setBackgroundImage:imagef forState:UIControlStateHighlighted];
+    [btn addTarget:self action:@selector(showLeft:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem* someBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.leftBarButtonItem = someBarButtonItem;
     
     //设置背景颜色
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"main_background.png"]]];
@@ -97,7 +116,13 @@
 }
 
 
+- (void)showLeft:(id)seder
+{
+    DDMenuController *menuController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
+    [menuController showLeftController:YES];
+    
 
+}
 
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
