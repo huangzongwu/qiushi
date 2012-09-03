@@ -13,6 +13,7 @@
 #import "QiuShi.h"
 #import "GADBannerView.h"
 #import "SqliteUtil.h"
+#import "SVStatusHUD.h"
 
 @interface ContentViewController () <
 PullingRefreshTableViewDelegate,
@@ -80,6 +81,7 @@ UITableViewDelegate
     
     _cacheArray = [SqliteUtil queryDb];
     if (_cacheArray != nil) {
+        [self.list removeAllObjects];
         for (QiuShi *qiushi in _cacheArray)
         {
             QiuShi *qs = [[QiuShi alloc]initWithQiushi:qiushi];
@@ -88,17 +90,20 @@ UITableViewDelegate
             
             [self.list addObject:qs];
             
-            DLog(@"%@",[self.list description]);
-            [self.tableView reloadData];
+            
         }
+//        DLog(@"%@",[self.list description]);
+        [self.tableView tableViewDidFinishedLoading];
+        self.tableView.reachedTheEnd  = NO;
+        [self.tableView reloadData];
 
     }
     
     
-//    if (self.page == 0) {
-//
-//        [self.tableView launchRefreshing];
-//    }
+    if (self.page == 0) {
+
+        [self.tableView launchRefreshing];
+    }
 }
 
 - (void)viewDidUnload
@@ -187,6 +192,7 @@ UITableViewDelegate
     NSLog(@"error:%@",error);
     
     
+    [SVStatusHUD showWithImage:[UIImage imageNamed:@"wifi.png"] status:[NSString stringWithFormat:@"%@=====\n%@",responseString,error]];
     
 }
 
@@ -200,6 +206,7 @@ UITableViewDelegate
         self.page = 1;
         self.refreshing = NO;
         [self.list removeAllObjects];
+        [SqliteUtil initDb];
     }
     NSData *data =[request responseData];
     NSMutableDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:data error:nil];

@@ -22,4 +22,6 @@
 + (void)saveDb:(QiuShi*)qs;
 + (NSMutableArray*)queryDb;
 + (NSString*)processString:(NSString*)str;
+
++ (BOOL)delAll;
 @end

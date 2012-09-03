@@ -156,6 +156,8 @@
     
         //tttttttttttttttttttttttt
     
+    [SqliteUtil delAll];
+    
     if(segment.selectedSegmentIndex == 0)
     {   _timeType = QiuShiTimeRandom;
         
