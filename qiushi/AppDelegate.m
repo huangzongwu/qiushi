@@ -13,6 +13,7 @@
 
 #import "LeftController.h"
 #import "CustomNavigationBar.h"
+#import "MyNavigationController.h"
 //#import "RightController.h"
 
 //#import "ViewController.h"
@@ -27,7 +28,6 @@
 @synthesize mainController = _mainController;
 @synthesize navController = _navController;
 @synthesize leftController = _leftController;
-
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -66,7 +66,7 @@
     
     _mainController = [[MainViewController alloc] init];
     
-    _navController = [[UINavigationController alloc] initWithRootViewController:_mainController];
+    _navController = [[MyNavigationController alloc] initWithRootViewController:_mainController];
     
     _menuController = [[DDMenuController alloc] initWithRootViewController:_navController];
     
@@ -130,5 +130,7 @@
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
+
+
 
 @end

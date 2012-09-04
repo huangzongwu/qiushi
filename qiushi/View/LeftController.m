@@ -13,6 +13,7 @@
 #import "AboutViewController.h"
 #import "SetViewController.h"
 #import "PurchaseInViewController.h"
+#import "MyNavigationController.h"
 
 
 @implementation LeftController

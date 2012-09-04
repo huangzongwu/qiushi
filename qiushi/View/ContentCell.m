@@ -141,7 +141,7 @@
  
     UIFont *font = [UIFont fontWithName:@"微软雅黑" size:14];
     
-    CGSize size;
+    CGSize size = CGSizeMake(0, 0);
     if (type == kTypeMain)
     {
         size = [txtContent.text sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 220) lineBreakMode:UILineBreakModeTailTruncation];

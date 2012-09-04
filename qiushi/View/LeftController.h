@@ -9,18 +9,18 @@
 #import <UIKit/UIKit.h>
 
 #import "QuadCurveMenu.h"
-
+@class MyNavigationController;
 @interface LeftController : UIViewController<QuadCurveMenuDelegate>
 {
     NSMutableArray *_items;
     
     DDMenuController *_menuController;
-    UINavigationController *_navController;
+    MyNavigationController *_navController;
     MainViewController *_mainViewController;
 }
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, retain) NSMutableArray *items;
-@property (nonatomic, retain) UINavigationController *navController;
+@property (nonatomic, retain) MyNavigationController *navController;
 @property (nonatomic, retain) MainViewController *mainViewController;
 @end

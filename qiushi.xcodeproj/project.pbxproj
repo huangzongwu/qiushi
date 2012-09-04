@@ -18,6 +18,11 @@
 		1313DABC15F089DF002ACBB2 /* PurchaseInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1313DABA15F089DF002ACBB2 /* PurchaseInViewController.m */; };
 		1313DABD15F089DF002ACBB2 /* PurchaseInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 1313DABB15F089DF002ACBB2 /* PurchaseInViewController.xib */; };
 		1313DABF15F08A09002ACBB2 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1313DABE15F08A09002ACBB2 /* StoreKit.framework */; };
+		136A2E6215F5ED8700E402D8 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A2E6115F5ED8700E402D8 /* MBProgressHUD.m */; };
+		136A2E6615F5EE7D00E402D8 /* MyProgressHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A2E6515F5EE7D00E402D8 /* MyProgressHud.m */; };
+		136A2E6915F601BB00E402D8 /* MyNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 136A2E6815F601BB00E402D8 /* MyNavigationController.m */; };
+		136A2E6C15F6025500E402D8 /* navi_back_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136A2E6A15F6025500E402D8 /* navi_back_btn@2x.png */; };
+		136A2E6D15F6025500E402D8 /* navi_back_f_btn@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 136A2E6B15F6025500E402D8 /* navi_back_f_btn@2x.png */; };
 		13C3E9F215F490C30001E3A1 /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C3E9E715F490C30001E3A1 /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13C3E9F315F490C30001E3A1 /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C3E9E915F490C30001E3A1 /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13C3E9F415F490C30001E3A1 /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C3E9EB15F490C30001E3A1 /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -253,6 +258,14 @@
 		1313DABA15F089DF002ACBB2 /* PurchaseInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PurchaseInViewController.m; sourceTree = "<group>"; };
 		1313DABB15F089DF002ACBB2 /* PurchaseInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PurchaseInViewController.xib; sourceTree = "<group>"; };
 		1313DABE15F08A09002ACBB2 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
+		136A2E6015F5ED8700E402D8 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		136A2E6115F5ED8700E402D8 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		136A2E6415F5EE7D00E402D8 /* MyProgressHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyProgressHud.h; sourceTree = "<group>"; };
+		136A2E6515F5EE7D00E402D8 /* MyProgressHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyProgressHud.m; sourceTree = "<group>"; };
+		136A2E6715F601BB00E402D8 /* MyNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNavigationController.h; sourceTree = "<group>"; };
+		136A2E6815F601BB00E402D8 /* MyNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNavigationController.m; sourceTree = "<group>"; };
+		136A2E6A15F6025500E402D8 /* navi_back_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navi_back_btn@2x.png"; sourceTree = "<group>"; };
+		136A2E6B15F6025500E402D8 /* navi_back_f_btn@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "navi_back_f_btn@2x.png"; sourceTree = "<group>"; };
 		13C3E9E515F490C30001E3A1 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		13C3E9E615F490C30001E3A1 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		13C3E9E715F490C30001E3A1 /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
@@ -639,10 +652,21 @@
 		1313DAA015EF3281002ACBB2 /* CustomView */ = {
 			isa = PBXGroup;
 			children = (
+				136A2E6715F601BB00E402D8 /* MyNavigationController.h */,
+				136A2E6815F601BB00E402D8 /* MyNavigationController.m */,
 				1313DAA115EF3281002ACBB2 /* CustomNavigationBar.h */,
 				1313DAA215EF3281002ACBB2 /* CustomNavigationBar.m */,
 			);
 			path = CustomView;
+			sourceTree = "<group>";
+		};
+		136A2E5F15F5ED8700E402D8 /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				136A2E6015F5ED8700E402D8 /* MBProgressHUD.h */,
+				136A2E6115F5ED8700E402D8 /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 		13C3E9E415F490C30001E3A1 /* SBJson */ = {
@@ -750,6 +774,8 @@
 		13C843E815E489E8000B8A44 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				136A2E6A15F6025500E402D8 /* navi_back_btn@2x.png */,
+				136A2E6B15F6025500E402D8 /* navi_back_f_btn@2x.png */,
 				13F4C74C15F2164600DD8451 /* nav_menu_icon_f@2x.png */,
 				1313DAA415EF335C002ACBB2 /* navi_background@2x.png */,
 				1313DA9715EF0CC2002ACBB2 /* icon_shake@2x.png */,
@@ -866,6 +892,7 @@
 		13C845E315E48AFE000B8A44 /* Frame */ = {
 			isa = PBXGroup;
 			children = (
+				136A2E5F15F5ED8700E402D8 /* MBProgressHUD */,
 				13C3E9E415F490C30001E3A1 /* SBJson */,
 				13F4C73315F1E9E900DD8451 /* iVersion */,
 				1313DA8915EF0012002ACBB2 /* SVStatusHUD */,
@@ -1054,6 +1081,8 @@
 			children = (
 				13C8473D15E48D87000B8A44 /* SqliteUtil.h */,
 				13C8473E15E48D87000B8A44 /* SqliteUtil.m */,
+				136A2E6415F5EE7D00E402D8 /* MyProgressHud.h */,
+				136A2E6515F5EE7D00E402D8 /* MyProgressHud.m */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -1555,6 +1584,8 @@
 				1313DABD15F089DF002ACBB2 /* PurchaseInViewController.xib in Resources */,
 				13F4C74715F1FFB500DD8451 /* iVersion.bundle in Resources */,
 				13F4C74D15F2164600DD8451 /* nav_menu_icon_f@2x.png in Resources */,
+				136A2E6C15F6025500E402D8 /* navi_back_btn@2x.png in Resources */,
+				136A2E6D15F6025500E402D8 /* navi_back_f_btn@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1663,6 +1694,9 @@
 				13C3E9F515F490C30001E3A1 /* SBJsonBase.m in Sources */,
 				13C3E9F615F490C30001E3A1 /* SBJsonParser.m in Sources */,
 				13C3E9F715F490C30001E3A1 /* SBJsonWriter.m in Sources */,
+				136A2E6215F5ED8700E402D8 /* MBProgressHUD.m in Sources */,
+				136A2E6615F5EE7D00E402D8 /* MyProgressHud.m in Sources */,
+				136A2E6915F601BB00E402D8 /* MyNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -78,13 +78,7 @@ UITableViewDelegate
     }
     
     
-    self.navigationItem.hidesBackButton = YES;
-    UIButton* backButton = [UIButton buttonWithType:101];//UIButtonType，其实101和系统返回按钮一样
-    [backButton addTarget:self action:@selector(backMainContent) forControlEvents:UIControlEventTouchUpInside];
-    [backButton setTitle:@"返回" forState:UIControlStateNormal];
-    UIBarButtonItem *leftBtn = [[UIBarButtonItem alloc] initWithCustomView:backButton];
-    self.navigationItem.leftBarButtonItem = leftBtn;
-    
+       
     
     
     //解决本view与root 共同的手势 冲突
@@ -392,7 +386,7 @@ UITableViewDelegate
     // 计算出长宽
     CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, (content.length * 14 * 0.05 + 1 ) * 14) lineBreakMode:UILineBreakModeTailTruncation]; 
     CGFloat height;
-    if (qs.imageURL==nil) {
+    if (qs.imageURL==nil || [qs.imageURL isEqualToString:@""]) {
         height = size.height+214;
     }else
     {

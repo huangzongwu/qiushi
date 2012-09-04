@@ -14,6 +14,8 @@
 #import "GADBannerView.h"
 #import "SqliteUtil.h"
 #import "SVStatusHUD.h"
+#import "MyNavigationController.h"
+#import "AppDelegate.h"
 
 @interface ContentViewController () <
 PullingRefreshTableViewDelegate,
@@ -50,8 +52,8 @@ UITableViewDelegate
     [self.view setBackgroundColor:[UIColor clearColor]];
     _list = [[NSMutableArray alloc] init ];
     
-
-//    NSLog(@"viewDidLoad content");
+    
+    //    NSLog(@"viewDidLoad content");
     
     //ad
     bannerView_ = [[GADBannerView alloc]
@@ -74,7 +76,7 @@ UITableViewDelegate
     _tableView.delegate = self;
     [self.view addSubview:self.tableView];
     
-//    _asiRequest = nil;
+    //    _asiRequest = nil;
     
     
     
@@ -86,22 +88,25 @@ UITableViewDelegate
         {
             QiuShi *qs = [[QiuShi alloc]initWithQiushi:qiushi];
             
-                        
-            
             [self.list addObject:qs];
             
-            
         }
-//        DLog(@"%@",[self.list description]);
+        
+        //数据源去重复
+        [self removeRepeatArray];
+        
+        
+        
         [self.tableView tableViewDidFinishedLoading];
         self.tableView.reachedTheEnd  = NO;
         [self.tableView reloadData];
-
+        
     }
     
     
+    
     if (self.page == 0) {
-
+        
         [self.tableView launchRefreshing];
     }
 }
@@ -169,7 +174,7 @@ UITableViewDelegate
     
     
     NSLog(@"%@",url);
-//    [ASIHTTPRequest setDefaultCache:[ASIDownloadCache sharedCache]];
+    //    [ASIHTTPRequest setDefaultCache:[ASIDownloadCache sharedCache]];
     
     _asiRequest = [ASIHTTPRequest requestWithURL:url];
     [_asiRequest setDelegate:self];
@@ -183,7 +188,7 @@ UITableViewDelegate
 {
     self.refreshing = NO;
     [self.tableView tableViewDidFinishedLoading];
-
+    
     
     NSString *responseString = [request responseString];
     NSLog(@"%@\n",responseString);
@@ -199,42 +204,44 @@ UITableViewDelegate
 -(void) GetResult:(ASIHTTPRequest *)request
 {
     
-//    NSString *responseString = [request responseString];
-//    NSLog(@"%@\n",responseString);
+    //    NSString *responseString = [request responseString];
+    //    NSLog(@"%@\n",responseString);
     
     if (self.refreshing) {
         self.page = 1;
         self.refreshing = NO;
-        [self.list removeAllObjects];
+        if (self.list.count > 100) {
+            [self.list removeAllObjects];
+        }
+        
         [SqliteUtil initDb];
     }
     NSData *data =[request responseData];
     NSMutableDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:data error:nil];
     
-  
+    
     
     if ([dictionary objectForKey:@"items"]) {
 		NSArray *array = [NSArray arrayWithArray:[dictionary objectForKey:@"items"]];
         
-
+        
         NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
         //设定时间格式,这里可以设置成自己需要的格式
         [dateFormatter setDateFormat:@"yy-MM-dd HH:mm"];
-
+        
         for (NSDictionary *qiushi in array)
         {
             QiuShi *qs = [[QiuShi alloc]initWithDictionary:qiushi];
             
             qs.fbTime = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:qs.published_at]];
             
-//            DLog(@"%@",@"dsfasdfsa");
             
-//            //ttttttttttt
-//            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
-//            qs.content = @"test...";
-//            qs.imageURL = @"http://img.qiushibaike.com/system/pictures/6317243/small/app6317243.jpg";
-//            qs.imageMidURL = @"http://img.qiushibaike.com/system/pictures/6317243/medium/app6317243.jpg";
-//            //tttttttttttt
+            //            //ttttttttttt
+            //            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
+            //            qs.content = @"test...";
+            //            qs.imageURL = @"http://img.qiushibaike.com/system/pictures/6317243/small/app6317243.jpg";
+            //            qs.imageMidURL = @"http://img.qiushibaike.com/system/pictures/6317243/medium/app6317243.jpg";
+            //            //tttttttttttt
             
             
             
@@ -242,17 +249,25 @@ UITableViewDelegate
             //保存到数据库
             [SqliteUtil saveDb:qs];
             
-
+            
+            
             [self.list addObject:qs];
+            
+            
+            
         }
         
+        //数据源去重复
+        [self removeRepeatArray];
+        
+        
 		
-    }    
+    }
     
     if (self.page >= 20) {
         [self.tableView tableViewDidFinishedLoadingWithMessage:@"亲，下面没有了哦..."];
         self.tableView.reachedTheEnd  = YES;
-    } else {        
+    } else {
         [self.tableView tableViewDidFinishedLoading];
         self.tableView.reachedTheEnd  = NO;
         [self.tableView reloadData];
@@ -285,6 +300,7 @@ UITableViewDelegate
     //设置内容
     cell.txtContent.text = qs.content;
     
+    
     [cell.txtContent setNumberOfLines: 12];
     
     //设置图片
@@ -299,7 +315,7 @@ UITableViewDelegate
         // cell.imgPhoto.hidden = YES;
     }
     //设置用户名
-    if (qs.anchor!=nil && qs.anchor!= @"") 
+    if (qs.anchor!=nil && qs.anchor!= @"")
     {
         cell.txtAnchor.text = qs.anchor;
     }else
@@ -307,7 +323,7 @@ UITableViewDelegate
         cell.txtAnchor.text = @"匿名";
     }
     //设置标签
-    if (qs.tag!=nil && qs.tag!= @"") 
+    if (qs.tag!=nil && qs.tag!= @"")
     {
         cell.txtTag.text = qs.tag;
     }else
@@ -321,8 +337,8 @@ UITableViewDelegate
     
     //发布时间
     cell.txtTime.text = qs.fbTime;
-
-
+    
+    
     
     //自适应函数
     [cell resizeTheHeight:kTypeMain];
@@ -375,7 +391,7 @@ UITableViewDelegate
 
 
 - (void)pullingTableViewDidStartLoading:(PullingRefreshTableView *)tableView{
-    [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];    
+    [self performSelector:@selector(loadData) withObject:nil afterDelay:1.f];
 }
 
 #pragma mark - Scroll
@@ -391,13 +407,21 @@ UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-       
-    UINavigationController *menuController = (UINavigationController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
-    CommentsViewController *demoView=[[CommentsViewController alloc]initWithNibName:@"CommentsViewController" bundle:nil];
-    demoView.qs = [self.list objectAtIndex:indexPath.row];
-    [menuController pushViewController:demoView animated:YES];
+    
     
 
+    
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+
+    
+    
+
+    CommentsViewController *comments=[[CommentsViewController alloc]initWithNibName:@"CommentsViewController" bundle:nil];
+    comments.qs = [self.list objectAtIndex:indexPath.row];
+
+    
+    [[delegate navController] pushViewController:comments animated:YES];
+    
 }
 
 #pragma mark - LoadPage
@@ -413,24 +437,49 @@ UITableViewDelegate
 
 -(CGFloat) getTheHeight:(NSInteger)row
 {
-    CGFloat contentWidth = 280;  
+    CGFloat contentWidth = 280;
     // 设置字体
-    UIFont *font = [UIFont fontWithName:@"微软雅黑" size:14];  
+    UIFont *font = [UIFont fontWithName:@"微软雅黑" size:14];
     
-    QiuShi *qs =[self.list objectAtIndex:row];  
-    // 显示的内容 
+    QiuShi *qs =[self.list objectAtIndex:row];
+    // 显示的内容
     NSString *content = qs.content;
+    
     // 计算出长宽
-    CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 220) lineBreakMode:UILineBreakModeTailTruncation]; 
+    CGSize size = [content sizeWithFont:font constrainedToSize:CGSizeMake(contentWidth, 220) lineBreakMode:UILineBreakModeTailTruncation];
     CGFloat height;
-    if (qs.imageURL==nil) {
+    if (qs.imageURL==nil || [qs.imageURL isEqualToString:@""]) {
         height = size.height+140;
     }else
     {
         height = size.height+220;
     }
-    // 返回需要的高度  
-    return height; 
+    // 返回需要的高度
+    return height;
+}
+
+- (void)removeRepeatArray
+{
+    DLog(@"原来：%d",self.list.count);
+    NSMutableArray* filterResults = [[NSMutableArray alloc] init];
+    BOOL copy;
+    if (![self.list count] == 0) {
+        for (QiuShi *a1 in self.list) {
+            copy = YES;
+            for (QiuShi *a2 in filterResults) {
+                if ([a1.qiushiID isEqualToString:a2.qiushiID] && [a1.anchor isEqualToString:a2.anchor]) {
+                    copy = NO;
+                    break;
+                }
+            }
+            if (copy) {
+                [filterResults addObject:a1];
+            }
+        }
+    }
+    
+    self.list = filterResults;
+    DLog(@"之后：%d",self.list.count);
 }
 
 
