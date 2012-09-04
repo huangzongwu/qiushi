@@ -70,7 +70,7 @@ static NSArray *dirPaths;
         char *errMsg;
         
         
-        const char *sql_stmt = "CREATE TABLE IF NOT EXISTS QIUSHIS(ID INTEGER PRIMARY KEY AUTOINCREMENT, QIUSHIID TEXT unique,IMAGEURL TEXT,IMAGEMIDURL TEXT,TAG TEXT, CONTENT TEXT,COMMENTSCOUNT TEXT,UPCOUNT TEXT,DOWNCOUNT TEXT,ANCHOR TEXT,FBTIME TEXT)";
+        const char *sql_stmt = "CREATE TABLE IF NOT EXISTS QIUSHIS(ID INTEGER PRIMARY KEY AUTOINCREMENT, QIUSHIID TEXT unique,IMAGEURL TEXT,IMAGEMIDURL TEXT,TAG TEXT, CONTENT TEXT,COMMENTSCOUNT TEXT,UPCOUNT TEXT,DOWNCOUNT TEXT,ANCHOR TEXT,FBTIME TEXT,isSave text)";
         
         if (sqlite3_exec(qiushiDB, sql_stmt, NULL, NULL, &errMsg)!=SQLITE_OK) {
             
@@ -102,7 +102,7 @@ static NSArray *dirPaths;
     const char *dbpath = [databasePath UTF8String];
     
     if (sqlite3_open(dbpath, &qiushiDB)==SQLITE_OK) {
-        NSString *insertSQL = [NSString stringWithFormat:@"INSERT INTO QIUSHIS (qiushiid,imageurl,imagemidurl,tag,content,commentscount,upcount,downcount,anchor,fbtime) VALUES( \"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\")",qs.qiushiID,qs.imageURL,qs.imageMidURL,qs.tag,qs.content,[NSString stringWithFormat:@"%d",qs.commentsCount],[NSString stringWithFormat:@"%d",qs.upCount],[NSString stringWithFormat:@"%d",qs.downCount],qs.anchor,qs.fbTime];
+        NSString *insertSQL = [NSString stringWithFormat:@"INSERT INTO QIUSHIS (qiushiid,imageurl,imagemidurl,tag,content,commentscount,upcount,downcount,anchor,fbtime,isSave) VALUES( \"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",\"%@\",'no')",qs.qiushiID,qs.imageURL,qs.imageMidURL,qs.tag,qs.content,[NSString stringWithFormat:@"%d",qs.commentsCount],[NSString stringWithFormat:@"%d",qs.upCount],[NSString stringWithFormat:@"%d",qs.downCount],qs.anchor,qs.fbTime];
         
         
         
@@ -143,8 +143,8 @@ static NSArray *dirPaths;
     
     if (sqlite3_open(dbpath, &qiushiDB) == SQLITE_OK)
     {
-        NSString *querySQL = [NSString stringWithFormat:@"SELECT  * from QIUSHIS"];
-        
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT  * from QIUSHIS order by upcount desc"];
+        //本打算按 upcount 降序排序，但是string类型，所以 是 乱序了，
         
         const char *query_stmt = [querySQL UTF8String];
         if (sqlite3_prepare_v2(qiushiDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
@@ -201,7 +201,7 @@ static NSArray *dirPaths;
         [MyProgressHud showHUD:[NSString stringWithFormat:@"查到%d条数据",selectArray.count]];
         
         if (selectArray.count > 200) {
-            [self delAll];
+            [self delNoSave];
             [MyProgressHud showHUD:[NSString stringWithFormat:@"数据超过200条，删除数据"]];
         }
         
@@ -305,6 +305,127 @@ static NSArray *dirPaths;
     sqlite3_close(qiushiDB);
     return YES;
     
+}
+
++ (BOOL)delNoSave
+{
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &qiushiDB) == SQLITE_OK)
+    {
+        NSString *deleteSqlStr = [NSString stringWithFormat:@"delete from QIUSHIS where issave='no'"];
+        
+        
+        
+        
+        const char *deleteSql  = [deleteSqlStr UTF8String];
+        int deleteSqlOk = sqlite3_prepare_v2(qiushiDB, deleteSql, -1, &statement, nil);
+        if (deleteSqlOk != SQLITE_OK) {
+            
+            [MyProgressHud showHUD:[NSString stringWithFormat:@"删除出错:%s",sqlite3_errmsg(qiushiDB)]];
+            
+            
+            
+            
+            sqlite3_close(qiushiDB);
+            return NO;
+        }
+        
+        
+        int execDeleteSqlOk = sqlite3_step(statement);
+        sqlite3_finalize(statement);
+        
+        if (execDeleteSqlOk == SQLITE_ERROR) {
+            sqlite3_close(qiushiDB);
+            return NO;
+        }
+        
+    }
+    [MyProgressHud showHUD:[NSString stringWithFormat:@"删除成功"]];
+    sqlite3_close(qiushiDB);
+    return YES;
+    
+}
+
+
++ (NSMutableArray*)queryDbIsSave
+{
+    
+    
+    
+    NSMutableArray *selectArray = [[NSMutableArray alloc]init];
+    
+    const char *dbpath = [databasePath UTF8String];
+    sqlite3_stmt *statement;
+    
+    if (sqlite3_open(dbpath, &qiushiDB) == SQLITE_OK)
+    {
+        NSString *querySQL = [NSString stringWithFormat:@"SELECT  * from QIUSHIS where issave='yes' order by upcount desc"];
+        //本打算按 upcount 降序排序，但是string类型，所以 是 乱序了，
+        
+        const char *query_stmt = [querySQL UTF8String];
+        if (sqlite3_prepare_v2(qiushiDB, query_stmt, -1, &statement, NULL) == SQLITE_OK)
+        {
+            if (sqlite3_step(statement) == SQLITE_ROW)
+            {
+                
+                
+                NSLog(@"已查到结果");
+                
+                
+                QiuShi *qs;
+                
+                while (sqlite3_step(statement) == SQLITE_ROW)
+                {
+                    
+                    qs = [[QiuShi alloc]init];
+                    qs.qiushiID = [self processString:[[NSString alloc] initWithUTF8String: (char *)sqlite3_column_text(statement, 1)]];
+                    
+                    qs.imageURL = [self processString:[[NSString alloc] initWithUTF8String: (char *)sqlite3_column_text(statement, 2)]];
+                    qs.imageMidURL = [self processString:[[NSString alloc] initWithUTF8String: (char *)sqlite3_column_text(statement, 3)]];
+                    qs.tag = [self processString:[[NSString alloc] initWithUTF8String: (char *)sqlite3_column_text(statement, 4)]];
+                    qs.content = [self processString:[[NSString alloc] initWithUTF8String: (char *)sqlite3_column_text(statement, 5)]];
+                    qs.commentsCount = [[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(statement, 6)] intValue];
+                    qs.upCount = [[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(statement, 7)] intValue];
+                    qs.downCount = [[[NSString alloc] initWithUTF8String:(char *)sqlite3_column_text(statement, 8)] intValue];
+                    qs.anchor = [self processString:[[NSString alloc] initWithUTF8String: (char *)sqlite3_column_text(statement, 9)]];
+                    qs.fbTime = [self processString:[[NSString alloc] initWithUTF8String: (char *)sqlite3_column_text(statement, 10)]];
+                    
+                    
+                    
+                    
+                    [selectArray addObject:qs];
+                    
+                }
+                
+            }
+            else {
+                
+                
+                
+                [MyProgressHud showHUD:[NSString stringWithFormat:@"查询出错:%s",sqlite3_errmsg(qiushiDB)]];
+                
+            }
+            sqlite3_finalize(statement);
+        }
+        
+        sqlite3_close(qiushiDB);
+    }
+    
+    if (selectArray.count > 0) {
+        
+        
+        [MyProgressHud showHUD:[NSString stringWithFormat:@"查到%d条数据",selectArray.count]];
+        
+        if (selectArray.count > 200) {
+            [self delNoSave];
+            [MyProgressHud showHUD:[NSString stringWithFormat:@"数据超过200条，删除数据"]];
+        }
+        
+        return selectArray;
+    }
+    return nil;
 }
 
 @end

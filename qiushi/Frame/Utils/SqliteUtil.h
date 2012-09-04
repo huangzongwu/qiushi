@@ -23,5 +23,7 @@
 + (NSMutableArray*)queryDb;
 + (NSString*)processString:(NSString*)str;
 
-+ (BOOL)delAll;
++ (BOOL)delAll;//删除所有数据（删除表）
++ (BOOL)delNoSave;//删除未收藏的
++ (NSMutableArray*)queryDbIsSave;//查询收藏的
 @end

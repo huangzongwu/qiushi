@@ -1,14 +1,16 @@
 //
-//  ContentViewController.m
-//  NetDemo
+//  FavouriteViewController.m
+//  qiushi
 //
-//  Created by xyxd on 12-6-6.
-//  Copyright (c) 2012年 __MyCompanyName__. All rights reserved.
+//  Created by xyxd on 12-9-4.
+//  Copyright (c) 2012年 XYXD. All rights reserved.
 //
 
-#import "ContentViewController.h"
+#import "FavouriteViewController.h"
+
 #import "PullingRefreshTableView.h"
 #import "CommentsViewController.h"
+
 #import "CJSONDeserializer.h"
 #import "QiuShi.h"
 #import "GADBannerView.h"
@@ -16,39 +18,41 @@
 #import "SVStatusHUD.h"
 #import "MyNavigationController.h"
 #import "AppDelegate.h"
-
-@interface ContentViewController () <
+@interface FavouriteViewController () <
 PullingRefreshTableViewDelegate,
-ASIHTTPRequestDelegate,
 UITableViewDataSource,
 UITableViewDelegate
 >
--(void) GetErr:(ASIHTTPRequest *)request;
--(void) GetResult:(ASIHTTPRequest *)request;
+
 @property (retain,nonatomic) PullingRefreshTableView *tableView;
 @property (retain,nonatomic) NSMutableArray *list;
 @property (nonatomic) BOOL refreshing;
 @property (assign,nonatomic) NSInteger page;
 @end
 
-@implementation ContentViewController
+@implementation FavouriteViewController
+
 @synthesize tableView = _tableView;
 @synthesize list = _list;
 @synthesize refreshing = _refreshing;
 @synthesize page = _page;
-@synthesize asiRequest = _asiRequest;
-@synthesize Qiutype,QiuTime;
 @synthesize cacheArray = _cacheArray;
 
-
-
-
-
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+        self.title = @"个人收藏";
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
+    // Do any additional setup after loading the view from its nib.
+    
     [self.view setBackgroundColor:[UIColor clearColor]];
     _list = [[NSMutableArray alloc] init ];
     
@@ -76,8 +80,7 @@ UITableViewDelegate
     _tableView.delegate = self;
     [self.view addSubview:self.tableView];
     
-    //    _asiRequest = nil;
-    
+
     
     
     
@@ -105,16 +108,21 @@ UITableViewDelegate
     
     
     
-    if (self.page == 0) {
-        
-        [self.tableView launchRefreshing];
-    }
+//    if (self.page == 0) {
+//        
+//        [self.tableView launchRefreshing];
+//    }
+
+    
+    
+    
 }
 
 - (void)viewDidUnload
 {
     [super viewDidUnload];
     // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -122,84 +130,18 @@ UITableViewDelegate
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
-- (void)dealloc
-{
-    //    NSLog(@"dealloc content");
-    self.asiRequest.delegate = nil;
-}
 
 #pragma mark - Your actions
 
 - (void)loadData{
     
     self.page++;
-    NSURL *url;
+        
     
-    if (Qiutype == QiuShiTypeTop) {
-        switch (QiuTime) {
-            case QiuShiTimeRandom:
-                url = [NSURL URLWithString:SuggestURLString(10,self.page)];
-                break;
-            case QiuShiTimeDay:
-                url = [NSURL URLWithString:DayURLString(10,self.page)];
-                break;
-            case QiuShiTimeWeek:
-                url = [NSURL URLWithString:WeakURlString(10,self.page)];
-                break;
-            case QiuShiTimeMonth:
-                url = [NSURL URLWithString:MonthURLString(10,self.page)];
-                break;
-            default:
-                url = [NSURL URLWithString:SuggestURLString(10,self.page)];
-                break;
-        }
-    }else{
-        switch (Qiutype) {
-            case QiuShiTypeTop:
-                url = [NSURL URLWithString:SuggestURLString(10,self.page)];
-                break;
-            case QiuShiTypeNew:
-                url = [NSURL URLWithString:LastestURLString(10,self.page)];
-                break;
-            case QiuShiTypePhoto:
-                url = [NSURL URLWithString:ImageURLString(10,self.page)];
-                break;
-            default:
-                url = [NSURL URLWithString:SuggestURLString(10,self.page)];
-                break;
-        }
-    }
-    
-    
-    
-    
-    NSLog(@"%@",url);
-    //    [ASIHTTPRequest setDefaultCache:[ASIDownloadCache sharedCache]];
-    
-    _asiRequest = [ASIHTTPRequest requestWithURL:url];
-    [_asiRequest setDelegate:self];
-    [_asiRequest setDidFinishSelector:@selector(GetResult:)];
-    [_asiRequest setDidFailSelector:@selector(GetErr:)];
-    [_asiRequest startAsynchronous];
     
 }
 
--(void) GetErr:(ASIHTTPRequest *)request
-{
-    self.refreshing = NO;
-    [self.tableView tableViewDidFinishedLoading];
-    
-    
-    NSString *responseString = [request responseString];
-    NSLog(@"%@\n",responseString);
-    NSError *error = [request error];
-    NSLog(@"-------------------------------\n");
-    NSLog(@"error:%@",error);
-    
-    
-    [SVStatusHUD showWithImage:[UIImage imageNamed:@"wifi.png"] status:[NSString stringWithFormat:@"%@=====\n%@",responseString,error]];
-    
-}
+
 
 -(void) GetResult:(ASIHTTPRequest *)request
 {
@@ -216,53 +158,11 @@ UITableViewDelegate
         
         [SqliteUtil initDb];
     }
-    NSData *data =[request responseData];
-    NSMutableDictionary *dictionary = [[CJSONDeserializer deserializer] deserializeAsDictionary:data error:nil];
     
-    
-    
-    if ([dictionary objectForKey:@"items"]) {
-		NSArray *array = [NSArray arrayWithArray:[dictionary objectForKey:@"items"]];
-        
-        
-        NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-        //设定时间格式,这里可以设置成自己需要的格式
-        [dateFormatter setDateFormat:@"yy-MM-dd HH:mm"];
-        
-        for (NSDictionary *qiushi in array)
-        {
-            QiuShi *qs = [[QiuShi alloc]initWithDictionary:qiushi];
-            
-            qs.fbTime = [dateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:qs.published_at]];
-            
-            
-            //            //ttttttttttt
-            //            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
-            //            qs.content = @"test...";
-            //            qs.imageURL = @"http://img.qiushibaike.com/system/pictures/6317243/small/app6317243.jpg";
-            //            qs.imageMidURL = @"http://img.qiushibaike.com/system/pictures/6317243/medium/app6317243.jpg";
-            //            //tttttttttttt
-            
-            
-            
-            
-            //保存到数据库
-            [SqliteUtil saveDb:qs];
-            
-            
-            
-            [self.list addObject:qs];
-            
-            
-            
-        }
-        
-        //数据源去重复
-        [self removeRepeatArray];
         
         
 		
-    }
+
     
     if (self.page >= 20) {
         [self.tableView tableViewDidFinishedLoadingWithMessage:@"亲，下面没有了哦..."];
@@ -337,8 +237,8 @@ UITableViewDelegate
     
     //发布时间
     cell.txtTime.text = qs.fbTime;
-//    SEL *sel = [self shoucangWithQsId:qs.qiushiID];
-//    [cell.goodbtn addTarget:self action:[self shoucangWithQsId:qs.qiushiID] forControlEvents:UIControlEventTouchUpInside];
+    
+    
     
     //自适应函数
     [cell resizeTheHeight:kTypeMain];
@@ -409,30 +309,22 @@ UITableViewDelegate
 {
     
     
-
+    
     
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-
     
     
-
+    
+    
     CommentsViewController *comments=[[CommentsViewController alloc]initWithNibName:@"CommentsViewController" bundle:nil];
     comments.qs = [self.list objectAtIndex:indexPath.row];
-
+    
     
     [[delegate navController] pushViewController:comments animated:YES];
     
 }
 
-#pragma mark - LoadPage
--(void) LoadPageOfQiushiType:(QiuShiType) type Time:(QiuShiTime) time
-{
-    self.Qiutype = type;
-    self.QiuTime = time;
-    self.page =0;
-    [self.tableView launchRefreshing];
-    
-}
+
 
 
 -(CGFloat) getTheHeight:(NSInteger)row
@@ -480,15 +372,11 @@ UITableViewDelegate
     
     self.list = filterResults;
     DLog(@"之后：%d",self.list.count);
-//    self.list = [NSMutableArray arrayWithArray:[self.list sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]];
-
-}
-
-- (void)shoucangWithQsId:(NSString*)qsid
-{
+    //    self.list = [NSMutableArray arrayWithArray:[self.list sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]];
     
-    DLog(@"id:%@",qsid);
 }
+
+
 
 
 #ifdef _FOR_DEBUG_

@@ -100,7 +100,7 @@
         [goodbtn.titleLabel setFont:[UIFont fontWithName:@"微软雅黑" size:14]];
         [goodbtn.titleLabel setTextAlignment:UITextAlignmentRight];
         [goodbtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [goodbtn addTarget:self action:@selector(BtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//        [goodbtn addTarget:self action:@selector(BtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:goodbtn];
         
         badbtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -201,7 +201,7 @@
         }break;
         case FCOMMITE: //评论 
         {
-           
+            
        
         }break;
         default:

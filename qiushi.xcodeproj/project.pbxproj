@@ -241,6 +241,8 @@
 		13F4C73815F1E9E900DD8451 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F4C73615F1E9E900DD8451 /* iVersion.m */; };
 		13F4C74715F1FFB500DD8451 /* iVersion.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13F4C74615F1FFB500DD8451 /* iVersion.bundle */; };
 		13F4C74D15F2164600DD8451 /* nav_menu_icon_f@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F4C74C15F2164600DD8451 /* nav_menu_icon_f@2x.png */; };
+		C9BDA76915F64D0700645ED0 /* FavouriteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C9BDA76715F64D0700645ED0 /* FavouriteViewController.m */; };
+		C9BDA76A15F64D0700645ED0 /* FavouriteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C9BDA76815F64D0700645ED0 /* FavouriteViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -612,6 +614,9 @@
 		13F4C73615F1E9E900DD8451 /* iVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iVersion.m; sourceTree = "<group>"; };
 		13F4C74615F1FFB500DD8451 /* iVersion.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iVersion.bundle; sourceTree = "<group>"; };
 		13F4C74C15F2164600DD8451 /* nav_menu_icon_f@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "nav_menu_icon_f@2x.png"; sourceTree = "<group>"; };
+		C9BDA76615F64D0700645ED0 /* FavouriteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FavouriteViewController.h; sourceTree = "<group>"; };
+		C9BDA76715F64D0700645ED0 /* FavouriteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FavouriteViewController.m; sourceTree = "<group>"; };
+		C9BDA76815F64D0700645ED0 /* FavouriteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FavouriteViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -884,6 +889,9 @@
 				1313DAB915F089DF002ACBB2 /* PurchaseInViewController.h */,
 				1313DABA15F089DF002ACBB2 /* PurchaseInViewController.m */,
 				1313DABB15F089DF002ACBB2 /* PurchaseInViewController.xib */,
+				C9BDA76615F64D0700645ED0 /* FavouriteViewController.h */,
+				C9BDA76715F64D0700645ED0 /* FavouriteViewController.m */,
+				C9BDA76815F64D0700645ED0 /* FavouriteViewController.xib */,
 			);
 			name = View;
 			path = qiushi/View;
@@ -1586,6 +1594,7 @@
 				13F4C74D15F2164600DD8451 /* nav_menu_icon_f@2x.png in Resources */,
 				136A2E6C15F6025500E402D8 /* navi_back_btn@2x.png in Resources */,
 				136A2E6D15F6025500E402D8 /* navi_back_f_btn@2x.png in Resources */,
+				C9BDA76A15F64D0700645ED0 /* FavouriteViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1697,6 +1706,7 @@
 				136A2E6215F5ED8700E402D8 /* MBProgressHUD.m in Sources */,
 				136A2E6615F5EE7D00E402D8 /* MyProgressHud.m in Sources */,
 				136A2E6915F601BB00E402D8 /* MyNavigationController.m in Sources */,
+				C9BDA76915F64D0700645ED0 /* FavouriteViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

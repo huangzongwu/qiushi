@@ -14,6 +14,7 @@
 #import "SetViewController.h"
 #import "PurchaseInViewController.h"
 #import "MyNavigationController.h"
+#import "FavouriteViewController.h"
 
 
 @implementation LeftController
@@ -46,7 +47,7 @@
     
     _menuController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
     
-    _items = [[NSMutableArray alloc]initWithObjects:@"随便逛逛",@"新鲜出炉",@"有图有真相",@"关于",@"设置", nil];
+    _items = [[NSMutableArray alloc]initWithObjects:@"随便逛逛",@"新鲜出炉",@"有图有真相",@"关于",@"设置",@"个人收藏", nil];
     
     [[NSUserDefaults standardUserDefaults] setObject:@"1001" forKey:@"mainType"];
     
@@ -228,6 +229,16 @@
             SetViewController *set = [[SetViewController alloc]initWithNibName:@"SetViewController" bundle:nil];
             
             [self.navController pushViewController:set animated:YES];
+            [_menuController showRootController:YES];
+            
+        }
+    }else if (indexPath.row == 5){
+        if ([str isEqualToString:@"1006"]) {
+            [_menuController showRootController:YES];
+        }else{
+            FavouriteViewController *favourite = [[FavouriteViewController alloc]initWithNibName:@"FavouriteViewController" bundle:nil];
+            
+            [self.navController pushViewController:favourite animated:YES];
             [_menuController showRootController:YES];
             
         }

@@ -156,7 +156,8 @@
     
         //tttttttttttttttttttttttt
     
-    [SqliteUtil delAll];
+//    [SqliteUtil delNoSave];
+//    DLog(@"%d",[[SqliteUtil queryDb] count]);
     
     if(segment.selectedSegmentIndex == 0)
     {   _timeType = QiuShiTimeRandom;
