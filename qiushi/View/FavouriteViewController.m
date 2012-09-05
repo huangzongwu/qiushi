@@ -18,6 +18,7 @@
 #import "SVStatusHUD.h"
 #import "MyNavigationController.h"
 #import "AppDelegate.h"
+#import "DDMenuController.h"
 @interface FavouriteViewController () <
 PullingRefreshTableViewDelegate,
 UITableViewDataSource,
@@ -53,7 +54,33 @@ UITableViewDelegate
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    self.navigationItem.hidesBackButton = YES;
+    
+    
+    
+    UIImage *image = [UIImage imageNamed:@"nav_menu_icon.png"];
+    UIImage *imagef = [UIImage imageNamed:@"nav_menu_icon_f.png"];
+    CGRect backframe= CGRectMake(0, 0, image.size.width, image.size.height);
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [btn setFrame:backframe];
+    [btn setBackgroundImage:image forState:UIControlStateNormal];
+    [btn setBackgroundImage:imagef forState:UIControlStateHighlighted];
+    [btn addTarget:self action:@selector(showLeft:) forControlEvents:UIControlEventTouchUpInside];
+    
+    UIBarButtonItem* someBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:btn];
+    
+    self.navigationItem.leftBarButtonItem = someBarButtonItem;
+    
+    
+    
+    
+    
     [self.view setBackgroundColor:[UIColor clearColor]];
+    
+    //设置背景颜色
+    [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"main_background.png"]]];
+    
+    
     _list = [[NSMutableArray alloc] init ];
     
     
@@ -84,7 +111,7 @@ UITableViewDelegate
     
     
     
-    _cacheArray = [SqliteUtil queryDb];
+    _cacheArray = [SqliteUtil queryDbIsSave];
     if (_cacheArray != nil) {
         [self.list removeAllObjects];
         for (QiuShi *qiushi in _cacheArray)
@@ -129,7 +156,18 @@ UITableViewDelegate
 {
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
-
+- (void)viewDidAppear:(BOOL)animated
+{
+    //解决本view与root 共同的手势 冲突
+    _menuController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
+    [_menuController.tap setEnabled:NO];
+    [_menuController.pan setEnabled:NO];
+}
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [_menuController.tap setEnabled:YES];
+    [_menuController.pan setEnabled:YES];
+}
 
 #pragma mark - Your actions
 
@@ -325,6 +363,17 @@ UITableViewDelegate
 }
 
 
+// Override to support editing the table view.
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    
+    if (editingStyle == UITableViewCellEditingStyleDelete)
+    {
+        DLog(@"delete");
+    }
+    
+}
+
 
 
 -(CGFloat) getTheHeight:(NSInteger)row
@@ -376,7 +425,13 @@ UITableViewDelegate
     
 }
 
-
+- (void)showLeft:(id)seder
+{
+    DDMenuController *menuController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
+    [menuController showLeftController:YES];
+    
+    
+}
 
 
 #ifdef _FOR_DEBUG_

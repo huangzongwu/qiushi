@@ -53,7 +53,7 @@ UITableViewDelegate
     _list = [[NSMutableArray alloc] init ];
     
     
-    //    NSLog(@"viewDidLoad content");
+
     
     //ad
     bannerView_ = [[GADBannerView alloc]
@@ -238,7 +238,7 @@ UITableViewDelegate
             
             //            //ttttttttttt
             //            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
-            //            qs.content = @"test...";
+            qs.content = @"test...";
             //            qs.imageURL = @"http://img.qiushibaike.com/system/pictures/6317243/small/app6317243.jpg";
             //            qs.imageMidURL = @"http://img.qiushibaike.com/system/pictures/6317243/medium/app6317243.jpg";
             //            //tttttttttttt
@@ -337,8 +337,9 @@ UITableViewDelegate
     
     //发布时间
     cell.txtTime.text = qs.fbTime;
-//    SEL *sel = [self shoucangWithQsId:qs.qiushiID];
-//    [cell.goodbtn addTarget:self action:[self shoucangWithQsId:qs.qiushiID] forControlEvents:UIControlEventTouchUpInside];
+
+    [cell.goodbtn setTag:(indexPath.row +100) ];
+    [cell.goodbtn addTarget:self action:@selector(favoriteAction:) forControlEvents:UIControlEventTouchUpInside];
     
     //自适应函数
     [cell resizeTheHeight:kTypeMain];
@@ -484,10 +485,16 @@ UITableViewDelegate
 
 }
 
-- (void)shoucangWithQsId:(NSString*)qsid
+- (void)favoriteAction:(id)sender
 {
+    UIButton *btn = (UIButton*)sender;
+    int index = ([btn tag] - 100) ;
+    QiuShi *qs = [self.list objectAtIndex:index];
     
-    DLog(@"id:%@",qsid);
+    DLog(@"%@",qs.qiushiID);
+    [SqliteUtil updateDataIsFavourite:qs.qiushiID isFavourite:@"yes"];
+    
+
 }
 
 

@@ -78,15 +78,7 @@ UITableViewDelegate
     }
     
     
-       
-    
-    
-    //解决本view与root 共同的手势 冲突
-    _menuController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
-    [_menuController.tap setEnabled:NO];
-    [_menuController.pan setEnabled:NO];
-    
-    
+
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"main_background.png"]]];
     list = [[NSMutableArray alloc]init];
     
@@ -215,6 +207,13 @@ UITableViewDelegate
     // Release any retained subviews of the main view.
 }
 
+- (void)viewDidAppear:(BOOL)animated
+{
+    //解决本view与root 共同的手势 冲突
+    _menuController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
+    [_menuController.tap setEnabled:NO];
+    [_menuController.pan setEnabled:NO];
+}
 - (void)viewDidDisappear:(BOOL)animated
 {
     [_menuController.tap setEnabled:YES];

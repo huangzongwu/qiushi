@@ -26,4 +26,5 @@
 + (BOOL)delAll;//删除所有数据（删除表）
 + (BOOL)delNoSave;//删除未收藏的
 + (NSMutableArray*)queryDbIsSave;//查询收藏的
++ (BOOL) updateDataIsFavourite:(NSString *)qiushiid isFavourite:(NSString*)isSave;//更新收藏的 状态
 @end
