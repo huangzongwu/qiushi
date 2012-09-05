@@ -370,6 +370,16 @@ UITableViewDelegate
     if (editingStyle == UITableViewCellEditingStyleDelete)
     {
         DLog(@"delete");
+        QiuShi *qs = [self.list objectAtIndex:indexPath.row];
+
+        if ([SqliteUtil updateDataIsFavourite:qs.qiushiID isFavourite:@"no"] == YES) {
+            [self.list removeObjectAtIndex:indexPath.row];
+            [self.tableView reloadData];
+            DLog(@"设置成功");
+        }else
+            DLog(@"设置失败");
+       
+        
     }
     
 }

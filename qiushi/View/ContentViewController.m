@@ -482,7 +482,26 @@ UITableViewDelegate
     self.list = filterResults;
     DLog(@"之后：%d",self.list.count);
 //    self.list = [NSMutableArray arrayWithArray:[self.list sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]];
+    
+    //打乱顺序
+    self.list = [self randArray:self.list];
+    
 
+}
+
+
+#pragma mark –
+#pragma mark (NSMutableArray *)randArray:(NSMutableArray *)ary
+- (NSMutableArray *)randArray:(NSMutableArray *)ary{
+    NSMutableArray *tmpAry = [NSMutableArray arrayWithArray:ary];
+    NSUInteger count = [ary count];
+    for (NSUInteger i = 0; i < count; ++i) {
+        int nElements = count - i;
+        srandom(time(NULL));
+        int n = (random() % nElements) + i;
+        [tmpAry exchangeObjectAtIndex:i withObjectAtIndex:n];
+    }
+    return tmpAry;
 }
 
 - (void)favoriteAction:(id)sender

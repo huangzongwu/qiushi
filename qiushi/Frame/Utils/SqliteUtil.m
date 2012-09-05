@@ -114,7 +114,7 @@ static NSArray *dirPaths;
             
             
             
-            [MyProgressHud showHUD:[NSString stringWithFormat:@"已存储到数据库,"]];
+//            [MyProgressHud showHUD:[NSString stringWithFormat:@"已存储到数据库,"]];
             
         }
         else
@@ -198,7 +198,7 @@ static NSArray *dirPaths;
     if (selectArray.count > 0) {
         
         
-        [MyProgressHud showHUD:[NSString stringWithFormat:@"查到%d条数据",selectArray.count]];
+//        [MyProgressHud showHUD:[NSString stringWithFormat:@"查到%d条数据",selectArray.count]];
         
         if (selectArray.count > 200) {
             [self delNoSave];
