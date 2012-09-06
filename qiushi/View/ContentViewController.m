@@ -20,6 +20,11 @@
 #import "ATMHud.h"
 #import "ATMHudQueueItem.h"
 
+#import "PhotoViewer.h"
+
+
+
+
 @interface ContentViewController () <
 PullingRefreshTableViewDelegate,
 ASIHTTPRequestDelegate,
@@ -267,7 +272,7 @@ UITableViewDelegate
             
             
             //            //ttttttttttt
-            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
+//            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
 //            qs.content = @"test...";
             //            qs.imageURL = @"http://img.qiushibaike.com/system/pictures/6317243/small/app6317243.jpg";
             //            qs.imageMidURL = @"http://img.qiushibaike.com/system/pictures/6317243/medium/app6317243.jpg";
@@ -387,6 +392,9 @@ UITableViewDelegate
     
     //自适应函数
     [cell resizeTheHeight:kTypeMain];
+    
+    
+    [cell.imgPhoto addTarget:self action:@selector(imgPhotoClick:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -562,6 +570,18 @@ UITableViewDelegate
     
 
 }
+
+- (void)imgPhotoClick:(id)sender
+{
+    DLog(@"imgPhotoClick" );
+    
+    
+//    PhotoViewer *photoview = [[PhotoViewer alloc]initWithNibName:@"PhotoViewer" bundle:nil];
+//    photoview.imgUrl = self.imgMidUrl;
+    
+}
+
+
 
 
 //- (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes

@@ -185,6 +185,11 @@
     [[[UIApplication sharedApplication]keyWindow] addSubview:_photoview.view];
     [_photoview fadeIn];
     
+    
+    
+    
+    
+    
 }
 
 -(void) BtnClicked:(id)sender

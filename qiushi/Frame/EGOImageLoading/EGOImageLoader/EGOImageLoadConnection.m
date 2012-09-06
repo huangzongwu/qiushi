@@ -71,6 +71,12 @@
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
 	if(connection != _connection) return;
 	[_responseData appendData:data];
+    
+    self.downloadedByteCount += data.length;
+    DLog(@"已经下载了：%d/%d",self.downloadedByteCount,self.expectedByteCount);
+    //Update progress bar in front view
+//    [self performSelectorOnMainThread:@selector(updateProgressBar) withObject:nil waitUntilDone:YES];
+    
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
@@ -81,6 +87,8 @@
     
     DLog(@"总大小：%d",self.expectedByteCount);
 }
+
+
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
 	if(connection != _connection) return;
@@ -98,6 +106,14 @@
 	}
 }
 
+
+//#pragma mark - Private methods
+//- (void) updateProgressBar{
+//    if (self.expectedByteCount > 0)
+//        [self.progressView setProgress: ((CGFloat)self.downloadedByteCount/(CGFloat)self.expectedByteCount)];
+//    else
+//        [self.progressView setProgress:0.0f];
+//}
 
 - (void)dealloc {
 	self.response = nil;

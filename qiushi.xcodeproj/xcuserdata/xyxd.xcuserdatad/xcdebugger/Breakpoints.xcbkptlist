@@ -8,12 +8,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "qiushi/View/ContentViewController.m"
-         timestampString = "368381746.776161"
+         timestampString = "368638102.785278"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "284"
-         endingLineNumber = "284"
-         landmarkName = "-tableView:numberOfRowsInSection:"
+         startingLineNumber = "289"
+         endingLineNumber = "289"
+         landmarkName = "-GetResult:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
