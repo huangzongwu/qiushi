@@ -52,6 +52,25 @@
 
 @property(nonatomic,assign) NSTimeInterval timeoutInterval; // Default is 30 seconds
 
+
+
+// xyxd add
+/**
+ The number of downloaded bytes
+ */
+@property (nonatomic,assign) NSUInteger downloadedByteCount;
+/**
+ The expected number of bytes to download for the request
+ */
+@property (nonatomic,assign) NSUInteger expectedByteCount;
+
+
+
+
+
+
+
+
 #if __EGOIL_USE_BLOCKS
 @property(nonatomic,readonly) NSMutableDictionary* handlers;
 #endif

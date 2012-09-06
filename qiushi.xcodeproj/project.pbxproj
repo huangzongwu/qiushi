@@ -238,6 +238,12 @@
 		13C8485215E4F96B000B8A44 /* SHSMoreViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C8481E15E4F96B000B8A44 /* SHSMoreViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13C8485315E4F96B000B8A44 /* SHSShareViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 13C8482015E4F96B000B8A44 /* SHSShareViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13C8485F15E50778000B8A44 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13C8485E15E50778000B8A44 /* Icon@2x.png */; };
+		13CA882615F876AE00A85F01 /* ATMHud.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CA881A15F876AE00A85F01 /* ATMHud.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		13CA882715F876AE00A85F01 /* ATMHudQueueItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CA881D15F876AE00A85F01 /* ATMHudQueueItem.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		13CA882815F876AE00A85F01 /* ATMHudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CA881F15F876AE00A85F01 /* ATMHudView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		13CA882915F876AE00A85F01 /* ATMProgressLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CA882115F876AE00A85F01 /* ATMProgressLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		13CA882A15F876AE00A85F01 /* ATMSoundFX.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CA882315F876AE00A85F01 /* ATMSoundFX.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		13CA882B15F876AE00A85F01 /* ATMTextLayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 13CA882515F876AE00A85F01 /* ATMTextLayer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		13F4C73815F1E9E900DD8451 /* iVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = 13F4C73615F1E9E900DD8451 /* iVersion.m */; };
 		13F4C74715F1FFB500DD8451 /* iVersion.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 13F4C74615F1FFB500DD8451 /* iVersion.bundle */; };
 		13F4C74D15F2164600DD8451 /* nav_menu_icon_f@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 13F4C74C15F2164600DD8451 /* nav_menu_icon_f@2x.png */; };
@@ -610,6 +616,19 @@
 		13C8481F15E4F96B000B8A44 /* SHSShareViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SHSShareViewController.h; sourceTree = "<group>"; };
 		13C8482015E4F96B000B8A44 /* SHSShareViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SHSShareViewController.m; sourceTree = "<group>"; };
 		13C8485E15E50778000B8A44 /* Icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon@2x.png"; sourceTree = "<group>"; };
+		13CA881915F876AE00A85F01 /* ATMHud.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMHud.h; sourceTree = "<group>"; };
+		13CA881A15F876AE00A85F01 /* ATMHud.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMHud.m; sourceTree = "<group>"; };
+		13CA881B15F876AE00A85F01 /* ATMHudDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMHudDelegate.h; sourceTree = "<group>"; };
+		13CA881C15F876AE00A85F01 /* ATMHudQueueItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMHudQueueItem.h; sourceTree = "<group>"; };
+		13CA881D15F876AE00A85F01 /* ATMHudQueueItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMHudQueueItem.m; sourceTree = "<group>"; };
+		13CA881E15F876AE00A85F01 /* ATMHudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMHudView.h; sourceTree = "<group>"; };
+		13CA881F15F876AE00A85F01 /* ATMHudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMHudView.m; sourceTree = "<group>"; };
+		13CA882015F876AE00A85F01 /* ATMProgressLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMProgressLayer.h; sourceTree = "<group>"; };
+		13CA882115F876AE00A85F01 /* ATMProgressLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMProgressLayer.m; sourceTree = "<group>"; };
+		13CA882215F876AE00A85F01 /* ATMSoundFX.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMSoundFX.h; sourceTree = "<group>"; };
+		13CA882315F876AE00A85F01 /* ATMSoundFX.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMSoundFX.m; sourceTree = "<group>"; };
+		13CA882415F876AE00A85F01 /* ATMTextLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ATMTextLayer.h; sourceTree = "<group>"; };
+		13CA882515F876AE00A85F01 /* ATMTextLayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ATMTextLayer.m; sourceTree = "<group>"; };
 		13F4C73515F1E9E900DD8451 /* iVersion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iVersion.h; sourceTree = "<group>"; };
 		13F4C73615F1E9E900DD8451 /* iVersion.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iVersion.m; sourceTree = "<group>"; };
 		13F4C74615F1FFB500DD8451 /* iVersion.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = iVersion.bundle; sourceTree = "<group>"; };
@@ -900,6 +919,7 @@
 		13C845E315E48AFE000B8A44 /* Frame */ = {
 			isa = PBXGroup;
 			children = (
+				13CA881815F876AE00A85F01 /* ATMHud */,
 				136A2E5F15F5ED8700E402D8 /* MBProgressHUD */,
 				13C3E9E415F490C30001E3A1 /* SBJson */,
 				13F4C73315F1E9E900DD8451 /* iVersion */,
@@ -1415,6 +1435,26 @@
 			path = LoadingView;
 			sourceTree = "<group>";
 		};
+		13CA881815F876AE00A85F01 /* ATMHud */ = {
+			isa = PBXGroup;
+			children = (
+				13CA881915F876AE00A85F01 /* ATMHud.h */,
+				13CA881A15F876AE00A85F01 /* ATMHud.m */,
+				13CA881B15F876AE00A85F01 /* ATMHudDelegate.h */,
+				13CA881C15F876AE00A85F01 /* ATMHudQueueItem.h */,
+				13CA881D15F876AE00A85F01 /* ATMHudQueueItem.m */,
+				13CA881E15F876AE00A85F01 /* ATMHudView.h */,
+				13CA881F15F876AE00A85F01 /* ATMHudView.m */,
+				13CA882015F876AE00A85F01 /* ATMProgressLayer.h */,
+				13CA882115F876AE00A85F01 /* ATMProgressLayer.m */,
+				13CA882215F876AE00A85F01 /* ATMSoundFX.h */,
+				13CA882315F876AE00A85F01 /* ATMSoundFX.m */,
+				13CA882415F876AE00A85F01 /* ATMTextLayer.h */,
+				13CA882515F876AE00A85F01 /* ATMTextLayer.m */,
+			);
+			path = ATMHud;
+			sourceTree = "<group>";
+		};
 		13F4C73315F1E9E900DD8451 /* iVersion */ = {
 			isa = PBXGroup;
 			children = (
@@ -1707,6 +1747,12 @@
 				136A2E6615F5EE7D00E402D8 /* MyProgressHud.m in Sources */,
 				136A2E6915F601BB00E402D8 /* MyNavigationController.m in Sources */,
 				C9BDA76915F64D0700645ED0 /* FavouriteViewController.m in Sources */,
+				13CA882615F876AE00A85F01 /* ATMHud.m in Sources */,
+				13CA882715F876AE00A85F01 /* ATMHudQueueItem.m in Sources */,
+				13CA882815F876AE00A85F01 /* ATMHudView.m in Sources */,
+				13CA882915F876AE00A85F01 /* ATMProgressLayer.m in Sources */,
+				13CA882A15F876AE00A85F01 /* ATMSoundFX.m in Sources */,
+				13CA882B15F876AE00A85F01 /* ATMTextLayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

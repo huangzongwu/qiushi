@@ -61,6 +61,9 @@
         self.tableView = tableView;
     }
     
+    NSIndexPath *index0 = [NSIndexPath indexPathForRow:0 inSection:0];
+    [self.tableView selectRowAtIndexPath:index0 animated:YES scrollPosition:UITableViewScrollPositionBottom];
+    
     //仿Path菜单
     UIImage *storyMenuItemImage = [UIImage imageNamed:@"story-button.png"];
     UIImage *storyMenuItemImagePressed = [UIImage imageNamed:@"story-button-pressed.png"];
@@ -247,7 +250,7 @@
     
     
     [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d",(1001 + indexPath.row)] forKey:@"mainType"];
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     
     

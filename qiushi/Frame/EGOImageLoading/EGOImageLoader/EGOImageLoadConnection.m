@@ -29,6 +29,8 @@
 
 @implementation EGOImageLoadConnection
 @synthesize imageURL=_imageURL, response=_response, delegate=_delegate, timeoutInterval=_timeoutInterval;
+@synthesize downloadedByteCount = _downloadedByteCount;
+@synthesize expectedByteCount = _expectedByteCount;
 
 #if __EGOIL_USE_BLOCKS
 @synthesize handlers;
@@ -74,6 +76,10 @@
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
 	if(connection != _connection) return;
 	self.response = response;
+    self.expectedByteCount = [response expectedContentLength];
+    self.downloadedByteCount = 0;
+    
+    DLog(@"总大小：%d",self.expectedByteCount);
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {

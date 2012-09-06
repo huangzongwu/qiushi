@@ -17,18 +17,26 @@
 #import "MyNavigationController.h"
 #import "AppDelegate.h"
 
+#import "ATMHud.h"
+#import "ATMHudQueueItem.h"
+
 @interface ContentViewController () <
 PullingRefreshTableViewDelegate,
 ASIHTTPRequestDelegate,
 UITableViewDataSource,
 UITableViewDelegate
 >
+{
+    ATMHud *hud;
+    UIProgressView *mProgress;
+}
 -(void) GetErr:(ASIHTTPRequest *)request;
 -(void) GetResult:(ASIHTTPRequest *)request;
 @property (retain,nonatomic) PullingRefreshTableView *tableView;
 @property (retain,nonatomic) NSMutableArray *list;
 @property (nonatomic) BOOL refreshing;
 @property (assign,nonatomic) NSInteger page;
+@property (nonatomic, retain) ATMHud *hud;
 @end
 
 @implementation ContentViewController
@@ -39,7 +47,7 @@ UITableViewDelegate
 @synthesize asiRequest = _asiRequest;
 @synthesize Qiutype,QiuTime;
 @synthesize cacheArray = _cacheArray;
-
+@synthesize hud;
 
 
 
@@ -54,6 +62,13 @@ UITableViewDelegate
     
     
 
+    
+    mProgress = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleBar];
+    [mProgress setFrame:CGRectMake(10, 10, 200, 10)];
+    
+    [self.view addSubview:mProgress];
+    [mProgress setHidden:YES];
+    [mProgress setProgress:0];
     
     //ad
     bannerView_ = [[GADBannerView alloc]
@@ -78,7 +93,8 @@ UITableViewDelegate
     
     //    _asiRequest = nil;
     
-    
+    hud = [[ATMHud alloc] initWithDelegate:self];
+	[self.view addSubview:hud.view];
     
     
     _cacheArray = [SqliteUtil queryDb];
@@ -95,7 +111,9 @@ UITableViewDelegate
         //数据源去重复
         [self removeRepeatArray];
         
-        
+        //打乱顺序
+        self.list = [self randArray:self.list];
+        DLog(@"读取缓存%d条",self.list.count);
         
         [self.tableView tableViewDidFinishedLoading];
         self.tableView.reachedTheEnd  = NO;
@@ -178,6 +196,10 @@ UITableViewDelegate
     
     _asiRequest = [ASIHTTPRequest requestWithURL:url];
     [_asiRequest setDelegate:self];
+    [_asiRequest setDownloadProgressDelegate:mProgress];
+//    [hud show];
+    
+    [mProgress setHidden:NO];
     [_asiRequest setDidFinishSelector:@selector(GetResult:)];
     [_asiRequest setDidFailSelector:@selector(GetErr:)];
     [_asiRequest startAsynchronous];
@@ -190,6 +212,9 @@ UITableViewDelegate
     [self.tableView tableViewDidFinishedLoading];
     
     
+    [mProgress setHidden:YES];
+    [mProgress setProgress:0];
+    
     NSString *responseString = [request responseString];
     NSLog(@"%@\n",responseString);
     NSError *error = [request error];
@@ -197,22 +222,27 @@ UITableViewDelegate
     NSLog(@"error:%@",error);
     
     
-    [SVStatusHUD showWithImage:[UIImage imageNamed:@"wifi.png"] status:[NSString stringWithFormat:@"%@=====\n%@",responseString,error]];
+    [hud setCaption:@"网络连接失败"];
+    [hud show];
+    [hud hideAfter:2.0];
+    
+//    [SVStatusHUD showWithImage:[UIImage imageNamed:@"wifi.png"] status:[NSString stringWithFormat:@"%@=====\n%@",responseString,error]];
     
 }
 
 -(void) GetResult:(ASIHTTPRequest *)request
 {
-    
+    [mProgress setHidden:YES];
+    [mProgress setProgress:0];
     //    NSString *responseString = [request responseString];
     //    NSLog(@"%@\n",responseString);
     
     if (self.refreshing) {
         self.page = 1;
         self.refreshing = NO;
-        if (self.list.count > 100) {
-            [self.list removeAllObjects];
-        }
+ 
+        [self.list removeAllObjects];
+       
         
         [SqliteUtil initDb];
     }
@@ -237,17 +267,17 @@ UITableViewDelegate
             
             
             //            //ttttttttttt
-            //            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
-            qs.content = @"test...";
+            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
+//            qs.content = @"test...";
             //            qs.imageURL = @"http://img.qiushibaike.com/system/pictures/6317243/small/app6317243.jpg";
             //            qs.imageMidURL = @"http://img.qiushibaike.com/system/pictures/6317243/medium/app6317243.jpg";
             //            //tttttttttttt
             
             
             
-            
-            //保存到数据库
-            [SqliteUtil saveDb:qs];
+           
+//            //保存到数据库
+//            [SqliteUtil saveDb:qs];
             
             
             
@@ -259,7 +289,8 @@ UITableViewDelegate
         
         //数据源去重复
         [self removeRepeatArray];
-        
+        //保存到数据库
+        [NSThread detachNewThreadSelector:@selector(init_backup:) toTarget:self withObject:nil];
         
 		
     }
@@ -274,7 +305,20 @@ UITableViewDelegate
     }
     
 }
-#pragma mark - TableView*
+
+
+
+
+
+- (void)init_backup:(id)sender
+{
+    [SqliteUtil saveDbWithArray:self.list];
+}
+
+
+
+
+#pragma mark - TableView data source
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -435,7 +479,7 @@ UITableViewDelegate
     
 }
 
-
+//cell 动态 高度
 -(CGFloat) getTheHeight:(NSInteger)row
 {
     CGFloat contentWidth = 280;
@@ -459,6 +503,8 @@ UITableViewDelegate
     return height;
 }
 
+
+//去掉 重复数据
 - (void)removeRepeatArray
 {
     DLog(@"原来：%d",self.list.count);
@@ -483,15 +529,14 @@ UITableViewDelegate
     DLog(@"之后：%d",self.list.count);
 //    self.list = [NSMutableArray arrayWithArray:[self.list sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]];
     
-    //打乱顺序
-    self.list = [self randArray:self.list];
+    
     
 
 }
 
 
-#pragma mark –
-#pragma mark (NSMutableArray *)randArray:(NSMutableArray *)ary
+#pragma mark – 
+#pragma mark NSMutableArray 重排序
 - (NSMutableArray *)randArray:(NSMutableArray *)ary{
     NSMutableArray *tmpAry = [NSMutableArray arrayWithArray:ary];
     NSUInteger count = [ary count];
@@ -504,6 +549,8 @@ UITableViewDelegate
     return tmpAry;
 }
 
+
+
 - (void)favoriteAction:(id)sender
 {
     UIButton *btn = (UIButton*)sender;
@@ -515,6 +562,21 @@ UITableViewDelegate
     
 
 }
+
+
+//- (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
+//{
+//    DLog(@"%lld",bytes);
+//}
+//
+//- (void)setProgress:(float)newProgress
+//{
+////    if (newProgress == 1.0) {
+////        [hud hide];
+////        [hud setProgress:0];
+////    }
+//    DLog(@"%f",newProgress);
+//}
 
 
 #ifdef _FOR_DEBUG_
