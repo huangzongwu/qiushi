@@ -33,7 +33,7 @@ UITableViewDelegate
 >
 {
     ATMHud *hud;
-    UIProgressView *mProgress;
+    
 }
 -(void) GetErr:(ASIHTTPRequest *)request;
 -(void) GetResult:(ASIHTTPRequest *)request;
@@ -53,6 +53,7 @@ UITableViewDelegate
 @synthesize Qiutype,QiuTime;
 @synthesize cacheArray = _cacheArray;
 @synthesize hud;
+@synthesize imageUrlArray = _imageUrlArray;
 
 
 
@@ -64,16 +65,9 @@ UITableViewDelegate
 	// Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor clearColor]];
     _list = [[NSMutableArray alloc] init ];
+    _imageUrlArray = [[NSMutableArray alloc]init];
     
     
-
-    
-    mProgress = [[UIProgressView alloc]initWithProgressViewStyle:UIProgressViewStyleBar];
-    [mProgress setFrame:CGRectMake(10, 10, 200, 10)];
-    
-    [self.view addSubview:mProgress];
-    [mProgress setHidden:YES];
-    [mProgress setProgress:0];
     
     //ad
     bannerView_ = [[GADBannerView alloc]
@@ -201,10 +195,7 @@ UITableViewDelegate
     
     _asiRequest = [ASIHTTPRequest requestWithURL:url];
     [_asiRequest setDelegate:self];
-    [_asiRequest setDownloadProgressDelegate:mProgress];
-//    [hud show];
     
-    [mProgress setHidden:NO];
     [_asiRequest setDidFinishSelector:@selector(GetResult:)];
     [_asiRequest setDidFailSelector:@selector(GetErr:)];
     [_asiRequest startAsynchronous];
@@ -217,8 +208,6 @@ UITableViewDelegate
     [self.tableView tableViewDidFinishedLoading];
     
     
-    [mProgress setHidden:YES];
-    [mProgress setProgress:0];
     
     NSString *responseString = [request responseString];
     NSLog(@"%@\n",responseString);
@@ -231,23 +220,22 @@ UITableViewDelegate
     [hud show];
     [hud hideAfter:2.0];
     
-//    [SVStatusHUD showWithImage:[UIImage imageNamed:@"wifi.png"] status:[NSString stringWithFormat:@"%@=====\n%@",responseString,error]];
+    //    [SVStatusHUD showWithImage:[UIImage imageNamed:@"wifi.png"] status:[NSString stringWithFormat:@"%@=====\n%@",responseString,error]];
     
 }
 
 -(void) GetResult:(ASIHTTPRequest *)request
 {
-    [mProgress setHidden:YES];
-    [mProgress setProgress:0];
+    
     //    NSString *responseString = [request responseString];
     //    NSLog(@"%@\n",responseString);
     
     if (self.refreshing) {
         self.page = 1;
         self.refreshing = NO;
- 
+        
         [self.list removeAllObjects];
-       
+        [self.imageUrlArray removeAllObjects];
         
         [SqliteUtil initDb];
     }
@@ -273,21 +261,25 @@ UITableViewDelegate
             
             //            //ttttttttttt
 //            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
-//            qs.content = @"test...";
+            //            qs.content = @"test...";
             //            qs.imageURL = @"http://img.qiushibaike.com/system/pictures/6317243/small/app6317243.jpg";
             //            qs.imageMidURL = @"http://img.qiushibaike.com/system/pictures/6317243/medium/app6317243.jpg";
             //            //tttttttttttt
             
             
             
-           
-//            //保存到数据库
-//            [SqliteUtil saveDb:qs];
+            
+            //            //保存到数据库
+            //            [SqliteUtil saveDb:qs];
             
             
             
             [self.list addObject:qs];
             
+            if (qs.imageURL != nil && qs.imageURL != @"") {
+                [self.imageUrlArray addObject:qs.imageURL];
+                [self.imageUrlArray addObject:qs.imageMidURL];
+            }
             
             
         }
@@ -296,7 +288,8 @@ UITableViewDelegate
         [self removeRepeatArray];
         //保存到数据库
         [NSThread detachNewThreadSelector:@selector(init_backup:) toTarget:self withObject:nil];
-        
+        //
+        [NSThread detachNewThreadSelector:@selector(getImageCache:) toTarget:self withObject:nil];
 		
     }
     
@@ -320,6 +313,21 @@ UITableViewDelegate
     [SqliteUtil saveDbWithArray:self.list];
 }
 
+- (void)getImageCache:(id)sender
+{
+//    EGOImageButton *tem = [[EGOImageButton alloc]initWithPlaceholderImage:nil];
+//    NSLog(@"图片数：%d",self.imageUrlArray.count);
+//    for (NSString* strUrl in self.imageUrlArray)
+//    {
+//        [tem setImageURL:[NSURL URLWithString:strUrl]];
+//        
+//        
+//    }
+//    
+////    EGOImageLoadConnection *con = EGOImageLoadConnection 
+////    1111111111
+//    NSLog(@"获取缓存完成");
+}
 
 
 
@@ -386,7 +394,7 @@ UITableViewDelegate
     
     //发布时间
     cell.txtTime.text = qs.fbTime;
-
+    
     [cell.goodbtn setTag:(indexPath.row +100) ];
     [cell.goodbtn addTarget:self action:@selector(favoriteAction:) forControlEvents:UIControlEventTouchUpInside];
     
@@ -394,7 +402,6 @@ UITableViewDelegate
     [cell resizeTheHeight:kTypeMain];
     
     
-    [cell.imgPhoto addTarget:self action:@selector(imgPhotoClick:) forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -462,16 +469,14 @@ UITableViewDelegate
 {
     
     
-
+    
     
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
-
     
     
-
     CommentsViewController *comments=[[CommentsViewController alloc]initWithNibName:@"CommentsViewController" bundle:nil];
     comments.qs = [self.list objectAtIndex:indexPath.row];
-
+    
     
     [[delegate navController] pushViewController:comments animated:YES];
     
@@ -535,15 +540,15 @@ UITableViewDelegate
     
     self.list = filterResults;
     DLog(@"之后：%d",self.list.count);
-//    self.list = [NSMutableArray arrayWithArray:[self.list sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]];
+    //    self.list = [NSMutableArray arrayWithArray:[self.list sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)]];
     
     
     
-
+    
 }
 
 
-#pragma mark – 
+#pragma mark –
 #pragma mark NSMutableArray 重排序
 - (NSMutableArray *)randArray:(NSMutableArray *)ary{
     NSMutableArray *tmpAry = [NSMutableArray arrayWithArray:ary];
@@ -568,35 +573,9 @@ UITableViewDelegate
     DLog(@"%@",qs.qiushiID);
     [SqliteUtil updateDataIsFavourite:qs.qiushiID isFavourite:@"yes"];
     
-
-}
-
-- (void)imgPhotoClick:(id)sender
-{
-    DLog(@"imgPhotoClick" );
-    
-    
-//    PhotoViewer *photoview = [[PhotoViewer alloc]initWithNibName:@"PhotoViewer" bundle:nil];
-//    photoview.imgUrl = self.imgMidUrl;
     
 }
 
-
-
-
-//- (void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes
-//{
-//    DLog(@"%lld",bytes);
-//}
-//
-//- (void)setProgress:(float)newProgress
-//{
-////    if (newProgress == 1.0) {
-////        [hud hide];
-////        [hud setProgress:0];
-////    }
-//    DLog(@"%f",newProgress);
-//}
 
 
 #ifdef _FOR_DEBUG_

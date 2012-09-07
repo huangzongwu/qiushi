@@ -72,6 +72,7 @@
 #pragma mark Image loading
 
 - (void)cancelImageLoad {
+    DLog(@"cancelImageLoad");
 	[[EGOImageLoader sharedImageLoader] cancelLoadForURL:self.imageURL];
 	[[EGOImageLoader sharedImageLoader] removeObserver:self forURL:self.imageURL];
 }

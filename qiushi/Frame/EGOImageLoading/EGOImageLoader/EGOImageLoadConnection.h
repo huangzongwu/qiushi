@@ -79,5 +79,7 @@
 
 @protocol EGOImageLoadConnectionDelegate<NSObject>
 - (void)imageLoadConnectionDidFinishLoading:(EGOImageLoadConnection *)connection;
-- (void)imageLoadConnection:(EGOImageLoadConnection *)connection didFailWithError:(NSError *)error;	
+- (void)imageLoadConnection:(EGOImageLoadConnection *)connection didFailWithError:(NSError *)error;
+
+- (void)imageLoadConnection:(EGOImageLoadConnection *)connection progressBar:(float)progress;
 @end

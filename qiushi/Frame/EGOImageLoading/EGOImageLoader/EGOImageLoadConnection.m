@@ -58,10 +58,18 @@
 	[request setValue:@"gzip" forHTTPHeaderField:@"Accept-Encoding"];  
 	_connection = [[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:YES];
 	[request release];
+    
+    //Reset progress bar
+    self.downloadedByteCount = 0;
+    self.expectedByteCount = 0;
 }
 
 - (void)cancel {
-	[_connection cancel];	
+	[_connection cancel];
+    
+    //Reset progress bar
+    self.downloadedByteCount = 0;
+    self.expectedByteCount = 0;
 }
 
 - (NSData*)responseData {
@@ -73,9 +81,16 @@
 	[_responseData appendData:data];
     
     self.downloadedByteCount += data.length;
-    DLog(@"已经下载了：%d/%d",self.downloadedByteCount,self.expectedByteCount);
+//    DLog(@"已经下载了：%.f%",((CGFloat)self.downloadedByteCount/(CGFloat)self.expectedByteCount));
     //Update progress bar in front view
 //    [self performSelectorOnMainThread:@selector(updateProgressBar) withObject:nil waitUntilDone:YES];
+//    [self.delegate updateProgressBar:((CGFloat)self.downloadedByteCount/(CGFloat)self.expectedByteCount)];
+    
+    if ([self.delegate respondsToSelector:@selector(imageLoadConnection:progressBar:)]) {
+        [self.delegate imageLoadConnection:self progressBar:((CGFloat)self.downloadedByteCount/(CGFloat)self.expectedByteCount)];
+    }
+    
+    
     
 }
 
@@ -85,7 +100,10 @@
     self.expectedByteCount = [response expectedContentLength];
     self.downloadedByteCount = 0;
     
-    DLog(@"总大小：%d",self.expectedByteCount);
+    DLog(@"开始获取==1");
+    if ([self.delegate respondsToSelector:@selector(imageLoadConnection:progressBar:)]) {
+        [self.delegate imageLoadConnection:self progressBar:0];
+    }
 }
 
 
@@ -93,6 +111,14 @@
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection {
 	if(connection != _connection) return;
 
+    DLog(@"获取完成==2");
+    self.expectedByteCount = 0;
+    self.downloadedByteCount = 0;
+    if ([self.delegate respondsToSelector:@selector(imageLoadConnection:progressBar:)]) {
+        [self.delegate imageLoadConnection:self progressBar:0];
+    }
+    
+    //respondsToSelector判断是否实现了某方法
 	if([self.delegate respondsToSelector:@selector(imageLoadConnectionDidFinishLoading:)]) {
 		[self.delegate imageLoadConnectionDidFinishLoading:self];
 	}
@@ -101,19 +127,22 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error {
 	if(connection != _connection) return;
 
+    DLog(@"获取失败==3：%@",error);
+    
+    self.expectedByteCount = 0;
+    self.downloadedByteCount = 0;
+    if ([self.delegate respondsToSelector:@selector(imageLoadConnection:progressBar:)]) {
+        [self.delegate imageLoadConnection:self progressBar:0];
+    }
+    
+    //respondsToSelector判断是否实现了某方法
 	if([self.delegate respondsToSelector:@selector(imageLoadConnection:didFailWithError:)]) {
 		[self.delegate imageLoadConnection:self didFailWithError:error];
 	}
 }
 
 
-//#pragma mark - Private methods
-//- (void) updateProgressBar{
-//    if (self.expectedByteCount > 0)
-//        [self.progressView setProgress: ((CGFloat)self.downloadedByteCount/(CGFloat)self.expectedByteCount)];
-//    else
-//        [self.progressView setProgress:0.0f];
-//}
+
 
 - (void)dealloc {
 	self.response = nil;

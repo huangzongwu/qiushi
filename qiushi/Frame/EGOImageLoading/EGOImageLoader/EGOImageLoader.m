@@ -49,6 +49,7 @@ inline static NSString* keyForURL(NSURL* url, NSString* style) {
 #if __EGOIL_USE_NOTIF
 	#define kImageNotificationLoaded(s) [@"kEGOImageLoaderNotificationLoaded-" stringByAppendingString:keyForURL(s, nil)]
 	#define kImageNotificationLoadFailed(s) [@"kEGOImageLoaderNotificationLoadFailed-" stringByAppendingString:keyForURL(s, nil)]
+    #define kImageNotificationUpdateProgress(s) [@"kEGOImageLoaderNotificationLoadUpdate-" stringByAppendingString:keyForURL(s, nil)]
 #endif
 
 @interface EGOImageLoader ()
@@ -289,6 +290,21 @@ inline static NSString* keyForURL(NSURL* url, NSString* style) {
 	#endif
 
 	[self cleanUpConnection:connection];
+}
+
+
+- (void)imageLoadConnection:(EGOImageLoadConnection *)connection progressBar:(float)progress
+{
+#if __EGOIL_USE_NOTIF
+    
+//    DLog(@"%@",kImageNotificationUpdateProgress(connection.imageURL));
+	NSNotification* notification = [NSNotification notificationWithName:kImageNotificationUpdateProgress(connection.imageURL)
+																 object:self
+															   userInfo:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%.2f",progress],@"progress",connection.imageURL,@"imageURL",nil]];
+	
+	[[NSNotificationCenter defaultCenter] performSelectorOnMainThread:@selector(postNotification:) withObject:notification waitUntilDone:YES];
+#endif
+    
 }
 
 #if __EGOIL_USE_BLOCKS

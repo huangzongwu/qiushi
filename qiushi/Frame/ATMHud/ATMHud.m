@@ -29,6 +29,7 @@
 @synthesize shadowEnabled, blockTouches, allowSuperviewInteraction;
 @synthesize showSound, updateSound, hideSound;
 @synthesize __view, sound, displayQueue, queuePosition;
+@synthesize mFrame = _mFrame;
 
 - (id)init {
 	if ((self = [super init])) {
@@ -294,5 +295,11 @@
 	sound = [[ATMSoundFX alloc] initWithContentsOfFile:soundPath];
 	[sound play];
 }
+
+- (void)setMFrame:(CGRect)mFrame{
+    
+    [self.view setFrame:mFrame];
+}
+
 
 @end

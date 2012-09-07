@@ -25,12 +25,14 @@
     GADBannerView *bannerView_;
     
     NSMutableArray *_cacheArray;//保存到数据库里的缓存
+    NSMutableArray *_imageUrlArray;//预先把img读取 以便减少加载时间
 }
 
 @property(nonatomic,retain) ASIHTTPRequest *asiRequest;
 @property (nonatomic,assign) QiuShiType Qiutype;
 @property (nonatomic,assign) QiuShiTime QiuTime;
 @property (nonatomic,retain) NSMutableArray *cacheArray;
+@property (nonatomic,retain) NSMutableArray *imageUrlArray;
 -(void) LoadPageOfQiushiType:(QiuShiType) type Time:(QiuShiTime) time;
 -(CGFloat) getTheHeight:(NSInteger)row;
 @end

@@ -7,8 +7,10 @@
 //
 
 #import "ContentCell.h"
+
 #import "CommentsViewController.h"
 #import "PhotoViewer.h"
+#import "MyNavigationController.h"
 
 #define FGOOD       101
 #define FBAD        102
@@ -178,16 +180,17 @@
 -(void) ImageBtnClicked:(id)sender
 {
     
+    
+    
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    
     _photoview = [[PhotoViewer alloc]initWithNibName:@"PhotoViewer" bundle:nil];
     _photoview.imgUrl = self.imgMidUrl;
-    [_photoview fadeIn]; 
-    [_photoview.view setFrame:CGRectMake(0, 0, kDeviceWidth, KDeviceHeight)];
-    [[[UIApplication sharedApplication]keyWindow] addSubview:_photoview.view];
-    [_photoview fadeIn];
+    DLog(@"self.imgMidUrl:%@",self.imgMidUrl);
     
-    
-    
-    
+    [[delegate navController] presentModalViewController:_photoview animated:YES];
+
+
     
     
 }

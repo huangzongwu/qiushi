@@ -47,17 +47,17 @@ static MyProgressHud *instance;
 #ifndef __OPTIMIZE__
     
     DLog(@"%@",title);
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
-	
-	// Configure for text only and offset down
-	hud.mode = MBProgressHUDModeText;
-	hud.labelText = title;
-    //	hud.margin = 10.f;
-    //	hud.yOffset = 150.f;
-    //    hud.opacity = 0.6;
-	hud.removeFromSuperViewOnHide = YES;
-	
-	[hud hide:YES afterDelay:3];
+//    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:[UIApplication sharedApplication].keyWindow animated:YES];
+//	
+//	// Configure for text only and offset down
+//	hud.mode = MBProgressHUDModeText;
+//	hud.labelText = title;
+//    //	hud.margin = 10.f;
+//    //	hud.yOffset = 150.f;
+//    //    hud.opacity = 0.6;
+//	hud.removeFromSuperViewOnHide = YES;
+//	
+//	[hud hide:YES afterDelay:3];
     
 #else
 #endif

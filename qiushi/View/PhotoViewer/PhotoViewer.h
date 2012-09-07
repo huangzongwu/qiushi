@@ -11,6 +11,7 @@
 
 #import "ATMHud.h"
 
+
 @interface PhotoViewer : UIViewController<EGOImageViewDelegate,UIGestureRecognizerDelegate>
 {
     NSString *_imgUrl;
@@ -25,8 +26,8 @@
 
 @property (nonatomic,retain) EGOImageView *imageView;
 @property (nonatomic,retain) NSString *imgUrl;
--(void) fadeOut;
--(void) fadeIn;
+
+
 
 @property (nonatomic, retain) ATMHud *hud;
 

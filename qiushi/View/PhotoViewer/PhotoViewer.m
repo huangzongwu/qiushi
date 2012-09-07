@@ -7,13 +7,30 @@
 //
 
 #import "PhotoViewer.h"
+
+#import "TestNavigationBar.h"
+#import "MyNavigationController.h"
+
+
+
+inline static NSString* keyForURL(NSURL* url, NSString* style) {
+	if(style) {
+		return [NSString stringWithFormat:@"EGOImageLoader-%u-%u", [[url description] hash], [style hash]];
+	} else {
+		return [NSString stringWithFormat:@"EGOImageLoader-%u", [[url description] hash]];
+	}
+}
+
+#define kImageNotificationUpdateProgress(s) [@"kEGOImageLoaderNotificationLoadUpdate-" stringByAppendingString:keyForURL(s, nil)]
+
+
 @interface PhotoViewer()
 {
     ATMHud *hud1;
 }
 -(void) BtnClicked:(id)sender;
 -(void)handlePan:(UIPanGestureRecognizer *)recognizer;
--(void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *) contextInfo; 
+-(void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *) contextInfo;
 @end
 
 @implementation PhotoViewer
@@ -34,10 +51,6 @@
         //设置背景颜色
         [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"main_background.png"]]];
         
-        self.title = @"有图有真相";
-        
-
-
         roation = 0;
         scale = 1;
     }
@@ -55,25 +68,40 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib
     
-    _imageView = [[EGOImageView alloc]initWithPlaceholderImage:[UIImage imageNamed:@"thumb_pic.png"] delegate:self];
-    [_imageView setFrame:CGRectMake(20,50,300,300)];
-    [self.view addSubview:_imageView];
+    TestNavigationBar *navigationBar = [[TestNavigationBar alloc] initWithFrame:CGRectMake(0, 0, 320, 44)];
+    UINavigationItem *navigationItem = [[UINavigationItem alloc] initWithTitle:@"有图有真相"];
+    [navigationBar pushNavigationItem:navigationItem animated:NO];
+    [self.view addSubview:navigationBar];
     
-    [_imageView setImageURL:[NSURL URLWithString:imgUrl]];
+    UIImage* image= [UIImage imageNamed:@"navi_back_btn"];
+    UIImage* imagef = [UIImage imageNamed:@"navi_back_f_btn"];
+    CGRect backframe= CGRectMake(0, 0, image.size.width, image.size.height);
+    UIButton* backButton= [UIButton buttonWithType:UIButtonTypeCustom];
+    backButton.frame = backframe;
+    [backButton setBackgroundImage:image forState:UIControlStateNormal];
+    [backButton setBackgroundImage:imagef forState:UIControlStateHighlighted];
+    [backButton addTarget:self action:@selector(fadeOut) forControlEvents:UIControlEventTouchUpInside];
+    //定制自己的风格的  UIBarButtonItem
+    UIBarButtonItem* someBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:backButton];
+    navigationItem.leftBarButtonItem = someBarButtonItem;
+    
+    
+    _imageView = [[EGOImageView alloc]initWithPlaceholderImage:[UIImage imageNamed:@"thumb_pic.png"] delegate:self];
+    [_imageView setFrame:CGRectMake(20,50 + 44,300,300)];
+    [self.view addSubview:_imageView];
     
     
     _hud = [[ATMHud alloc] initWithDelegate:self];
     [self.view addSubview:_hud.view];
     
     CGRect mframe = _hud.mFrame;
-    [_hud setMFrame:CGRectMake(mframe.origin.x, 80.0, mframe.size.width, mframe.size.height)];
-    [_hud setCaption:@" "];
+    [_hud setMFrame:CGRectMake((320 - mframe.size.height) * .5, 80.0, mframe.size.width, mframe.size.height)];
+    [_hud setCaption:@"亲,正在努力加载中..."];
     [_hud setProgress:0.08];
     [_hud show];
     
-  
     NSArray *array = [NSArray arrayWithObjects:@"rotate_left",@"rotate_right",@"zoom_in",@"zoom_out",nil];
-    for (int i=0; i<[array count]; i++) 
+    for (int i=0; i<[array count]; i++)
     {
         UIImage *normal = [UIImage imageNamed:[NSString stringWithFormat:@"%@.png",[array objectAtIndex:i]]];
         UIImage *active = [[UIImage imageNamed:@"imageviewer_toolbar_background.png"]stretchableImageWithLeftCapWidth:5 topCapHeight:5];
@@ -84,30 +112,21 @@
         [btn addTarget:self action:@selector(BtnClicked:) forControlEvents:UIControlEventTouchUpInside];
         [btn setTag:i];
         [self.view addSubview:btn];
-
+        
     }
     
-    UIButton *backbtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [backbtn setFrame:CGRectMake(0,10,100,40)];
-    [backbtn setImageEdgeInsets:UIEdgeInsetsMake(0,2,0,0)];
-    [backbtn setTitleEdgeInsets:UIEdgeInsetsMake(2,-2,0,0)];
-    [backbtn setImage:[UIImage imageNamed:@"imageviewer_return.png"] forState:UIControlStateNormal];
-      [backbtn setTitle:@"返回" forState:UIControlStateNormal];
-    [backbtn setBackgroundImage:[[UIImage imageNamed:@"imageviewer_toolbar_background.png"]stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
-    [backbtn setTag:4];
-    [backbtn addTarget:self action:@selector(BtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:backbtn];
     
-    UIButton *savebtn = [UIButton buttonWithType:UIButtonTypeCustom];
-    [savebtn setFrame:CGRectMake(220,10,100,40)];
-    [savebtn setImageEdgeInsets:UIEdgeInsetsMake(0,2,0,0)];
-    [savebtn setTitleEdgeInsets:UIEdgeInsetsMake(2,-2,0,0)];
-    [savebtn setImage:[UIImage imageNamed:@"imageviewer_save.png"] forState:UIControlStateNormal];
-     [savebtn setTitle:@"保存" forState:UIControlStateNormal];
-    [savebtn setBackgroundImage:[[UIImage imageNamed:@"imageviewer_toolbar_background.png"]stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
-    [savebtn setTag:5];
-    [savebtn addTarget:self action:@selector(BtnClicked:) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:savebtn];
+    //
+    //    UIButton *savebtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    //    [savebtn setFrame:CGRectMake(220,10,100,40)];
+    //    [savebtn setImageEdgeInsets:UIEdgeInsetsMake(0,2,0,0)];
+    //    [savebtn setTitleEdgeInsets:UIEdgeInsetsMake(2,-2,0,0)];
+    //    [savebtn setImage:[UIImage imageNamed:@"imageviewer_save.png"] forState:UIControlStateNormal];
+    //     [savebtn setTitle:@"保存" forState:UIControlStateNormal];
+    //    [savebtn setBackgroundImage:[[UIImage imageNamed:@"imageviewer_toolbar_background.png"]stretchableImageWithLeftCapWidth:5 topCapHeight:5] forState:UIControlStateNormal];
+    //    [savebtn setTag:5];
+    //    [savebtn addTarget:self action:@selector(BtnClicked:) forControlEvents:UIControlEventTouchUpInside];
+    //    [self.view addSubview:savebtn];
     
     [_imageView setUserInteractionEnabled:YES];
     UIPanGestureRecognizer *panRcognize=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
@@ -136,7 +155,7 @@
 
 - (void)viewDidUnload
 {
-    NSLog(@"viewDidUnload photoViewer");
+    //    NSLog(@"viewDidUnload photoViewer");
     
     [_imageView cancelImageLoad];
     _imageView = nil;
@@ -153,7 +172,37 @@
     return (interfaceOrientation == UIInterfaceOrientationPortrait);
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    //    DLog(@"viewWillAppear");
+    [_imageView setImageURL:[NSURL URLWithString:imgUrl]];
+    //    DLog(@"imgUrl:%@",imgUrl);
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(update:)
+                                                 name:kImageNotificationUpdateProgress([NSURL URLWithString:imgUrl])
+                                               object:nil];
+    
+    
+}
 
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)update:(NSNotification *)notification
+{
+    //    NSLog(@"Received notification: %@", notification);
+    
+    float progress = [[[notification userInfo] objectForKey:@"progress"] floatValue];
+    NSLog(@"%f",progress);
+    
+    [_hud setProgress:progress];
+    
+    
+    
+}
 
 
 #pragma mark - user action
@@ -202,60 +251,62 @@
             break;
         case 5://保存.
         {
-            //调用方法保存到相册的代码  
-           UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(imageSavedToPhotosAlbum: didFinishSavingWithError: contextInfo:), nil);  
+            //调用方法保存到相册的代码
+            UIImageWriteToSavedPhotosAlbum(self.imageView.image, self, @selector(imageSavedToPhotosAlbum: didFinishSavingWithError: contextInfo:), nil);
             
         }
             break;
         default:
             break;
     }
-   
+    
 }
 
-//实现类中实现  
-- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *) contextInfo 
-{  
-    NSString *message;  
-    NSString *title;  
-    if (!error) {  
-        title = @"成功提示";  
-        message = [NSString stringWithFormat:@"成功保存到相冊"];  
-    } else {  
-        title = @"失败提示";  
-        message = [error description];  
-    }  
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title  
-                                                message:message  
-                                                   delegate:nil  
-                                                cancelButtonTitle:@"知道了"  
-                                          otherButtonTitles:nil];  
-    [alert show];  
+
+
+//实现类中实现
+- (void)imageSavedToPhotosAlbum:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *) contextInfo
+{
+    NSString *message;
+    NSString *title;
+    if (!error) {
+        title = @"成功提示";
+        message = [NSString stringWithFormat:@"成功保存到相冊"];
+    } else {
+        title = @"失败提示";
+        message = [error description];
+    }
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:title
+                                                    message:message
+                                                   delegate:nil
+                                          cancelButtonTitle:@"知道了"
+                                          otherButtonTitles:nil];
+    [alert show];
     
-}  
+}
 
 
 
-/*   
+/*
  *  移动图片处理的函数
  *  @recognizer 移动手势
  */
 - (void)handlePan:(UIPanGestureRecognizer *)recognizer {
-    CGPoint translation = [recognizer translationInView:self.view];
+    //    CGPoint translation = [recognizer translationInView:self.view];
+    //
+    //    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x, recognizer.view.center.y + translation.y);
+    //
+    //    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
     
-    recognizer.view.center = CGPointMake(recognizer.view.center.x + translation.x, recognizer.view.center.y + translation.y);
-    
-    [recognizer setTranslation:CGPointMake(0, 0) inView:self.view];
-
 }
 /*
  * handPinch 缩放的函数
  * @recognizer UIPinchGestureRecognizer 手势识别器
  */
 - (void)handlePinch:(UIPinchGestureRecognizer *)recognizer{
-  
+    
     recognizer.view.transform = CGAffineTransformScale(recognizer.view.transform, recognizer.scale, recognizer.scale);
-   
+    
     recognizer.scale = 1;
     
 }
@@ -279,8 +330,8 @@
     if (imageview.image.size.width>300) {
         w = imageview.image.size.width/300;
     }
-    if (imageview.image.size.height>400) {
-        h = imageview.image.size.height/400;
+    if (imageview.image.size.height>(480 - 44 - 20 - 40)) {
+        h = imageview.image.size.height/(480 - 44 - 20 - 40);
     }
     CGFloat scole = w>h ? w:h;
     
@@ -288,7 +339,7 @@
     [_imageView setFrame:rect];
     _imageView.center = self.view.center;
     
-    [_hud hide];
+    [_hud hideAfter:.5];
     [_hud setProgress:0];
 }
 
@@ -310,36 +361,18 @@
     }
     [hud1 show];
     [hud1 hideAfter:1.0];
-		
+    
 }
 
 
-
--(void) fadeIn
-{   
-    CGRect rect = [[UIScreen mainScreen] bounds];
-      self.view.center = CGPointMake(rect.size.width/2, 720);
-    [UIView animateWithDuration:0.5f animations:^{
-         self.view.center = CGPointMake(rect.size.width/2, 240+10);  
-    } completion:^(BOOL finished) {
-        [_imageView setImageURL:[NSURL URLWithString:imgUrl]];
-    }];
-}
 
 -(void) fadeOut
 {
-//    CGRect rect = [[UIScreen mainScreen] bounds];
-//    [UIView animateWithDuration:0.5f animations:^{
-//        self.view.center = CGPointMake(rect.size.width/2, 720);
-//    } completion:^(BOOL finished) {
-//        [_imageView cancelImageLoad];
-//        _imageView = nil;
-//        imgUrl = nil;
-//        [self.view removeFromSuperview];
-//
-//    }];
     
-    [self.navigationController popViewControllerAnimated:YES];
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [[delegate navController] dismissModalViewControllerAnimated:YES];
 }
+
+
 
 @end

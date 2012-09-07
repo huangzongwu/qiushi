@@ -43,6 +43,8 @@ typedef enum {
 	
 	id <ATMHudDelegate> delegate;
 	ATMHudAccessoryPosition accessoryPosition;
+    
+    CGRect _mFrame;
 	
 	@private
 	ATMHudView *__view;
@@ -73,6 +75,8 @@ typedef enum {
 
 @property (nonatomic, assign) id <ATMHudDelegate> delegate;
 @property (nonatomic, assign) ATMHudAccessoryPosition accessoryPosition;
+
+@property (nonatomic, assign) CGRect mFrame;
 
 @property (nonatomic, retain) ATMHudView *__view;
 @property (nonatomic, retain) ATMSoundFX *sound;
