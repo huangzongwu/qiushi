@@ -33,6 +33,7 @@ UITableViewDelegate
 >
 {
     ATMHud *hud;
+    EGOImageButton *tem;//读取图片缓存的
     
 }
 -(void) GetErr:(ASIHTTPRequest *)request;
@@ -289,8 +290,8 @@ UITableViewDelegate
         //保存到数据库
         [NSThread detachNewThreadSelector:@selector(init_backup:) toTarget:self withObject:nil];
         //
-        [NSThread detachNewThreadSelector:@selector(getImageCache:) toTarget:self withObject:nil];
-		
+//        [NSThread detachNewThreadSelector:@selector(getImageCache:) toTarget:self withObject:nil];
+		[self getImageCache];
     }
     
     if (self.page >= 20) {
@@ -313,21 +314,7 @@ UITableViewDelegate
     [SqliteUtil saveDbWithArray:self.list];
 }
 
-- (void)getImageCache:(id)sender
-{
-//    EGOImageButton *tem = [[EGOImageButton alloc]initWithPlaceholderImage:nil];
-//    NSLog(@"图片数：%d",self.imageUrlArray.count);
-//    for (NSString* strUrl in self.imageUrlArray)
-//    {
-//        [tem setImageURL:[NSURL URLWithString:strUrl]];
-//        
-//        
-//    }
-//    
-////    EGOImageLoadConnection *con = EGOImageLoadConnection 
-////    1111111111
-//    NSLog(@"获取缓存完成");
-}
+
 
 
 
@@ -577,6 +564,35 @@ UITableViewDelegate
 }
 
 
+- (void)getImageCache
+{
+    
+    NSLog(@"图片数：%d",self.imageUrlArray.count);
+    tem = [[EGOImageButton alloc]initWithPlaceholderImage:[UIImage imageNamed:@"main_background.png"] delegate:self];
+    for (NSString* strUrl in self.imageUrlArray)
+    {
+        //        EGOImageButton *tem = [[EGOImageButton alloc]initWithPlaceholderImage:nil];
+        [tem setImageURL:[NSURL URLWithString:strUrl]];
+        
+        
+    }
+    
+    //    EGOImageLoadConnection *con = EGOImageLoadConnection
+    //    1111111111
+    NSLog(@"获取缓存完成");
+}
+
+- (void)imageButtonLoadedImage:(EGOImageButton*)imageButton
+{
+    
+    NSLog(@"预下载图片成功");
+}
+
+- (void)imageButtonFailedToLoadImage:(EGOImageButton*)imageButton error:(NSError*)error;
+{
+    [imageButton cancelImageLoad];
+    NSLog(@"预下载图片失败");
+}
 
 #ifdef _FOR_DEBUG_
 -(BOOL) respondsToSelector:(SEL)aSelector {

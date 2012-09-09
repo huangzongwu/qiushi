@@ -187,7 +187,7 @@
     _photoview = [[PhotoViewer alloc]initWithNibName:@"PhotoViewer" bundle:nil];
     _photoview.imgUrl = self.imgMidUrl;
     DLog(@"self.imgMidUrl:%@",self.imgMidUrl);
-    
+    _photoview.placeholderImage = [[self.imgPhoto imageView] image];
     [[delegate navController] presentModalViewController:_photoview animated:YES];
 
 

@@ -21,6 +21,7 @@
     
     
     ATMHud *_hud;//读取 图片进度条
+    UIImage *_placeholderImage;//
 
 }
 
@@ -30,5 +31,5 @@
 
 
 @property (nonatomic, retain) ATMHud *hud;
-
+@property (nonatomic, retain) UIImage *placeholderImage;//
 @end

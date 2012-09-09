@@ -10,9 +10,9 @@
 #import "ContentCell.h"
 #import "ASIHttpHeaders.h"
 
+@class PhotoViewer;
 
-
-@interface ContentViewController : UIViewController
+@interface ContentViewController : UIViewController<EGOImageButtonDelegate>
 {
     //http 请求
     ASIHTTPRequest *_asiRequest;

@@ -142,13 +142,13 @@ static NSArray *dirPaths;
             sqlite3_prepare_v2(qiushiDB, insert_stmt, -1, &statement, NULL);
             if (sqlite3_step(statement)==SQLITE_DONE) {
                 
-                DLog(@"已存储到数据库");
+//                DLog(@"已存储到数据库");
                 
             }
             else
             {
-                DLog(@"保存失败:%s",sqlite3_errmsg(qiushiDB));
-//                [MyProgressHud showHUD:[NSString stringWithFormat:@"保存失败:%s",sqlite3_errmsg(qiushiDB)]];
+//                DLog(@"保存失败:%s",sqlite3_errmsg(qiushiDB));
+//
                 
             }
             //这个过程销毁前面被sqlite3_prepare创建的准备语句，每个准备语句都必须使用这个函数去销毁以防止内存泄露。

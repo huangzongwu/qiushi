@@ -37,6 +37,7 @@ inline static NSString* keyForURL(NSURL* url, NSString* style) {
 @synthesize imgUrl;
 @synthesize imageView = _imageView;
 @synthesize hud = _hud;
+@synthesize placeholderImage = _placeholderImage;
 
 
 #pragma mark - View lifecycle
@@ -87,7 +88,7 @@ inline static NSString* keyForURL(NSURL* url, NSString* style) {
     
     
     _imageView = [[EGOImageView alloc]initWithPlaceholderImage:[UIImage imageNamed:@"thumb_pic.png"] delegate:self];
-    [_imageView setFrame:CGRectMake(20,50 + 44,300,300)];
+    [_imageView setFrame:CGRectMake(5,44 + 50,310,310)];
     [self.view addSubview:_imageView];
     
     
@@ -129,28 +130,38 @@ inline static NSString* keyForURL(NSURL* url, NSString* style) {
     //    [self.view addSubview:savebtn];
     
     [_imageView setUserInteractionEnabled:YES];
-    UIPanGestureRecognizer *panRcognize=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
-    [panRcognize setMinimumNumberOfTouches:1];
-    panRcognize.delegate=self;
-    [panRcognize setEnabled:YES];
-    [panRcognize delaysTouchesEnded];
-    [panRcognize cancelsTouchesInView];
+//    UIPanGestureRecognizer *panRcognize=[[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(handlePan:)];
+//    [panRcognize setMinimumNumberOfTouches:1];
+//    panRcognize.delegate=self;
+//    [panRcognize setEnabled:YES];
+//    [panRcognize delaysTouchesEnded];
+//    [panRcognize cancelsTouchesInView];
+//    
+//    UIPinchGestureRecognizer *pinchRcognize=[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
+//    [pinchRcognize setEnabled:YES];
+//    [pinchRcognize delaysTouchesEnded];
+//    [pinchRcognize cancelsTouchesInView];
+//    
+//    UIRotationGestureRecognizer *rotationRecognize=[[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotate:)];
+//    [rotationRecognize setEnabled:YES];
+//    [rotationRecognize delaysTouchesEnded];
+//    [rotationRecognize cancelsTouchesInView];
+//    rotationRecognize.delegate=self;
+//    pinchRcognize.delegate=self;
     
-    UIPinchGestureRecognizer *pinchRcognize=[[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinch:)];
-    [pinchRcognize setEnabled:YES];
-    [pinchRcognize delaysTouchesEnded];
-    [pinchRcognize cancelsTouchesInView];
+    UISwipeGestureRecognizer *swipeRcognize1=[[UISwipeGestureRecognizer alloc]
+                                              initWithTarget:self action:@selector(handleSwipe:)];
+    swipeRcognize1.delegate=self;
+    [swipeRcognize1 setEnabled:YES];
+    [swipeRcognize1 delaysTouchesEnded];
+    [swipeRcognize1 cancelsTouchesInView];
+    swipeRcognize1.direction = UISwipeGestureRecognizerDirectionRight;
+//    [self.view addGestureRecognizer:swipeRcognize1];
+    [_imageView addGestureRecognizer:swipeRcognize1];
     
-    UIRotationGestureRecognizer *rotationRecognize=[[UIRotationGestureRecognizer alloc] initWithTarget:self action:@selector(handleRotate:)];
-    [rotationRecognize setEnabled:YES];
-    [rotationRecognize delaysTouchesEnded];
-    [rotationRecognize cancelsTouchesInView];
-    rotationRecognize.delegate=self;
-    pinchRcognize.delegate=self;
-    
-    [_imageView addGestureRecognizer:rotationRecognize];
-    [_imageView addGestureRecognizer:panRcognize];
-    [_imageView addGestureRecognizer:pinchRcognize];
+//    [_imageView addGestureRecognizer:rotationRecognize];
+//    [_imageView addGestureRecognizer:panRcognize];
+//    [_imageView addGestureRecognizer:pinchRcognize];
 }
 
 - (void)viewDidUnload
@@ -175,6 +186,8 @@ inline static NSString* keyForURL(NSURL* url, NSString* style) {
 - (void)viewWillAppear:(BOOL)animated
 {
     //    DLog(@"viewWillAppear");
+    [_imageView setPlaceholderImage:_placeholderImage];
+    
     [_imageView setImageURL:[NSURL URLWithString:imgUrl]];
     //    DLog(@"imgUrl:%@",imgUrl);
     
@@ -285,6 +298,28 @@ inline static NSString* keyForURL(NSURL* url, NSString* style) {
     
 }
 
+-(void)handleSwipe:(UISwipeGestureRecognizer *)recognizer
+{
+    [self fadeOut];
+    
+    
+//    UISwipeGestureRecognizerDirection direction = recognizer.direction;
+//    if (direction == 1)
+//    {
+//        //右
+//        [self fadeOut];
+//        
+//        
+//    }else if (direction == 2)
+//    {
+//        [self fadeOut];
+//        //左
+//        
+//    }else if (direction == UISwipeGestureRecognizerDirectionDown){
+//        [self fadeOut];
+//    }
+    
+}
 
 
 /*
