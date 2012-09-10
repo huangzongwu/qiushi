@@ -12,6 +12,8 @@
 @interface SetViewController ()
 {
     UIBarButtonItem *leftMenuBtn;
+    
+
 }
 @end
 
@@ -85,6 +87,10 @@
     [_adSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
     
 
+    
+    
+
+    
 }
 
 - (void)viewDidUnload
@@ -99,6 +105,7 @@
     // Release any retained subviews of the main view.
     // e.g. self.myOutlet = nil;
 }
+
 
 
 

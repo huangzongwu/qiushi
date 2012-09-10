@@ -9,7 +9,7 @@
 #ifndef DIYMenu_DIYMenuOptions_h
 #define DIYMenu_DIYMenuOptions_h
 
-#define ITEMHEIGHT 47.0f
+#define ITEMHEIGHT 44.0f
 #define ITEMPADDING 19.0f
 
 #define ICONPADDING 10.0f
@@ -17,7 +17,9 @@
 
 #define GLYPHPADDINGADJUST 2.0f
 
-#define MENUFONT_FAMILY @"Helvetica-Neue"
-#define MENUFONT_SIZE 32
+//#define MENUFONT_FAMILY @"Helvetica-Neue"
+//#define MENUFONT_SIZE 32
+#define MENUFONT_FAMILY @"微软雅黑"
+#define MENUFONT_SIZE 20
 
 #endif

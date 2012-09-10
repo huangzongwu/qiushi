@@ -23,6 +23,8 @@
     MainViewController *_mainController;
     MyNavigationController *_navController;
     LeftController *_leftController;
+    
+    UIView *_lightView;
 }
 
 @property (strong, nonatomic) UIWindow *window;
@@ -33,6 +35,7 @@
 @property (strong, nonatomic) MainViewController *mainController;
 @property (strong, nonatomic) MyNavigationController *navController;
 @property (strong, nonatomic) LeftController *leftController;
+@property (strong, nonatomic) UIView *lightView;
 
 
 @end

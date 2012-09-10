@@ -21,7 +21,6 @@
     int _typeQiuShi;
     int _timeType;
     
-    UISegmentedControl *_timeSegment;
     UIBarButtonItem* _timeItem;
     
     

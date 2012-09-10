@@ -18,9 +18,8 @@
 #import "DIYMenuOptions.h"
 
 
-#define FTop      101
-#define FRecent   102
-#define FPhoto    103
+#define kTagMenu      101
+
 
 //启动一定次数，引导用户去评分
 #define kQDCS @"qdcs"  //启动次数
@@ -86,7 +85,7 @@
     NSString *path = [[NSBundle mainBundle] pathForResource:@"shake" ofType:@"wav"];
 	AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath:path], &soundID);
     
-
+    
     
     //设置糗事类型
     if (!_typeQiuShi) {
@@ -98,25 +97,19 @@
         _timeType = QiuShiTimeRandom;
     }
     
-    _timeSegment = [[UISegmentedControl alloc]initWithItems:[NSArray arrayWithObjects: @"随便逛逛",@"日精选", @"周精选", @"月精选", nil]];
-    [_timeSegment setSegmentedControlStyle:UISegmentedControlStyleBar];
-    [_timeSegment setSelectedSegmentIndex:0];
-    [_timeSegment addTarget:self action:@selector(segmentAction:)forControlEvents:UIControlEventValueChanged];
-    _timeItem = [[UIBarButtonItem alloc] initWithCustomView:_timeSegment];
     
     
-    
-    if (_typeQiuShi == QiuShiTypeTop) {
-        self.navigationItem.rightBarButtonItem = _timeItem;
-    }else
-        self.navigationItem.rightBarButtonItem = nil;
-    
-    
-    
-    
-    _segmentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    _segmentButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    [_segmentButton setFrame:CGRectMake(0, 0, 200, 35)];
+    [_segmentButton setTag:kTagMenu];
     [_segmentButton setTitle:@"随便逛逛" forState:UIControlStateNormal];
     
+    [_segmentButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    if (_typeQiuShi == QiuShiTypeTop) {
+        self.navigationItem.titleView = _segmentButton;
+    }else
+        self.navigationItem.titleView = nil;
     
     
     
@@ -139,8 +132,8 @@
     [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
     [self.view addSubview:m_contentView.view];
     
-
-
+    
+    
     
     
     
@@ -183,35 +176,19 @@
 #pragma mark - action
 
 
--(void)segmentAction:(UISegmentedControl *)segment
+- (void)btnClick:(id)sender
 {
-    
-    if(segment.selectedSegmentIndex == 0)
-    {   _timeType = QiuShiTimeRandom;
-        
-        
-    }
-    else if(segment.selectedSegmentIndex == 1)
+    UIButton *btn = (UIButton*)sender;
+    switch ([btn tag])
     {
-        _timeType = QiuShiTimeDay;
-        
+        case kTagMenu:
+        {
+            [DIYMenu show];
+        }break;
+            
+            
     }
-    else if (segment.selectedSegmentIndex == 2)
-    {
-        _timeType = QiuShiTimeWeek;
-        
-    }
-    else if (segment.selectedSegmentIndex == 3)
-    {
-        _timeType = QiuShiTimeMonth;
-       
-    }
-    
-    [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
-    
-    [DIYMenu show];
 }
-
 
 #pragma mark -  引导用户去 评分
 - (void) pingFen
@@ -227,7 +204,7 @@
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"温馨提示" message:@"糗事囧事有什么需要改进的吗？去评个分吧~~" delegate:self cancelButtonTitle:@"取消" otherButtonTitles:@"去评分", nil];
         
         [alert show];
-     
+        
     }
     
     [ud setInteger:sum forKey:kQDCS];
@@ -244,16 +221,13 @@
 
 
 
-
-
-
-//摇动后 
+//摇动后
 -(void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event{
     
     DLog(@"UIEventSubType : %d",motion);
     if(motion==UIEventSubtypeMotionShake)
     {
-                
+        
         AudioServicesPlaySystemSound (soundID);
         
         [SVStatusHUD showWithImage:[UIImage imageNamed:@"icon_shake.png"] status:@"摇动刷新哦，亲~~"];
@@ -267,10 +241,11 @@
 #pragma mark - 刷新数据
 - (void)refreshDate
 {
+
     if (_typeQiuShi == QiuShiTypeTop) {
-        self.navigationItem.rightBarButtonItem = _timeItem;
+        self.navigationItem.titleView = _segmentButton;
     }else
-        self.navigationItem.rightBarButtonItem = nil;
+        self.navigationItem.titleView = nil;
     //刷新 数据
     [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
 }
@@ -281,6 +256,42 @@
 - (void)menuItemSelected:(NSString *)action
 {
     NSLog(@"Delegate: selected: %@", action);
+    if ([action isEqualToString:@"随便逛逛"]) {
+        if (_timeType != QiuShiTimeRandom) {
+            _timeType = QiuShiTimeRandom;
+        }else{
+            return;
+        }
+        
+        
+    }else if ([action isEqualToString:@"日精选"]) {
+        
+        if (_timeType != QiuShiTimeDay) {
+             _timeType = QiuShiTimeDay;
+        }else{
+            return;
+        }
+
+    }else if ([action isEqualToString:@"周精选"]) {
+       
+        if (_timeType != QiuShiTimeWeek) {
+             _timeType = QiuShiTimeWeek;
+        }else{
+            return;
+        }
+
+    }else if ([action isEqualToString:@"月精选"]) {
+        
+        if (_timeType != QiuShiTimeMonth) {
+            _timeType = QiuShiTimeMonth;
+        }else{
+            return;
+        }
+
+    }
+    
+    [_segmentButton setTitle:action forState:UIControlStateNormal];
+    [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
 }
 
 - (void)menuActivated

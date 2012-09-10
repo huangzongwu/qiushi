@@ -28,6 +28,7 @@
 @synthesize mainController = _mainController;
 @synthesize navController = _navController;
 @synthesize leftController = _leftController;
+@synthesize lightView = _lightView;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
@@ -61,7 +62,11 @@
     // Override point for customization after application launch.
     
     
-    
+    _lightView = [[UIView alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    [_lightView setUserInteractionEnabled:NO];
+    [_lightView setBackgroundColor:[UIColor blackColor]];
+    [_lightView setAlpha:.0];
+//    [self.window addSubview:_lightView];
     
     
     _mainController = [[MainViewController alloc] init];

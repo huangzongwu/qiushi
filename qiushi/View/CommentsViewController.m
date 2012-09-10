@@ -337,6 +337,24 @@ UITableViewDelegate
         Comments *cm = [list objectAtIndex:indexPath.row];
         //设置内容
         cell.txtContent.text = cm.content;
+        
+        int i = [cm.content intValue];
+//        NSLog(@"%d",i);
+        
+        if (i > 0 ) {
+            NSRange range1 = [cm.content rangeOfString:[NSString stringWithFormat:@"%d楼",i]];
+            NSRange range2 = [cm.content rangeOfString:[NSString stringWithFormat:@"%dl",i]];
+            NSRange range3 = [cm.content rangeOfString:[NSString stringWithFormat:@"%dL",i]];
+            
+
+            if (range1.length > 0 || range2.length > 0 || range3.length > 0 ){
+                NSLog(@"有");
+            }else{
+                NSLog(@"没有");
+            }
+        }
+        
+        
         cell.txtfloor.text = [NSString stringWithFormat:@"%d",cm.floor];
         //设置用户名
         if (cm.anchor!=nil && cm.anchor!= @"") 

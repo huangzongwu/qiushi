@@ -16,13 +16,20 @@
 #import "MyNavigationController.h"
 #import "FavouriteViewController.h"
 
+@interface LeftController ()
+{
+    UISlider *_mSlider;//伪 调节屏幕亮度
+}
 
+@end
 @implementation LeftController
 
 @synthesize tableView=_tableView;
 @synthesize items = _items;
 @synthesize navController = _navController;
 @synthesize mainViewController = _mainViewController;
+@synthesize setBtn = _setBtn;
+@synthesize isNormalTable = _isNormalTable;
 
 - (id)init {
     if ((self = [super init])) {
@@ -51,8 +58,35 @@
     
     [[NSUserDefaults standardUserDefaults] setObject:@"1001" forKey:@"mainType"];
     
+    
+    [self.view setBackgroundColor:[UIColor scrollViewTexturedBackgroundColor]];
+    
+    _setBtn = [UIButton buttonWithType:UIButtonTypeInfoLight];
+    [_setBtn setBackgroundImage:[UIImage imageNamed:@"more_setting.png"] forState:UIControlStateNormal];
+    [_setBtn setFrame:CGRectMake(0, 0, 32, 32)];
+    
+    [_setBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_setBtn];
+    
+    
+    //调节亮度的 滑动条
+    _mSlider = [[UISlider alloc]initWithFrame:CGRectMake(20.0, 12 , 200, 20)];
+    [_mSlider setMaximumValue:1.0];
+    [_mSlider setMinimumValue:.3];
+    [_mSlider setValue:1.0];
+    [_mSlider addTarget:self action:@selector(changeAction:) forControlEvents:UIControlEventValueChanged];
+    
+    
+    self.isNormalTable = YES;
+    
+    
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+   [delegate.window addSubview:delegate.lightView];
+    
+    
+    
     if (!_tableView) {
-        UITableView *tableView = [[UITableView alloc] initWithFrame:self.view.bounds style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, 480 - 44 -20 - 44) style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.delegate = (id<UITableViewDelegate>)self;
         tableView.dataSource = (id<UITableViewDataSource>)self;
@@ -121,15 +155,28 @@
 #pragma mark - UITableViewDataSource
 - (NSInteger) numberOfSectionsInTableView:(UITableView *)tableView
 {
+
     return 4;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section {
-    if (section == 0) {
-        return self.items.count;
+    if (_isNormalTable == YES) {
+        if (section == 0) {
+            return self.items.count;
+        }else{
+            return 0;
+        }
     }else{
-        return 0;
+        if (section == 0) {
+            return 1;
+        }else{
+            return 0;
+        }
     }
+
+        
+
+    
     
 }
 
@@ -141,10 +188,20 @@
         cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:CellIdentifier];
     }
     
-    if (indexPath.section == 0) {
-        cell.textLabel.text = [self.items objectAtIndex:indexPath.row];
-    }
-    cell.textLabel.font = [UIFont fontWithName:@"微软雅黑" size:15.0];
+     if (_isNormalTable == YES) {
+         if (indexPath.section == 0) {
+             cell.textLabel.text = [self.items objectAtIndex:indexPath.row];
+         }
+         cell.textLabel.font = [UIFont fontWithName:@"微软雅黑" size:15.0];
+     }else{
+         if (indexPath.section == 0) {
+             cell.textLabel.text = @"";
+              [cell.contentView addSubview:_mSlider];
+         }
+
+        
+     }
+    
     
     return cell;
     
@@ -269,6 +326,26 @@
     }
      [_menuController showRootController:YES];
 }
+
+
+
+- (void)btnClick:(id)sender
+{
+//    UIButton *btn = (UIButton* )sender;
+    self.isNormalTable = !self.isNormalTable;
+    [self.tableView reloadData];
+}
+
+
+- (void)changeAction:(id)sender {
+    
+    UISlider *mSlider = (UISlider*)sender;
+
+    AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
+    [delegate.lightView setAlpha:(1 - [mSlider value])];
+    
+}
+
 
 
 #ifdef _FOR_DEBUG_
