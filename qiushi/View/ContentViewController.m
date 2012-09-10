@@ -18,9 +18,10 @@
 #import "AppDelegate.h"
 
 #import "ATMHud.h"
-#import "ATMHudQueueItem.h"
+
 
 #import "PhotoViewer.h"
+#import "iToast.h"
 
 
 
@@ -32,7 +33,7 @@ UITableViewDataSource,
 UITableViewDelegate
 >
 {
-    ATMHud *hud;
+    ATMHud *hud;//提示网络连接 信息的：网络连接失败
     EGOImageButton *tem;//读取图片缓存的
     
 }
@@ -91,9 +92,11 @@ UITableViewDelegate
     _tableView.delegate = self;
     [self.view addSubview:self.tableView];
     
-    //    _asiRequest = nil;
+
     
+    //提示网络连接失败的
     hud = [[ATMHud alloc] initWithDelegate:self];
+    [hud setBlockTouches:NO];
 	[self.view addSubview:hud.view];
     
     
@@ -217,9 +220,12 @@ UITableViewDelegate
     NSLog(@"error:%@",error);
     
     
-    [hud setCaption:@"网络连接失败"];
-    [hud show];
-    [hud hideAfter:2.0];
+//    [hud setCaption:@"网络连接失败"];
+//    [hud show];
+//    [hud hideAfter:2.0];
+    
+    
+    [[iToast makeText:@"网络连接失败"] show];
     
     //    [SVStatusHUD showWithImage:[UIImage imageNamed:@"wifi.png"] status:[NSString stringWithFormat:@"%@=====\n%@",responseString,error]];
     
@@ -261,7 +267,7 @@ UITableViewDelegate
             
             
             //            //ttttttttttt
-//            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
+            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
             //            qs.content = @"test...";
             //            qs.imageURL = @"http://img.qiushibaike.com/system/pictures/6317243/small/app6317243.jpg";
             //            qs.imageMidURL = @"http://img.qiushibaike.com/system/pictures/6317243/medium/app6317243.jpg";

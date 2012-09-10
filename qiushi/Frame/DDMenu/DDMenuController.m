@@ -25,7 +25,7 @@
 //
 
 #import "DDMenuController.h"
-
+#import "IsNetWorkUtil.h"
 
 #define kMenuFullWidth 320.0f
 #define kMenuDisplayedWidth 280.0f
@@ -74,6 +74,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [IsNetWorkUtil initNetWorkStatus];
+    
     [self setRootViewController:_root]; // reset root
     
     if (!_tap) {
@@ -83,6 +86,7 @@
         [tap setEnabled:NO];
         _tap = tap;
     }
+    
     
 }
 

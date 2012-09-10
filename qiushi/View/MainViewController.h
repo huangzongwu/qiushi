@@ -11,9 +11,10 @@
 #import <AudioToolbox/AudioToolbox.h>
 
 @class ContentViewController;
+#import "DIYMenu.h"
 
 
-@interface MainViewController : UIViewController<UIAlertViewDelegate>
+@interface MainViewController : UIViewController<UIAlertViewDelegate,DIYMenuDelegate>
 {
     ContentViewController *m_contentView;  //内容页面
 

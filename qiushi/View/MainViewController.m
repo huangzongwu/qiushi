@@ -15,6 +15,8 @@
 #import "ContentViewController.h"
 #import "SVStatusHUD.h"
 
+#import "DIYMenuOptions.h"
+
 
 #define FTop      101
 #define FRecent   102
@@ -26,6 +28,9 @@
 
 
 @interface MainViewController ()
+{
+    UIButton *_segmentButton;//
+}
 
 @end
 
@@ -53,6 +58,28 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    
+    UIFont *font = [UIFont fontWithName:MENUFONT_FAMILY size:MENUFONT_SIZE];
+    [DIYMenu setDelegate:self];
+    
+    // Add menu items
+    [DIYMenu addMenuItem:@"随便逛逛"
+                withIcon:[UIImage imageNamed:@"portfolioIcon.png"]
+               withColor:[UIColor colorWithRed:0.18f green:0.76f blue:0.93f alpha:1.0f]
+                withFont:font];
+    [DIYMenu addMenuItem:@"日精选"
+                withIcon:[UIImage imageNamed:@"skillsIcon.png"]
+               withColor:[UIColor colorWithRed:0.28f green:0.55f blue:0.95f alpha:1.0f]
+                withFont:font];
+    [DIYMenu addMenuItem:@"周精选"
+                withIcon:[UIImage imageNamed:@"exploreIcon.png"]
+               withColor:[UIColor colorWithRed:0.47f green:0.24f blue:0.93f alpha:1.0f]
+                withFont:font];
+    [DIYMenu addMenuItem:@"月精选"
+                withIcon:[UIImage imageNamed:@"settingsIcon.png"]
+               withColor:[UIColor colorWithRed:0.57f green:0.0f blue:0.85f alpha:1.0f]
+                withFont:font];
     
     
     //初始化 摇一摇刷新
@@ -83,6 +110,14 @@
         self.navigationItem.rightBarButtonItem = _timeItem;
     }else
         self.navigationItem.rightBarButtonItem = nil;
+    
+    
+    
+    
+    _segmentButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_segmentButton setTitle:@"随便逛逛" forState:UIControlStateNormal];
+    
+    
     
     
     //设置背景颜色
@@ -150,14 +185,6 @@
 
 -(void)segmentAction:(UISegmentedControl *)segment
 {
-    //tttttttttttttttttttttttt
-//    [SVStatusHUD showWithImage:[UIImage imageNamed:@"icon_shake.png"] status:@"摇动刷新哦，亲~~"];
-    
-    
-        //tttttttttttttttttttttttt
-    
-//    [SqliteUtil delNoSave];
-//    DLog(@"%d",[[SqliteUtil queryDb] count]);
     
     if(segment.selectedSegmentIndex == 0)
     {   _timeType = QiuShiTimeRandom;
@@ -182,7 +209,7 @@
     
     [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
     
-    
+    [DIYMenu show];
 }
 
 
@@ -246,6 +273,24 @@
         self.navigationItem.rightBarButtonItem = nil;
     //刷新 数据
     [m_contentView LoadPageOfQiushiType:_typeQiuShi Time:_timeType];
+}
+
+
+#pragma mark - DIYMenuDelegate
+
+- (void)menuItemSelected:(NSString *)action
+{
+    NSLog(@"Delegate: selected: %@", action);
+}
+
+- (void)menuActivated
+{
+    NSLog(@"Delegate: menuActivated");
+}
+
+- (void)menuCancelled
+{
+    NSLog(@"Delegate: menuCancelled");
 }
 
 
