@@ -19,6 +19,7 @@
 #import "MyNavigationController.h"
 #import "AppDelegate.h"
 #import "DDMenuController.h"
+#import "iToast.h"
 @interface FavouriteViewController () <
 PullingRefreshTableViewDelegate,
 UITableViewDataSource,
@@ -84,7 +85,7 @@ UITableViewDelegate
     _list = [[NSMutableArray alloc] init ];
     
     
-    //    NSLog(@"viewDidLoad content");
+   
     
     //ad
     bannerView_ = [[GADBannerView alloc]
@@ -133,13 +134,15 @@ UITableViewDelegate
         
     }
     
+    if (_cacheArray.count == 0) {
+        [[iToast makeText:@"亲,您还没有收藏..."] show];
+    }
     
     
-//    if (self.page == 0) {
-//        
-//        [self.tableView launchRefreshing];
-//    }
 
+
+    
+    [self setBarButtonItems];
     
     
     
@@ -171,11 +174,69 @@ UITableViewDelegate
 
 #pragma mark - Your actions
 
+
+- (void) setBarButtonItems
+{
+	if (_tableView.isEditing)
+        //		self.navigationItem.rightBarButtonItem = SYSBARBUTTON(@"完成",UIBarButtonItemStyleDone, @selector(leaveEditMode));
+    {
+        UIImage* image1= [UIImage imageNamed:@"comm_btn_top_n.png"];
+        UIImage* imagef1 = [UIImage imageNamed:@"comm_btn_top_s.png"];
+        CGRect backframe1= CGRectMake(0, 0, image1.size.width, image1.size.height);
+        UIButton* editButton= [UIButton buttonWithType:UIButtonTypeCustom];
+        editButton.frame = backframe1;
+        [editButton setBackgroundImage:image1 forState:UIControlStateNormal];
+        [editButton setBackgroundImage:imagef1 forState:UIControlStateHighlighted];
+        [editButton setTitle:@"完成" forState:UIControlStateNormal];
+        [editButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        editButton.titleLabel.font=[UIFont systemFontOfSize:12];
+        [editButton addTarget:self action:@selector(leaveEditMode) forControlEvents:UIControlEventTouchUpInside];
+        //定制自己的风格的  UIBarButtonItem
+        UIBarButtonItem* addBarButton= [[UIBarButtonItem alloc] initWithCustomView:editButton];
+        [self.navigationItem setRightBarButtonItem:addBarButton];
+    }
+	else
+        //        self.navigationItem.rightBarButtonItem = SYSBARBUTTON(@"编辑",UIBarButtonItemStylePlain, @selector(enterEditMode));
+    {
+        UIImage* image1= [UIImage imageNamed:@"comm_btn_top_n.png"];
+        UIImage* imagef1 = [UIImage imageNamed:@"comm_btn_top_s.png"];
+        CGRect backframe1= CGRectMake(0, 0, image1.size.width, image1.size.height);
+        UIButton* editButton= [UIButton buttonWithType:UIButtonTypeCustom];
+        editButton.frame = backframe1;
+        [editButton setBackgroundImage:image1 forState:UIControlStateNormal];
+        [editButton setBackgroundImage:imagef1 forState:UIControlStateHighlighted];
+        [editButton setTitle:@"编辑" forState:UIControlStateNormal];
+        [editButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+        editButton.titleLabel.font=[UIFont systemFontOfSize:12];
+        [editButton addTarget:self action:@selector(enterEditMode) forControlEvents:UIControlEventTouchUpInside];
+        //定制自己的风格的  UIBarButtonItem
+        UIBarButtonItem* addBarButton= [[UIBarButtonItem alloc] initWithCustomView:editButton];
+        [self.navigationItem setRightBarButtonItem:addBarButton];
+    }
+    
+    
+}
+
+-(void)enterEditMode
+{
+	[_tableView deselectRowAtIndexPath:[_tableView indexPathForSelectedRow] animated:YES];
+	[_tableView setEditing:YES animated:YES];
+    [self setBarButtonItems];
+    
+}
+-(void)leaveEditMode
+{
+	[_tableView setEditing:NO animated:YES];
+	[self setBarButtonItems];
+}
+
+
 - (void)loadData{
     
     self.page++;
         
-    
+    [self.tableView tableViewDidFinishedLoadingWithMessage:@"亲，下面没有了哦..."];
+    self.tableView.reachedTheEnd  = YES;
     
 }
 

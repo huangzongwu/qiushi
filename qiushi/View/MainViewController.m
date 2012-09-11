@@ -29,6 +29,7 @@
 @interface MainViewController ()
 {
     UIButton *_segmentButton;//
+    UIImageView *_arrowImage;
 }
 
 @end
@@ -99,12 +100,19 @@
     
     
     
-    _segmentButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _segmentButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_segmentButton setFrame:CGRectMake(0, 0, 200, 35)];
     [_segmentButton setTag:kTagMenu];
+    [_segmentButton setTintColor:[UIColor whiteColor]];
+    _segmentButton.titleLabel.font = [UIFont boldSystemFontOfSize:20];
     [_segmentButton setTitle:@"随便逛逛" forState:UIControlStateNormal];
     
     [_segmentButton addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
+    
+    
+    _arrowImage = [[UIImageView alloc]initWithImage:[UIImage imageNamed:@"ic_att_input_pressed.png"]];
+    [_arrowImage setCenter:CGPointMake(155, 16)];
+    [_segmentButton addSubview:_arrowImage];
     
     if (_typeQiuShi == QiuShiTypeTop) {
         self.navigationItem.titleView = _segmentButton;

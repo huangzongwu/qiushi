@@ -46,6 +46,8 @@
     UIButton *badbtn;   
     //评论按钮  
     UIButton *commentsbtn;
+    //收藏按钮
+    UIButton *_saveBtn;
 
     
     PhotoViewer *_photoview;
@@ -64,6 +66,7 @@
 @property (nonatomic,retain) UIButton *goodbtn;    
 @property (nonatomic,retain) UIButton *badbtn; 
 @property (nonatomic,retain) UIButton *commentsbtn;
+@property (nonatomic,retain) UIButton *saveBtn;
 @property (nonatomic,retain) PhotoViewer *photoview;
 -(void) resizeTheHeight:(int)type;
 @end

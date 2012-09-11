@@ -4,7 +4,7 @@
    version = "1.0">
    <FileBreakpoints>
       <FileBreakpoint
-         shouldBeEnabled = "Yes"
+         shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "qiushi/Frame/Utils/SqliteUtil.m"
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "qiushi/View/ContentCell.m"
-         timestampString = "368954855.566916"
+         timestampString = "369038274.03395"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "188"
-         endingLineNumber = "188"
+         startingLineNumber = "198"
+         endingLineNumber = "198"
          landmarkName = "-ImageBtnClicked:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "qiushi/View/ContentCell.m"
-         timestampString = "368954855.566916"
+         timestampString = "369038274.03395"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "185"
-         endingLineNumber = "185"
+         startingLineNumber = "195"
+         endingLineNumber = "195"
          landmarkName = "-ImageBtnClicked:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -124,13 +124,13 @@
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "qiushi/View/CommentsViewController.m"
-         timestampString = "368969447.265416"
+         filePath = "qiushi/View/SetViewController.m"
+         timestampString = "369045192.992659"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "345"
-         endingLineNumber = "345"
-         landmarkName = "-tableView:cellForRowAtIndexPath:"
+         startingLineNumber = "248"
+         endingLineNumber = "248"
+         landmarkName = "-actionSheet:clickedButtonAtIndex:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

@@ -31,7 +31,7 @@
     GADBannerView *bannerView_;//实例变量 bannerView_是一个view
     
     
-    UIBarButtonItem *_shareItem;//分享item
+//    UIBarButtonItem *_shareItem;//分享item
     
     DDMenuController *_menuController;
     

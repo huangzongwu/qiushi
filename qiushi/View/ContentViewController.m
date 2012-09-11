@@ -22,6 +22,7 @@
 
 #import "PhotoViewer.h"
 #import "iToast.h"
+#import "IsNetWorkUtil.h"
 
 
 
@@ -267,7 +268,7 @@ UITableViewDelegate
             
             
             //            //ttttttttttt
-//            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
+            qs.content = @"中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试中文测试111";
             //            qs.content = @"test...";
             //            qs.imageURL = @"http://img.qiushibaike.com/system/pictures/6317243/small/app6317243.jpg";
             //            qs.imageMidURL = @"http://img.qiushibaike.com/system/pictures/6317243/medium/app6317243.jpg";
@@ -295,9 +296,21 @@ UITableViewDelegate
         [self removeRepeatArray];
         //保存到数据库
         [NSThread detachNewThreadSelector:@selector(init_backup:) toTarget:self withObject:nil];
-        //
-//        [NSThread detachNewThreadSelector:@selector(getImageCache:) toTarget:self withObject:nil];
-		[self getImageCache];
+
+        
+        //预先加载 图片
+        NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+        int loadType = [[ud objectForKey:@"loadImage"] intValue];
+        if (loadType == 0) {//全部加载
+            [self getImageCache];
+        }else if (loadType == 1){//仅wifi加载
+            if ([IsNetWorkUtil netWorkType] == kTypeWifi) {
+                [self getImageCache];
+            }
+        }else if (loadType == 2){//不加载
+            
+        }
+
     }
     
     if (self.page >= 20) {
@@ -388,8 +401,8 @@ UITableViewDelegate
     //发布时间
     cell.txtTime.text = qs.fbTime;
     
-    [cell.goodbtn setTag:(indexPath.row +100) ];
-    [cell.goodbtn addTarget:self action:@selector(favoriteAction:) forControlEvents:UIControlEventTouchUpInside];
+    [cell.saveBtn setTag:(indexPath.row +100) ];
+    [cell.saveBtn addTarget:self action:@selector(favoriteAction:) forControlEvents:UIControlEventTouchUpInside];
     
     //自适应函数
     [cell resizeTheHeight:kTypeMain];
@@ -566,7 +579,7 @@ UITableViewDelegate
     DLog(@"%@",qs.qiushiID);
     [SqliteUtil updateDataIsFavourite:qs.qiushiID isFavourite:@"yes"];
     
-    
+    [[iToast makeText:@"已添加到收藏..."] show];
 }
 
 
@@ -577,14 +590,13 @@ UITableViewDelegate
     tem = [[EGOImageButton alloc]initWithPlaceholderImage:[UIImage imageNamed:@"main_background.png"] delegate:self];
     for (NSString* strUrl in self.imageUrlArray)
     {
-        //        EGOImageButton *tem = [[EGOImageButton alloc]initWithPlaceholderImage:nil];
+        
         [tem setImageURL:[NSURL URLWithString:strUrl]];
         
         
     }
     
-    //    EGOImageLoadConnection *con = EGOImageLoadConnection
-    //    1111111111
+
     NSLog(@"获取缓存完成");
 }
 

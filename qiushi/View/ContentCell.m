@@ -15,6 +15,7 @@
 #define FGOOD       101
 #define FBAD        102
 #define FCOMMITE    103
+#define FSave       104
 
 
 @interface ContentCell()
@@ -27,6 +28,7 @@
 @synthesize commentsbtn,badbtn,goodbtn,imgUrl,txtTag,txtTime;
 @synthesize imgPhoto,imgMidUrl;
 @synthesize photoview = _photoview;
+@synthesize saveBtn = _saveBtn;
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier
 {
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
@@ -106,7 +108,7 @@
         [self addSubview:goodbtn];
         
         badbtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [badbtn setFrame:CGRectMake(100,txtContent.frame.size.height-30,70,32)];
+        [badbtn setFrame:CGRectMake(90,txtContent.frame.size.height-30,70,32)];
         [badbtn setTitleEdgeInsets:UIEdgeInsetsMake(0, 0, 0, -20)];
         [badbtn setImageEdgeInsets:UIEdgeInsetsMake(0, .5, 0, 0)];
         [badbtn setBackgroundImage:[UIImage imageNamed:@"button_vote.png"] forState:UIControlStateNormal];
@@ -119,7 +121,7 @@
         [self addSubview:badbtn];
         
         commentsbtn = [UIButton buttonWithType:UIButtonTypeCustom];
-        [commentsbtn setFrame:CGRectMake(230,txtContent.frame.size.height-30,70,32)];
+        [commentsbtn setFrame:CGRectMake(170,txtContent.frame.size.height-30,70,32)];
         [commentsbtn setBackgroundImage:[UIImage imageNamed:@"button_vote.png"] forState:UIControlStateNormal];
         [commentsbtn setBackgroundImage:[UIImage imageNamed:@"button_vote_active.png"] forState:UIControlStateHighlighted];
         [commentsbtn setImage:[UIImage imageNamed:@"icon_for_comment.png"] forState:UIControlStateNormal];
@@ -132,6 +134,13 @@
         [commentsbtn setTag:FCOMMITE];
         [self addSubview:commentsbtn];
      
+        _saveBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+        [_saveBtn setFrame:CGRectMake(260,txtContent.frame.size.height-30,25,25)];
+        [_saveBtn setBackgroundImage:[UIImage imageNamed:@"button_vote.png"] forState:UIControlStateNormal];
+        [_saveBtn setBackgroundImage:[UIImage imageNamed:@"button_vote_active.png"] forState:UIControlStateHighlighted];
+        [_saveBtn setImage:[UIImage imageNamed:@"button_save.png"] forState:UIControlStateNormal];
+        [_saveBtn setTag:FSave];
+        [self addSubview:_saveBtn];
     }
     return self;
 }
@@ -170,8 +179,9 @@
     
     [footView setFrame:CGRectMake(0, centerimageView.frame.size.height, 320, 15)];
     [goodbtn setFrame:CGRectMake(10,centerimageView.frame.size.height-28,70,32)];
-    [badbtn setFrame:CGRectMake(100,centerimageView.frame.size.height-28,70,32)];
-    [commentsbtn setFrame:CGRectMake(230,centerimageView.frame.size.height-28,70,32)];
+    [badbtn setFrame:CGRectMake(90,centerimageView.frame.size.height-28,70,32)];
+    [commentsbtn setFrame:CGRectMake(170,centerimageView.frame.size.height-28,70,32)];
+    [_saveBtn setFrame:CGRectMake(260, centerimageView.frame.size.height-28, 25, 25)];
     [txtTag setFrame:CGRectMake(40,centerimageView.frame.size.height-50,200, 30)];
     [TagPhoto setFrame:CGRectMake(15,centerimageView.frame.size.height-50,24, 24)];
     

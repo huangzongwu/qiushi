@@ -229,11 +229,11 @@ static NSArray *dirPaths;
         
 //        [MyProgressHud showHUD:[NSString stringWithFormat:@"查到%d条数据",selectArray.count]];
         
-        if (selectArray.count > 200) {
-           
-            [self autoDelNoSave];
-            [MyProgressHud showHUD:[NSString stringWithFormat:@"数据超过200条，自动删除数据"]];
-        }
+//        if (selectArray.count > 200) {
+//           
+//            [self autoDelNoSave];
+//            [MyProgressHud showHUD:[NSString stringWithFormat:@"数据超过200条，自动删除数据"]];
+//        }
         
         return selectArray;
     }

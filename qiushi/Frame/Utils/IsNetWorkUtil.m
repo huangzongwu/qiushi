@@ -118,6 +118,8 @@ static int typeInternet = kTypeNO;
             break;
     }
 }
-
++ (int)netWorkType{
+    return typeInternet;
+}
 
 @end

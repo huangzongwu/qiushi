@@ -10,7 +10,7 @@
 
 #import "DDMenuController.h"
 
-@interface SetViewController : UIViewController<UITableViewDataSource,UITableViewDelegate>
+@interface SetViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,UIPickerViewDelegate, UIPickerViewDataSource, UIActionSheetDelegate>
 {
     UITableView *_mTable;
     

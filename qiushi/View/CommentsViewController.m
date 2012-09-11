@@ -12,6 +12,8 @@
 #import "QiuShi.h"
 #import "DDMenuController.h"
 #import "SHSShareViewController.h"
+#import "SqliteUtil.h"
+#import "iToast.h"
 
 #define FShareBtn       101
 #define FBackBtn        102
@@ -65,15 +67,9 @@ UITableViewDelegate
                                                 GAD_SIZE_320x50.height)];//设置位置
         
         
-        // Specify the ad's "unit identifier." This is your AdMob Publisher ID.
         bannerView_.adUnitID = MY_BANNER_UNIT_ID;//调用你的id
-        
-        // Let the runtime know which UIViewController to restore after taking
-        // the user wherever the ad goes and add it to the view hierarchy.
         bannerView_.rootViewController = self;
         [self.view addSubview:bannerView_];//添加bannerview到你的试图
-        
-        // Initiate a generic request to load it with an ad.
         [bannerView_ loadRequest:[GADRequest request]];
     }
     
@@ -83,10 +79,25 @@ UITableViewDelegate
     list = [[NSMutableArray alloc]init];
     
     
-    _shareItem = [[UIBarButtonItem alloc]initWithBarButtonSystemItem:UIBarButtonSystemItemAction
-                                                                          target:self action:@selector(btnClicked:)];
-    self.navigationItem.rightBarButtonItem = _shareItem;
-   
+    
+    
+//    UIImage* image= [UIImage imageNamed:@"comm_btn_top_n.png"];
+//    UIImage* imagef= [UIImage imageNamed:@"comm_btn_top_s.png"];
+//    CGRect frame_1= CGRectMake(0, 0, image.size.width, image.size.height);
+//    UIButton* backButton= [[UIButton alloc] initWithFrame:frame_1];
+//    [backButton setBackgroundImage:image forState:UIControlStateNormal];
+//    [backButton setBackgroundImage:imagef forState:UIControlStateHighlighted];
+//    [backButton setTitle:@"分享" forState:UIControlStateNormal];
+//    [backButton setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+//    backButton.titleLabel.font=[UIFont boldSystemFontOfSize:14];
+//    [backButton addTarget:self action:@selector(btnClicked:) forControlEvents:UIControlEventTouchUpInside];
+//    
+//    //定制自己的风格的  UIBarButtonItem
+//    UIBarButtonItem* someBarButtonItem= [[UIBarButtonItem alloc] initWithCustomView:backButton];
+//    
+//    
+//    [self.navigationItem setRightBarButtonItem:someBarButtonItem];
+    
     
     
     //糗事列表
@@ -196,6 +207,15 @@ UITableViewDelegate
     UIWindow *window = [[[UIApplication sharedApplication] windows] objectAtIndex:0];
     [window addSubview:_shareView.view];
     
+}
+
+
+- (void)favoriteAction:(id)sender
+{
+        
+    [SqliteUtil updateDataIsFavourite:qs.qiushiID isFavourite:@"yes"];
+    
+    [[iToast makeText:@"已添加到收藏..."] show];
 }
 
 - (void)viewDidUnload
@@ -320,6 +340,10 @@ UITableViewDelegate
         [cell.badbtn setEnabled:NO];
         [cell.commentsbtn setTitle:[NSString stringWithFormat:@"%d",qs.commentsCount] forState:UIControlStateNormal];
         [cell.commentsbtn setEnabled:NO];
+        
+        
+        [cell.saveBtn addTarget:self action:@selector(favoriteAction:) forControlEvents:UIControlEventTouchUpInside];
+        
         //自适应函数
         [cell resizeTheHeight:kTypeContent];
         return cell;
@@ -338,21 +362,32 @@ UITableViewDelegate
         //设置内容
         cell.txtContent.text = cm.content;
         
-        int i = [cm.content intValue];
-//        NSLog(@"%d",i);
-        
-        if (i > 0 ) {
-            NSRange range1 = [cm.content rangeOfString:[NSString stringWithFormat:@"%d楼",i]];
-            NSRange range2 = [cm.content rangeOfString:[NSString stringWithFormat:@"%dl",i]];
-            NSRange range3 = [cm.content rangeOfString:[NSString stringWithFormat:@"%dL",i]];
-            
-
-            if (range1.length > 0 || range2.length > 0 || range3.length > 0 ){
-                NSLog(@"有");
-            }else{
-                NSLog(@"没有");
-            }
-        }
+//        int i = [cm.content intValue];
+////        NSLog(@"%d",i);
+//        
+//        if (i > 0 ) {
+//            NSRange range1 = [cm.content rangeOfString:[NSString stringWithFormat:@"%d楼",i]];
+//            NSRange range2 = [cm.content rangeOfString:[NSString stringWithFormat:@"%dl",i]];
+//            NSRange range3 = [cm.content rangeOfString:[NSString stringWithFormat:@"%dL",i]];
+//            
+//
+//            
+//            
+//            if (range1.length > 0) {
+//                NSLog(@"Range is: %@", NSStringFromRange(range1));
+//                NSLog (@" shortname: %@", [cm.content substringWithRange:range1]);
+////                NSLog(@"==%@",range1.location);
+////                cell.textLabel.textColor
+//            }else if (range2.length > 0) {
+//                 NSLog(@"Range is: %@", NSStringFromRange(range2));
+//                 NSLog (@" shortname: %@", [cm.content substringWithRange:range2]);
+//            }else if (range3.length > 0) {
+//                 NSLog(@"Range is: %@", NSStringFromRange(range3));
+//                 NSLog (@" shortname: %@", [cm.content substringWithRange:range3]);
+//            }else{//只有数字
+////                 NSLog(@"没有");
+//            }
+//        }
         
         
         cell.txtfloor.text = [NSString stringWithFormat:@"%d",cm.floor];

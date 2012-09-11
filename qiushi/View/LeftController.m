@@ -19,8 +19,9 @@
 @interface LeftController ()
 {
     UISlider *_mSlider;//伪 调节屏幕亮度
+    int _mainType;
 }
-
+@property (nonatomic, assign) int mainType;
 @end
 @implementation LeftController
 
@@ -30,6 +31,7 @@
 @synthesize mainViewController = _mainViewController;
 @synthesize setBtn = _setBtn;
 @synthesize isNormalTable = _isNormalTable;
+@synthesize mainType = _mainType;
 
 - (id)init {
     if ((self = [super init])) {
@@ -54,30 +56,32 @@
     
     _menuController = (DDMenuController*)((AppDelegate*)[[UIApplication sharedApplication] delegate]).menuController;
     
-    _items = [[NSMutableArray alloc]initWithObjects:@"随便逛逛",@"新鲜出炉",@"有图有真相",@"关于",@"设置",@"个人收藏", nil];
+    _items = [[NSMutableArray alloc]initWithObjects:@"随便逛逛",@"新鲜出炉",@"有图有真相",@"个人收藏",@"设置",@"关于", nil];
     
-    [[NSUserDefaults standardUserDefaults] setObject:@"1001" forKey:@"mainType"];
     
     
     [self.view setBackgroundColor:[UIColor scrollViewTexturedBackgroundColor]];
     
-    _setBtn = [UIButton buttonWithType:UIButtonTypeInfoLight];
-    [_setBtn setBackgroundImage:[UIImage imageNamed:@"more_setting.png"] forState:UIControlStateNormal];
-    [_setBtn setFrame:CGRectMake(0, 0, 32, 32)];
-    
+    _setBtn = [UIButton buttonWithType:UIButtonTypeCustom];
+    [_setBtn setBackgroundImage:[UIImage imageNamed:@"settingsIcon.png"] forState:UIControlStateNormal];
+    [_setBtn setFrame:CGRectMake(320 - 27 - 70, (44 - 27) *.5, 27, 27)];
+    [_setBtn setShowsTouchWhenHighlighted:YES];
     [_setBtn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_setBtn];
     
     
     //调节亮度的 滑动条
-    _mSlider = [[UISlider alloc]initWithFrame:CGRectMake(20.0, 12 , 200, 20)];
+    _mSlider = [[UISlider alloc]initWithFrame:CGRectMake(15.0, 12 , 220, 20)];
     [_mSlider setMaximumValue:1.0];
-    [_mSlider setMinimumValue:.3];
+    [_mSlider setMinimumValue:.2];
     [_mSlider setValue:1.0];
+    [_mSlider setMaximumValueImage:[UIImage imageNamed:@"set_asc.png"]];
+    [_mSlider setMinimumValueImage:[UIImage imageNamed:@"set_desc.png"]];
     [_mSlider addTarget:self action:@selector(changeAction:) forControlEvents:UIControlEventValueChanged];
     
     
     self.isNormalTable = YES;
+    _mainType = 1001;
     
     
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
@@ -86,7 +90,7 @@
     
     
     if (!_tableView) {
-        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, 480 - 44 -20 - 44) style:UITableViewStylePlain];
+        UITableView *tableView = [[UITableView alloc] initWithFrame:CGRectMake(0, 44, 320, 480 - 44 -20) style:UITableViewStylePlain];
         tableView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
         tableView.delegate = (id<UITableViewDelegate>)self;
         tableView.dataSource = (id<UITableViewDataSource>)self;
@@ -139,7 +143,7 @@
     
     QuadCurveMenu *menu = [[QuadCurveMenu alloc] initWithFrame:self.view.bounds menus:menus];
     menu.delegate = self;
-    [self.view addSubview:menu];
+//    [self.view addSubview:menu];
     
     
 }
@@ -193,10 +197,14 @@
              cell.textLabel.text = [self.items objectAtIndex:indexPath.row];
          }
          cell.textLabel.font = [UIFont fontWithName:@"微软雅黑" size:15.0];
+         [cell.textLabel setTextColor:[UIColor whiteColor]];
+          [_mSlider removeFromSuperview];
      }else{
          if (indexPath.section == 0) {
              cell.textLabel.text = @"";
-              [cell.contentView addSubview:_mSlider];
+
+             [_mSlider removeFromSuperview];
+             [cell.contentView addSubview:_mSlider];
          }
 
         
@@ -228,87 +236,52 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     
-    NSString *str =[NSString stringWithFormat:@"%@",[[NSUserDefaults standardUserDefaults] objectForKey:@"mainType"]];
     
     
-    
-    if (indexPath.row == 0) {
-        if ([str isEqualToString:@"(null)"]||[str isEqualToString:@"1001"]) {
-            [_menuController showRootController:YES];
-        }else{
-            
-            [self.navController popToRootViewControllerAnimated:YES];
-            self.mainViewController.title = @"";
-            
-            self.mainViewController.typeQiuShi = 1001 + indexPath.row ; //
-            [self.mainViewController refreshDate];
-            [_menuController showRootController:YES];
-            
-        }
+    if (_mainType == (1001 + indexPath.row)) {
+        [_menuController showRootController:YES];
+    }else if (indexPath.row == 0){
+        
+        [self.navController popToRootViewControllerAnimated:YES];
+        self.mainViewController.title = @"";
+        
+        self.mainViewController.typeQiuShi = 1001 + indexPath.row ; //
+        [self.mainViewController refreshDate];
+        [_menuController showRootController:YES];
     }else if (indexPath.row == 1){
+        [self.navController popToRootViewControllerAnimated:YES];
+        self.mainViewController.title = [NSString stringWithFormat:@"%@", [self.items objectAtIndex:indexPath.row]];
         
-        if ([str isEqualToString:@"1002"]) {
-            [_menuController showRootController:YES];
-        }else{
-            [self.navController popToRootViewControllerAnimated:YES];
-            self.mainViewController.title = [NSString stringWithFormat:@"%@", [self.items objectAtIndex:indexPath.row]];
-            
-            self.mainViewController.typeQiuShi = 1001 + indexPath.row ; //
-            [self.mainViewController refreshDate];
-            [_menuController showRootController:YES];
-            
-        }
-        
+        self.mainViewController.typeQiuShi = 1001 + indexPath.row ; //
+        [self.mainViewController refreshDate];
+        [_menuController showRootController:YES];
     }else if (indexPath.row == 2){
-        if ([str isEqualToString:@"1003"]) {
-            [_menuController showRootController:YES];
-        }else{
-            [self.navController popToRootViewControllerAnimated:YES];
-            self.mainViewController.title = [NSString stringWithFormat:@"%@", [self.items objectAtIndex:indexPath.row]];
-            
-            self.mainViewController.typeQiuShi = 1001 + indexPath.row ; //
-            [self.mainViewController refreshDate];
-            [_menuController showRootController:YES];
-            
-            
-        }
+        [self.navController popToRootViewControllerAnimated:YES];
+        self.mainViewController.title = [NSString stringWithFormat:@"%@", [self.items objectAtIndex:indexPath.row]];
+        
+        self.mainViewController.typeQiuShi = 1001 + indexPath.row ; //
+        [self.mainViewController refreshDate];
+        [_menuController showRootController:YES];
     }else if (indexPath.row == 3){
-        if ([str isEqualToString:@"1004"]) {
-            [_menuController showRootController:YES];
-        }else{
-            AboutViewController *about = [[AboutViewController alloc]initWithNibName:@"AboutViewController" bundle:nil];
-            [self.navController pushViewController:about animated:YES];
+        FavouriteViewController *favourite = [[FavouriteViewController alloc]initWithNibName:@"FavouriteViewController" bundle:nil];
+        
+        [self.navController pushViewController:favourite animated:YES];
+        [_menuController showRootController:YES];
 
-            [_menuController showRootController:YES];
-            
-        }
     }else if (indexPath.row == 4){
-        if ([str isEqualToString:@"1005"]) {
-            [_menuController showRootController:YES];
-        }else{
-            SetViewController *set = [[SetViewController alloc]initWithNibName:@"SetViewController" bundle:nil];
-            
-            [self.navController pushViewController:set animated:YES];
-            [_menuController showRootController:YES];
-            
-        }
+        SetViewController *set = [[SetViewController alloc]initWithNibName:@"SetViewController" bundle:nil];
+        
+        [self.navController pushViewController:set animated:YES];
+        [_menuController showRootController:YES];
     }else if (indexPath.row == 5){
-        if ([str isEqualToString:@"1006"]) {
-            [_menuController showRootController:YES];
-        }else{
-            FavouriteViewController *favourite = [[FavouriteViewController alloc]initWithNibName:@"FavouriteViewController" bundle:nil];
-            
-            [self.navController pushViewController:favourite animated:YES];
-            [_menuController showRootController:YES];
-            
-        }
+        AboutViewController *about = [[AboutViewController alloc]initWithNibName:@"AboutViewController" bundle:nil];
+        [self.navController pushViewController:about animated:YES];
+        
+        [_menuController showRootController:YES];
     }
-    
-    
-    
-    [[NSUserDefaults standardUserDefaults] setObject:[NSString stringWithFormat:@"%d",(1001 + indexPath.row)] forKey:@"mainType"];
-//    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+
+
+    _mainType = 1001 + indexPath.row;
     
     
 }
@@ -343,6 +316,12 @@
 
     AppDelegate *delegate = (AppDelegate*)[[UIApplication sharedApplication] delegate];
     [delegate.lightView setAlpha:(1 - [mSlider value])];
+    
+    if ([mSlider value] < .5) {
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleBlackTranslucent];
+    }else{
+        [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    }
     
 }
 

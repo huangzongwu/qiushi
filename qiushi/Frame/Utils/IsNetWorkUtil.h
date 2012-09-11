@@ -21,6 +21,6 @@ enum internetType
 + (void)initNetWorkStatus;
 + (BOOL)isNetWork;
 + (BOOL)isNetWork1;
-
++ (int)netWorkType;
 
 @end

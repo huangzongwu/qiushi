@@ -9,12 +9,18 @@
 #import "SetViewController.h"
 
 #import "DDMenuController.h"
+#import "iToast.h"
+#import "SqliteUtil.h"
+#import "EGOCache.h"
 @interface SetViewController ()
 {
     UIBarButtonItem *leftMenuBtn;
     
-
+    NSMutableArray *_loadItems;//加载图片items
+    int _typeLoad;
 }
+@property (nonatomic, retain) NSMutableArray *loadItems;
+@property (nonatomic, assign) int typeLoad;
 @end
 
 @implementation SetViewController
@@ -23,6 +29,8 @@
 @synthesize subItems = _subItems;
 @synthesize mTable = _mTable;
 @synthesize adSwitch = _adSwitch;
+@synthesize loadItems = _loadItems;
+@synthesize typeLoad = _typeLoad;
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -58,14 +66,14 @@
     self.navigationItem.leftBarButtonItem = someBarButtonItem;
     
     
-//    leftMenuBtn = [[UIBarButtonItem alloc] initWithImage:[UIImage imageNamed:@"nav_menu_icon.png"]
-//                                                               style:UIBarButtonItemStyleBordered
-//                                                              target:self
-//                                                              action:@selector(showLeft:)];
-//
-//    self.navigationItem.leftBarButtonItem = leftMenuBtn;
+
     
-   
+    
+    _loadItems = [[NSMutableArray alloc]initWithObjects:@"全部自动加载",@"仅Wifi自动加载",@"不自动加载", nil];
+    
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    int loadType = [[ud objectForKey:@"loadImage"] intValue];
+    _typeLoad = loadType;
     
     //设置背景颜色
     [self.view setBackgroundColor:[UIColor colorWithPatternImage:[UIImage imageNamed:@"main_background.png"]]];
@@ -77,11 +85,11 @@
     _mTable.backgroundColor = [UIColor clearColor];
     [self.view addSubview:_mTable];
     
-    _items = [[NSMutableArray alloc]initWithObjects:@"显示广告",@"去给评个分吧", nil];
+    _items = [[NSMutableArray alloc]initWithObjects:@"显示广告",@"去给评个分吧",@"图片加载方式",@"清除缓存", nil];
     _subItems = [[NSMutableArray alloc]initWithObjects:@"", nil];
     
     
-    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    
     _adSwitch = [[UISwitch alloc] initWithFrame:CGRectZero];
     [_adSwitch setOn:[[ud objectForKey:@"showAD"] boolValue] animated:NO];
     [_adSwitch addTarget:self action:@selector(switchChanged:) forControlEvents:UIControlEventValueChanged];
@@ -145,10 +153,10 @@
     cell.selectionStyle = UITableViewCellSelectionStyleGray;
     cell.backgroundColor = [UIColor clearColor];
     cell.contentView.backgroundColor = [UIColor clearColor];
-    //    cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+   
     cell.textLabel.font = [UIFont fontWithName:@"微软雅黑" size:15.0];
     cell.textLabel.text = [self.items objectAtIndex:indexPath.row];
-    //    cell.detailTextLabel.text = [self.subItems objectAtIndex:indexPath.row];
+   
     
     if (indexPath.row == 0) {
         
@@ -157,6 +165,10 @@
     }
     else{
         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
+    }
+    
+    if (indexPath.row == 2) {
+        cell.detailTextLabel.text = [_loadItems objectAtIndex:_typeLoad];
     }
     
     
@@ -181,8 +193,65 @@
         NSString *str = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software&id=%@",MyAppleID];
         [[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
         
+    }else if (indexPath.row == 2){
+        //图片加载方式
+        NSString *title = UIDeviceOrientationIsLandscape([UIDevice currentDevice].orientation) ? @"\n\n\n\n\n\n\n\n\n" : @"\n\n\n\n\n\n\n\n\n\n\n\n" ;
+        
+        UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:title delegate:self cancelButtonTitle:nil destructiveButtonTitle:nil otherButtonTitles:@"确定", nil];
+        [actionSheet showInView:self.view];
+        
+        UIPickerView *pickerView = [[UIPickerView alloc] init];
+        pickerView.tag = 101;
+        pickerView.delegate = self;
+        pickerView.dataSource = self;
+        pickerView.showsSelectionIndicator = YES;
+        
+        [actionSheet addSubview:pickerView];
+
+        
+    }else if (indexPath.row == 3){
+        //清除缓存
+        
+        [SqliteUtil delNoSave];
+        EGOCache *cache = [[EGOCache alloc]init];
+        [cache clearCache];
+        [[iToast makeText:@"已完成"] show];
+        
     }
 }
+
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
+{
+	return 1;
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+	return [_loadItems count];
+}
+
+- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
+{
+    return  [_loadItems objectAtIndex:row];
+
+}
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+	UIPickerView *pickerView = (UIPickerView *)[actionSheet viewWithTag:101];
+    
+    _typeLoad = [pickerView selectedRowInComponent:0];
+    NSUserDefaults *ud = [NSUserDefaults standardUserDefaults];
+    [ud setObject:[NSNumber numberWithInt:_typeLoad]  forKey:@"loadImage"];
+    
+    NSLog(@"%@",[ud objectForKey:@"loadImage"]);
+    
+    [_mTable reloadData];
+    
+
+}
+
 
 - (void) switchChanged:(id)sender
 {
