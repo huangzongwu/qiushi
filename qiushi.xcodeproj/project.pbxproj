@@ -1964,6 +1964,8 @@
 		13C8436715E47EEC000B8A44 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: xuanyuan xidong (5SLN54QG2G)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xuanyuan xidong (5SLN54QG2G)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "qiushi/qiushi-Prefix.pch";
 				INFOPLIST_FILE = "qiushi/qiushi-Info.plist";
@@ -1973,6 +1975,8 @@
 					"\"$(SRCROOT)/qiushi/Frame/admob\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9A84F65C-C77D-4A30-B928-0A0D71DF7E5C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A84F65C-C77D-4A30-B928-0A0D71DF7E5C";
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -1982,6 +1986,8 @@
 		13C8436815E47EEC000B8A44 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: xuanyuan xidong (5SLN54QG2G)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: xuanyuan xidong (5SLN54QG2G)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "qiushi/qiushi-Prefix.pch";
 				INFOPLIST_FILE = "qiushi/qiushi-Info.plist";
@@ -1991,6 +1997,8 @@
 					"\"$(SRCROOT)/qiushi/Frame/admob\"",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "9A84F65C-C77D-4A30-B928-0A0D71DF7E5C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "9A84F65C-C77D-4A30-B928-0A0D71DF7E5C";
 				RUN_CLANG_STATIC_ANALYZER = NO;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;

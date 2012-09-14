@@ -66,7 +66,7 @@
     [self.view addSubview:_iconImageView];
     
     _name = [[UILabel alloc]initWithFrame:CGRectMake(0, 101, 320, 21)];
-    _name.text = @"糗事囧事 1.0.120817";
+    _name.text = @"糗事囧事 1.0.120901";
     _name.font = [UIFont fontWithName:@"微软雅黑" size:17];
     _name.textAlignment = UITextAlignmentCenter;
     _name.backgroundColor = [UIColor clearColor];

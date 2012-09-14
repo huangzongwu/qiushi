@@ -199,12 +199,15 @@
          cell.textLabel.font = [UIFont fontWithName:@"微软雅黑" size:15.0];
          [cell.textLabel setTextColor:[UIColor whiteColor]];
           [_mSlider removeFromSuperview];
+         
+         cell.accessoryType = UITableViewCellAccessoryDisclosureIndicator;
      }else{
          if (indexPath.section == 0) {
              cell.textLabel.text = @"";
 
              [_mSlider removeFromSuperview];
              [cell.contentView addSubview:_mSlider];
+             cell.accessoryType = UITableViewCellAccessoryNone;
          }
 
         
@@ -217,7 +220,7 @@
 
 - (NSString*)tableView:(UITableView*)tableView titleForHeaderInSection:(NSInteger)section {
     if (section == 0) {
-        return @"我的糗事囧事 v1.0.120817";
+        return @"我的糗事囧事 v1.0.120901";
     }else if(section == 1)
     {
         return @"内容及版权归糗事百科所有";
