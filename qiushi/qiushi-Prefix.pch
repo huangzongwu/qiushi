@@ -13,9 +13,20 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
+
+#import "GANTracker.h"
+
 #endif
 
 #define MY_BANNER_UNIT_ID @"a14feae0ee078ea"
+
+
+// Dispatch period in seconds
+#define kGANDispatchPeriodSec 100
+// **************************************************************************
+// PLEASE REPLACE WITH YOUR ACCOUNT DETAILS.
+// **************************************************************************
+#define kAnalyticsAccountId @"UA-34878021-1"
 
 #define MyAppleID @"545549453"
 

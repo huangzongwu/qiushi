@@ -54,6 +54,17 @@ UITableViewDelegate
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib
     
+    
+    NSError *error;
+    if (![[GANTracker sharedTracker] trackEvent:@"Application iOS"
+                                         action:@"CommentsViewController"
+                                          label:@"Example iOS"
+                                          value:99
+                                      withError:&error]) {
+        NSLog(@"error in trackEvent");
+    }
+    
+    
 //    NSLog(@"viewDidLoad comments");
     
     //是否显示广告

@@ -65,6 +65,17 @@ UITableViewDelegate
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    NSError *error;
+    if (![[GANTracker sharedTracker] trackEvent:@"Application iOS"
+                                         action:@"ContentViewController.h"
+                                          label:@"Example iOS"
+                                          value:99
+                                      withError:&error]) {
+        NSLog(@"error in trackEvent");
+    }
+    
+    
 	// Do any additional setup after loading the view, typically from a nib.
     [self.view setBackgroundColor:[UIColor clearColor]];
     _list = [[NSMutableArray alloc] init ];
@@ -209,6 +220,16 @@ UITableViewDelegate
 
 -(void) GetErr:(ASIHTTPRequest *)request
 {
+    NSError *error1;
+    if (![[GANTracker sharedTracker] trackEvent:@"Application iOS"
+                                         action:@"refresh error"
+                                          label:@"Example iOS"
+                                          value:99
+                                      withError:&error1]) {
+        NSLog(@"error in trackEvent");
+    }
+    
+    
     self.refreshing = NO;
     [self.tableView tableViewDidFinishedLoading];
     
@@ -237,6 +258,14 @@ UITableViewDelegate
     
     //    NSString *responseString = [request responseString];
     //    NSLog(@"%@\n",responseString);
+    NSError *error;
+    if (![[GANTracker sharedTracker] trackEvent:@"Application iOS"
+                                         action:@"refresh ok"
+                                          label:@"Example iOS"
+                                          value:99
+                                      withError:&error]) {
+        NSLog(@"error in trackEvent");
+    }
     
     if (self.refreshing) {
         self.page = 1;

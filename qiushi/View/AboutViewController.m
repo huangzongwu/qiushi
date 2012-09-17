@@ -41,6 +41,15 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
     
+    NSError *error;
+    if (![[GANTracker sharedTracker] trackEvent:@"Application iOS"
+                                         action:@"AboutViewController.h"
+                                          label:@"Example iOS"
+                                          value:99
+                                      withError:&error]) {
+        NSLog(@"error in trackEvent");
+    }
+    
     self.navigationItem.hidesBackButton = YES;
     
     

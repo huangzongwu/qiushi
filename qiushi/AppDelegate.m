@@ -14,11 +14,15 @@
 #import "LeftController.h"
 #import "CustomNavigationBar.h"
 #import "MyNavigationController.h"
+
+
+
+
+
+
 //#import "RightController.h"
 
 //#import "ViewController.h"
-
-
 
 
 @implementation AppDelegate
@@ -32,6 +36,32 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    //google analytics
+    [[GANTracker sharedTracker] startTrackerWithAccountID:kAnalyticsAccountId
+                                           dispatchPeriod:kGANDispatchPeriodSec
+                                                 delegate:nil];
+    NSError *error;
+    
+    if (![[GANTracker sharedTracker] setCustomVariableAtIndex:1
+                                                         name:@"iOS1"
+                                                        value:@"iv1"
+                                                    withError:&error]) {
+        NSLog(@"error in setCustomVariableAtIndex");
+    }
+    
+    if (![[GANTracker sharedTracker] trackEvent:@"Application iOS"
+                                         action:@"Launch iOS"
+                                          label:@"Example iOS"
+                                          value:99
+                                      withError:&error]) {
+        NSLog(@"error in trackEvent");
+    }
+    
+    if (![[GANTracker sharedTracker] trackPageview:@"/app_entry_point"
+                                         withError:&error]) {
+        NSLog(@"error in trackPageview");
+    }
+
     
     //    //暂停2s
     ////    [NSThread sleepForTimeInterval:1.0];
@@ -136,6 +166,9 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
-
+- (void)dealloc
+{
+    [[GANTracker sharedTracker] stopTracker];
+}
 
 @end
